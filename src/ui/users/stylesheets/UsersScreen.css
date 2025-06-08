@@ -1,0 +1,30 @@
+.users-screen-container {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 20px);
+  height: 100%; 
+}
+
+.user-sections-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+}
+
+.add-user-button {
+  margin: 20px 0px 0px 20px;
+  min-width: 300px;
+  margin-right: 20px;
+}
+
+.user-form-dialog {
+  height: fit-content;
+  width: calc(50%);
+  background-color: white;
+  box-shadow: 0px 1px 10px 0px #D9D9D9;
+  border-radius: 10px;
+  padding: 20px;
+  border: none;
+}

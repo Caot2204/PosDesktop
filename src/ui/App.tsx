@@ -1,30 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import './App.css';
+import UsersScreen from './users/components/UsersScreen';
+import PosMenu from './common/components/PosMenu';
+import UserAvatar from './common/components/UserAvatar';
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <h1>Hola combinacion react + vite + electron + ts</h1>
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="pos-header">
+        <PosMenu
+          className="pos-menu"
+          onSalesClicked={() => console.log('Ventas clicked')}
+          onEgressClicked={() => console.log('Egresos clicked')}
+          onInventoryClicked={() => console.log('Inventario clicked')}
+          onUsersClicked={() => console.log('Usuarios clicked')}
+          onSettingsClicked={() => console.log('Configuración clicked')} />
+        <UserAvatar />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <UsersScreen />
     </>
   )
 }

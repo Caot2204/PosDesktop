@@ -1,0 +1,27 @@
+.message-container {
+  box-shadow: 0px 1px 10px 0px #D9D9D9;
+  border-radius: 10px;
+  padding: 20px;
+  border: none;
+}
+
+.message {
+  font-size: 20px;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: black;
+}
+
+.primary-button {
+  width: 200px;
+}

@@ -1,0 +1,24 @@
+.user-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input {
+  width: calc(100% - 80px);
+  height: 30px;
+}
+
+label {
+  width: calc(100% - 80px);
+  text-align: start;
+  margin-top: 10px;
+}
+
+.checkbox-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}

@@ -1,0 +1,21 @@
+.primary-button {
+  background-color: #4C662B;
+  color: white;
+  font-family: Inter, sans-serif;
+  font-size: 1.2em;
+  height: 50px;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trailing-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}

@@ -1,0 +1,40 @@
+.user-container {
+  min-width: 200px;
+  min-height: 65px;
+  background-color: #CDEDA3;
+  padding: 8px 16px;
+  box-shadow: 0 1px 5px 0px #838282;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-weight: normal;
+}
+
+.user-icons-container {
+  display: flex;
+  justify-content: space-between;
+  min-width: 60px;
+  margin-right: 10px;
+  margin-left: 20px;
+}
+
+.user-name {
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  color: #000;
+}
+
+.user-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.edit {
+  color: #000;
+}
+
+.delete {
+  color: red;
+}

@@ -1,0 +1,16 @@
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: black;
+}
+
+.primary-button {
+  width: 300px;
+}
