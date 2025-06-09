@@ -12,7 +12,7 @@ declare global {
   interface Window {
     userAPI?: {
       saveUser: (name: string, password: string, isAdmin: boolean) => Promise<void>;
-      updateUser: (id: string, name: string, password: string, isAdmin: boolean) => Promise<void>;
+      updateUser: (id: string, name: string, isAdmin: boolean) => Promise<void>;
       deleteUser: (id: string) => Promise<void>;
       getAllUsers: () => Promise<User[]>;
       getUserById: (id: string) => Promise<User>;
@@ -88,7 +88,7 @@ function UsersScreen() {
         <UserForm
           id={userForForm ? userForForm.id : ""}
           name={userForForm ? userForForm.name : ""}
-          password={userForForm ? userForForm.password : ""}
+          password={userForForm?.password ? userForForm.password : ""}
           isAdmin={userForForm ? userForForm.isAdmin : false}
           onSaveSuccess={() => {
             fetchUsers();

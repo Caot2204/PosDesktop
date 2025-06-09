@@ -13,6 +13,9 @@ dist-react
 dist-electron
 *.local
 
+# Dev Files
+pos_dev_database.sqlite
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

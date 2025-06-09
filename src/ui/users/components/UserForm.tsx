@@ -38,7 +38,7 @@ export function UserForm(props: UserDataProps) {
     if (userId) {
       if (window.userAPI && typeof window.userAPI.updateUser === 'function') {
         try {
-          await window.userAPI?.updateUser(userId!!, name, password, isAdmin)
+          await window.userAPI?.updateUser(userId!!, name, isAdmin)
           showSuccessNotify("Usuario actualizado!");
           props.onSaveSuccess();
         } catch (error: any) {

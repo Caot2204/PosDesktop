@@ -2,10 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { getPreloadPath } from './pathResolver.js';
 import path from 'path';
 import { isDev } from './util.js';
-import PosDatabase from '../data/datasource/ds-sqlite/PosDatabase.js';
-import UserIpcDecorator from './decorators/UserIpcDecorator.js';
-
-let dbInstance: PosDatabase;
+import DataSourceConfigurator from './decorators/DataSourceConfigurator.js'
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -26,14 +23,9 @@ const createWindow = () => {
 }
 
 const initializeDatabaseAndIpcMethods = async (): Promise<boolean> => {
-  const dbPath = isDev() ? 'pos_dev_database.sqlite' : path.join(app.getAppPath(), 'pos_database.sqlite');
-  console.log(`Database path:${dbPath}`);
-  dbInstance = new PosDatabase(dbPath);
   try {
-    await dbInstance.initialize();
-    console.log('Database initialized');
-    const userDecorator = new UserIpcDecorator(dbInstance, ipcMain);
-    userDecorator.configure();
+    const dataSourceConfigurator = new DataSourceConfigurator(ipcMain);
+    dataSourceConfigurator.configureWithSqlite();    
   } catch (error) {
     console.error('Error initializing database:', error);
     app.quit();

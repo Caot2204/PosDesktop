@@ -31,12 +31,12 @@ class UserRepository {
         }
     }
 
-    async updateUser(id: string, name: string, password: string, isAdmin: boolean) {
-        if (this.validateUserData(name, password)) {
+    async updateUser(id: string, name: string, isAdmin: boolean) {
+        if (name && (name.length > 0 && name.length < 30)) {
             const user = await this.getUserById(id);
             if (user) {
                 try {
-                    this.userDataSource.updateUser(new User(id, name, password, isAdmin));
+                    this.userDataSource.updateUser(new User(id, name, undefined, isAdmin));
                 } catch (error) {
                     throw new Error("Ha ocurrido un error al guardar, intente de nuevo");
                 }

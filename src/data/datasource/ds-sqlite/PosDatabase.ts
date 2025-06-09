@@ -1,9 +1,11 @@
 import sqlite3 from "sqlite3";
+import UserDao from "./UserDao.js";
 
 class PosDatabase {
 
     private db: any | null = null;
     private dbPath: string | 'test';
+    private userDao: UserDao | null = null;
 
     constructor(dbPath: string | 'test') {
         this.dbPath = dbPath;
@@ -15,6 +17,7 @@ class PosDatabase {
                 this.db = new sqlite3.Database(this.dbPath === 'test' ? ':memory:' : this.dbPath);
                 if (this.db) {
                     this.createUserTable();
+                    this.userDao = new UserDao(this);
                     resolve();
                 } else {
                     reject(new Error("Database is not initialized"));
@@ -23,7 +26,7 @@ class PosDatabase {
         });
     }
 
-    getInstance() {
+    getInstance(): any {
         if (this.db === null) {
             throw new Error("Database is not initialized");
         }
@@ -69,6 +72,13 @@ class PosDatabase {
                 }
             });
         })
+    }
+
+    getUserDao(): UserDao {
+        if (!this.userDao) {
+            this.userDao = new UserDao(this.db);
+        }
+        return this.userDao;
     }
 
 }

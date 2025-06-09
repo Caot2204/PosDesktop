@@ -21,7 +21,7 @@ class UserDao implements IUserDataSource {
                     const users: User[] = rows.map(row => new User(
                         row.id,
                         row.name,
-                        row.password,
+                        undefined,
                         Boolean(row.isAdmin)
                     ));
                     resolve(users);
@@ -49,74 +49,71 @@ class UserDao implements IUserDataSource {
                     resolve(userRecived);
                 });
             });
-        });     
+        });
     }
 
     async saveUser(user: User): Promise<void> {
         return new Promise((resolve, reject) => {
             this.dbInstance.serialize(() => {
-            const statement = this.dbInstance.prepare(
-                "INSERT INTO users VALUES (?, ?, ?, ?)"
-            );
-            const result = statement.run(
-                user.id,
-                user.name,
-                user.password,
-                user.isAdmin ? 1 : 0,
-                (error: Error | null) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve();
+                const statement = this.dbInstance.prepare(
+                    "INSERT INTO users VALUES (?, ?, ?, ?)"
+                );
+                statement.run(
+                    user.id,
+                    user.name,
+                    user.password,
+                    user.isAdmin ? 1 : 0,
+                    (error: Error | null) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve();
+                        }
                     }
-                }
-            );
-            console.log(result);
-        });
+                );
+            });
         });
     }
 
     async updateUser(user: User): Promise<void> {
         return new Promise((resolve, reject) => {
             this.dbInstance.serialize(() => {
-            const statement = this.dbInstance.prepare(
-                "UPDATE users SET name=?, password=?, isAdmin=? WHERE id = ?"
-            );
-            const result = statement.run(
-                user.name,
-                user.password,
-                user.isAdmin ? 1 : 0,
-                user.id,
-                (error: Error | null) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve();
+                const statement = this.dbInstance.prepare(
+                    "UPDATE users SET name=?, isAdmin=? WHERE id = ?"
+                );
+                statement.run(
+                    user.name,
+                    user.isAdmin ? 1 : 0,
+                    user.id,
+                    (error: Error | null) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve();
+                        }
                     }
-                }
-            )
-            console.log(result);
-        });
+                )
+            });
         });
     }
 
     async deleteUser(userId: string): Promise<void> {
         return new Promise((resolve, reject) => {
             this.dbInstance.serialize(() => {
-            const statement = this.dbInstance.prepare(
-                "DELETE FROM users WHERE id = ?"
-            );
-            statement.run(
-                userId,
-                (error: Error | null) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve();
+                const statement = this.dbInstance.prepare(
+                    "DELETE FROM users WHERE id = ?"
+                );
+                statement.run(
+                    userId,
+                    (error: Error | null) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve();
+                        }
                     }
-                }
-            )
-        });
+                )
+            });
         });
     }
 

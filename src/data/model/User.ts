@@ -1,10 +1,10 @@
 class User {
     id: string | undefined;
     name: string;
-    password: string;
+    password: string | undefined;
     isAdmin: boolean = false
 
-    constructor(id: string | undefined, name: string, password: string, isAdmin: boolean) {
+    constructor(id: string | undefined, name: string, password: string | undefined, isAdmin: boolean) {
         if (id) this.id = id;
         this.name = name;
         this.password = password;
