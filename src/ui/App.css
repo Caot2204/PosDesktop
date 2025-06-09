@@ -1,13 +1,9 @@
-#root {
-  padding: 0 8px 0 8px;
-}
-
 body {
   background-color: #F9FAEF;
 }
 
 .pos-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
+  height: 60px;
 }

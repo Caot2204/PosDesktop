@@ -10,7 +10,7 @@ let dbInstance: PosDatabase;
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
-    minWidth: 900,
+    minWidth: 1000,
     minHeight: 500,
     webPreferences: {
       preload: getPreloadPath()

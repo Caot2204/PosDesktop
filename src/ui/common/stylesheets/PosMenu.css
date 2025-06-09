@@ -1,6 +1,6 @@
 .menu-container {
   display: flex;
-  height: 100%;
+  height: fit-content;
 }
 
 .menu-item {

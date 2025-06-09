@@ -1,6 +1,6 @@
-import UserDao from '../../../src/data/datasource/ds-sqlite/UserDao';
-import PosDatabase from '../../../src/data/datasource/ds-sqlite/PosDatabase';
-import User from '../../../src/data/model/User';
+import UserDao from '../../../dist-electron/data/datasource/ds-sqlite/UserDao';
+import PosDatabase from '../../../dist-electron/data/datasource/ds-sqlite/PosDatabase';
+import User from '../../../dist-electron/data/model/User';
 
 describe('UserDao', () => {
     let posDatabase: PosDatabase;
