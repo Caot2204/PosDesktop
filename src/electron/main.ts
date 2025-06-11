@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { getPreloadPath } from './pathResolver.js';
 import path from 'path';
 import { isDev } from './util.js';
-import DataSourceConfigurator from './decorators/DataSourceConfigurator.js'
+import DataSourceConfigurator from './DataSourceConfigurator.js'
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({

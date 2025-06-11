@@ -13,7 +13,7 @@ class UserDao implements IUserDataSource {
     async getAllUsers(): Promise<User[]> {
         return new Promise<User[]>((resolve: any, reject: any) => {
             this.dbInstance.serialize(() => {
-                this.dbInstance.all('SELECT * FROM users ORDER BY name DESC', (error: Error | null, rows: any[]) => {
+                this.dbInstance.all('SELECT * FROM users ORDER BY name ASC', (error: Error | null, rows: any[]) => {
                     if (error) {
                         reject(error);
                         return;

@@ -55,13 +55,13 @@ describe('UserRepository', () => {
     });*/
 
     it('should call updateUser on the data source with the correct user', async () => {
-        await userRepository.updateUser('update-id', 'Updated User', 'password test', false);
+        await userRepository.updateUser('update-id', 'Updated User', false);
 
         expect(mockUserDataSource.updateUser).toHaveBeenCalledTimes(1);
         expect(mockUserDataSource.updateUser).toHaveBeenCalledWith({
             "id": 'update-id',
             "name": 'Updated User', 
-            "password": 'password test', 
+            "password": undefined, 
             "isAdmin": false
         });
     });

@@ -65,7 +65,6 @@ describe('UserDao', () => {
         expect(mockUser).toEqual(userRecupered);
 
         mockUser.name = "New name";
-        mockUser.password = "12345677";
         userDao.updateUser(mockUser);
         const userUpdated = await userDao.getUserById("1");
         expect(mockUser).toEqual(userUpdated);

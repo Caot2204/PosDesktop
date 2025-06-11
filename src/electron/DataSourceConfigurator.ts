@@ -1,9 +1,9 @@
 import { app, IpcMain } from 'electron';
 import path from 'path';
-import { isDev } from '../util.js';
-import PosDatabase from '../../data/datasource/ds-sqlite/PosDatabase.js';
-import UserRepository from '../../data/repository/UserRepository.js';
-import UserIpcDecorator from './UserIpcDecorator.js';
+import { isDev } from './util.js';
+import PosDatabase from '../data/datasource/ds-sqlite/PosDatabase.js';
+import UserRepository from '../data/repository/UserRepository.js';
+import UserIpcDecorator from './decorators/UserIpcDecorator.js';
 
 
 class DataSourceConfigurator {

@@ -1,11 +1,13 @@
 import sqlite3 from "sqlite3";
 import UserDao from "./UserDao.js";
+import CategoryDao from "./CategoryDao.js";
 
 class PosDatabase {
 
     private db: any | null = null;
     private dbPath: string | 'test';
     private userDao: UserDao | null = null;
+    private categoryDao: CategoryDao | null = null;
 
     constructor(dbPath: string | 'test') {
         this.dbPath = dbPath;
@@ -17,7 +19,9 @@ class PosDatabase {
                 this.db = new sqlite3.Database(this.dbPath === 'test' ? ':memory:' : this.dbPath);
                 if (this.db) {
                     this.createUserTable();
+                    this.createCategoryTable();
                     this.userDao = new UserDao(this);
+                    this.categoryDao = new CategoryDao(this);
                     resolve();
                 } else {
                     reject(new Error("Database is not initialized"));
@@ -74,11 +78,38 @@ class PosDatabase {
         })
     }
 
+    private createCategoryTable(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (!this.db) {
+                return reject(new Error("Database is not initialized"));
+            }
+            this.db.run(`CREATE TABLE IF NOT EXISTS categories(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name VARCHAR(50) NOT NULL            
+            )`, (error: Error) => {
+                if (error) {
+                    console.error('Error creating categories table: ', error.message);
+                    reject(error);
+                } else {
+                    console.log('Categories table checked/created');
+                    resolve();
+                }
+            });
+        });
+    }
+
     getUserDao(): UserDao {
         if (!this.userDao) {
-            this.userDao = new UserDao(this.db);
+            this.userDao = new UserDao(this);
         }
         return this.userDao;
+    }
+
+    getCategoryDao(): CategoryDao {
+        if (!this.categoryDao) {
+            this.categoryDao = new CategoryDao(this);
+        }
+        return this.categoryDao;
     }
 
 }
