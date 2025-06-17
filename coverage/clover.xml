@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749665305652" clover="3.2.0">
-  <project timestamp="1749665305652" name="All files">
+<coverage generated="1749668717750" clover="3.2.0">
+  <project timestamp="1749668717750" name="All files">
     <metrics statements="178" coveredstatements="123" conditionals="82" coveredconditionals="41" methods="79" coveredmethods="64" elements="339" coveredelements="228" complexity="0" loc="178" ncloc="178" packages="5" files="8" classes="8"/>
     <package name="dist-electron.data.datasource.ds-sqlite">
       <metrics statements="129" coveredstatements="93" conditionals="52" coveredconditionals="28" methods="59" coveredmethods="49"/>

@@ -17,7 +17,6 @@ function UserSection(prop: UserSectionProps) {
         prop.users.map((user) => (
           <UserItem 
             key={user.id} 
-            userId={user.id}
             name={user.name}
             onUpdate={() => prop.onUpdateUser(user)}
             onDelete={() => prop.onDeleteUser(user.id!!)} />

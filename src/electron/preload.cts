@@ -11,3 +11,12 @@ contextBridge.exposeInMainWorld('userAPI',
     getAllUsers: () => ipcRenderer.invoke('userApi:getAllUsers')
   }
 );
+
+contextBridge.exposeInMainWorld('categoryAPI',
+  {
+    saveCategory: (name: string) => ipcRenderer.invoke('categoryApi:saveCategory', name),
+    updateCategory: (categoryId: number, name: string) => ipcRenderer.invoke('categoryApi:updateCategory', categoryId, name),
+    deleteCategory: (categoryId: number) => ipcRenderer.invoke('categoryApi:deleteCategory', categoryId),
+    getAllCategories: () => ipcRenderer.invoke('categoryApi:getAllCategories')
+  }
+);

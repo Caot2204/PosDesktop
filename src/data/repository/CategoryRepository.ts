@@ -1,8 +1,7 @@
 import type { ICategoryDataSource } from '../datasource/ds-interfaces/ICategoryDataSource.js';
-import Category from '../model/Category.js';
 
 class CategoryRepository {
-    
+
     private categoryDataSource: ICategoryDataSource;
 
     constructor(categoryDataSource: ICategoryDataSource) {
@@ -19,18 +18,36 @@ class CategoryRepository {
 
     async saveCategory(name: string) {
         if (this.validateCategoryData(name)) {
-            this.categoryDataSource.saveCategory(name);
+            try {
+                this.categoryDataSource.saveCategory(name);
+            } catch (error) {
+                throw new Error("Ha ocurrido un error al guardar, intente de nuevo");
+            }
         }
     }
 
-    async updateCategory(category: Category) {
-        if (this.validateCategoryData(category.name)) {
-            this.categoryDataSource.updateCategory(category);
+    async updateCategory(categoryId: number, name: string) {
+        if (categoryId) {
+            const category = await this.getCategoryById(categoryId);
+            if (category) {
+                if (this.validateCategoryData(name)) {
+                    category.name = name;
+                    try {
+                        this.categoryDataSource.updateCategory(category);
+                    } catch (error) {
+                        throw new Error("Ha ocurrido un error al guardar, intente de nuevo");
+                    }
+                }
+            }
         }
     }
 
     async deleteCategory(categoryId: number) {
-        this.categoryDataSource.deleteCategory(categoryId);
+        try {
+            this.categoryDataSource.deleteCategory(categoryId);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     private validateCategoryData(name: string): boolean {

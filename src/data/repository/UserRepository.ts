@@ -43,6 +43,8 @@ class UserRepository {
             } else {
                 throw Error(`The user with the ${id} not exist`);
             }
+        } else {
+            throw new Error("El nombre no puede estar vacío y debe tener máximo 30 caracteres");
         }
     }
 
@@ -52,7 +54,7 @@ class UserRepository {
 
     private validateUserData(name: string, password: string): boolean {
         if (!name || !password) throw new Error("No puede haber campos vacios");
-        if (name.length > 30) throw new Error("El nombre solo puede tener 30 caracteres");
+        if (name.length > 30) throw new Error("El nombre solo puede tener hasta 30 caracteres");
         if (password.length < 8 || password.length > 30) throw new Error("La contraseña debe tener entre 8 y 30 caracteres");
         return true;
     }

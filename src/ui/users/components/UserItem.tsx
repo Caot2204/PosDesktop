@@ -5,7 +5,6 @@ import PosConfirmDialog from '../../common/components/PosConfirmDialog';
 import { useState } from 'react';
 
 interface UserItemProps {
-  userId?: string;
   name: string;
   onUpdate: () => void;
   onDelete: () => void;

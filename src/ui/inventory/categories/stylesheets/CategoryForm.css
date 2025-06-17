@@ -1,0 +1,16 @@
+h2 {
+  width: 100%;
+  text-align: center;
+}
+
+span {
+  margin-left: 10px;
+}
+
+.category-form {
+  padding-right: 10px;
+}
+
+.error-message-container {
+  color: red;
+}

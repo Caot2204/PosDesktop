@@ -9,8 +9,9 @@
 .cancel-button {
   background-color: transparent;
   color: black;
+  border: none;
 }
 
 .primary-button {
-  width: 300px;
+  width: 250px;
 }

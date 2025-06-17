@@ -10,8 +10,8 @@ class UserIpcDecorator {
         this.ipcMain = ipcMain;
     }
 
-    configure() {
-        this.configureUserIpcMethods();
+    async configure() {
+        await this.configureUserIpcMethods();
     }
 
     private async configureUserIpcMethods() {

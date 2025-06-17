@@ -8,18 +8,6 @@ import { UserForm } from './UserForm';
 import User from '../../../data/model/User';
 import { showErrorNotify, showSuccessNotify } from '../../utils/NotifyUtils';
 
-declare global {
-  interface Window {
-    userAPI?: {
-      saveUser: (name: string, password: string, isAdmin: boolean) => Promise<void>;
-      updateUser: (id: string, name: string, isAdmin: boolean) => Promise<void>;
-      deleteUser: (id: string) => Promise<void>;
-      getAllUsers: () => Promise<User[]>;
-      getUserById: (id: string) => Promise<User>;
-    };
-  }
-}
-
 function UsersScreen() {
   const dialogRef = useRef<HTMLDialogElement>(null);
 

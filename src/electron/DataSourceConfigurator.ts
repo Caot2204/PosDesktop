@@ -4,6 +4,8 @@ import { isDev } from './util.js';
 import PosDatabase from '../data/datasource/ds-sqlite/PosDatabase.js';
 import UserRepository from '../data/repository/UserRepository.js';
 import UserIpcDecorator from './decorators/UserIpcDecorator.js';
+import CategoryRepository from '../data/repository/CategoryRepository.js';
+import CategoryIpcDecorator from './decorators/CategoryIpcDecorator.js';
 
 
 class DataSourceConfigurator {
@@ -22,14 +24,14 @@ class DataSourceConfigurator {
         await this.dbInstance.initialize();
         console.log('Database initialized');
 
-        this.configureUserMethods();
-    }
-
-    private configureUserMethods() {
         if (this.dbInstance) {
+            const categoryRepository = new CategoryRepository(this.dbInstance.getCategoryDao());
+            const categoryDecorator = new CategoryIpcDecorator(categoryRepository, this.ipcMain);
+            await categoryDecorator.configure();
+
             const userRepository = new UserRepository(this.dbInstance.getUserDao());
             const userDecorator = new UserIpcDecorator(userRepository, this.ipcMain);
-            userDecorator.configure();
+            await userDecorator.configure();
         }
     }
 }

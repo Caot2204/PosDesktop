@@ -1,8 +1,8 @@
 class Category {
-    id: number | null;
+    id: number | undefined;
     name: string;
 
-    constructor(categoryId: number, categoryName: string) {
+    constructor(categoryId: number | undefined, categoryName: string) {
         this.id = categoryId;
         this.name = categoryName;
     }
