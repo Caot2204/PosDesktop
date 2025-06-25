@@ -1,7 +1,7 @@
 .category-container {
   min-width: 200px;
   min-height: 65px;
-  background-color: #CDEDA3;
+  background-color: #F9FAEF;
   padding: 8px 16px;
   box-shadow: 0 1px 5px 0px #838282;
   display: flex;
@@ -21,7 +21,7 @@
 
 .category-name {
   font-family: Inter, sans-serif;
-  font-size: 20px;
+  font-size: 1em;
   color: #000;
 }
 

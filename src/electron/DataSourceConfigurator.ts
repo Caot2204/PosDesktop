@@ -5,13 +5,13 @@ import PosDatabase from '../data/datasource/ds-sqlite/PosDatabase.js';
 import UserRepository from '../data/repository/UserRepository.js';
 import UserIpcDecorator from './decorators/UserIpcDecorator.js';
 import CategoryRepository from '../data/repository/CategoryRepository.js';
-import CategoryIpcDecorator from './decorators/CategoryIpcDecorator.js';
+import ProductRepository from '../data/repository/ProductRepository.js';
+import InventoryIpcDecorator from './decorators/InventoryIpcDecorator.js';
 
 
 class DataSourceConfigurator {
 
     private ipcMain: IpcMain;
-    private dbInstance: any | null;
 
     constructor(ipcMain: IpcMain) {
         this.ipcMain = ipcMain;
@@ -20,16 +20,16 @@ class DataSourceConfigurator {
     async configureWithSqlite() {
         const dbPath = isDev() ? 'pos_dev_database.sqlite' : path.join(app.getAppPath(), 'pos_database.sqlite');
         console.log(`Database path:${dbPath}`);
-        this.dbInstance = new PosDatabase(dbPath);
-        await this.dbInstance.initialize();
+        const posDatabase = new PosDatabase(dbPath);
+        await posDatabase.initialize();
         console.log('Database initialized');
+        if (posDatabase) {
+            const categoryRepository = new CategoryRepository(posDatabase.getCategoryDao());
+            const productRepository = new ProductRepository(posDatabase.getProductDao());
+            const inventoryDecorator = new InventoryIpcDecorator(this.ipcMain, categoryRepository, productRepository);
+            inventoryDecorator.configure();
 
-        if (this.dbInstance) {
-            const categoryRepository = new CategoryRepository(this.dbInstance.getCategoryDao());
-            const categoryDecorator = new CategoryIpcDecorator(categoryRepository, this.ipcMain);
-            await categoryDecorator.configure();
-
-            const userRepository = new UserRepository(this.dbInstance.getUserDao());
+            const userRepository = new UserRepository(posDatabase.getUserDao());
             const userDecorator = new UserIpcDecorator(userRepository, this.ipcMain);
             await userDecorator.configure();
         }

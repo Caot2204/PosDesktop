@@ -50,6 +50,26 @@ class CategoryDao implements ICategoryDataSource {
         });
     }
 
+    getCategoryByName(name: string): Promise<Category> {
+        return new Promise<Category>((resolve: any, reject: any) => {
+            this.dbInstance.serialize(() => {
+                this.dbInstance.get('SELECT * FROM categories WHERE name=?', [name], (error: Error | null, row: any) => {
+                    if (error) {
+                        return reject(error);
+                    }
+                    if (!row) {
+                        return resolve(undefined);
+                    }
+                    const categoryRecived: Category = new Category(
+                        row.id,
+                        row.name
+                    );
+                    resolve(categoryRecived);
+                });
+            });
+        });
+    }
+
     saveCategory(name: string): Promise<void> {
         return new Promise((resolve: any, reject: any) => {
             this.dbInstance.serialize(() => {

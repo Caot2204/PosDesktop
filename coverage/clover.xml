@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749668717750" clover="3.2.0">
-  <project timestamp="1749668717750" name="All files">
-    <metrics statements="178" coveredstatements="123" conditionals="82" coveredconditionals="41" methods="79" coveredmethods="64" elements="339" coveredelements="228" complexity="0" loc="178" ncloc="178" packages="5" files="8" classes="8"/>
+<coverage generated="1750870884497" clover="3.2.0">
+  <project timestamp="1750870884498" name="All files">
+    <metrics statements="299" coveredstatements="227" conditionals="136" coveredconditionals="78" methods="121" coveredmethods="107" elements="556" coveredelements="412" complexity="0" loc="299" ncloc="299" packages="5" files="10" classes="10"/>
     <package name="dist-electron.data.datasource.ds-sqlite">
-      <metrics statements="129" coveredstatements="93" conditionals="52" coveredconditionals="28" methods="59" coveredmethods="49"/>
+      <metrics statements="228" coveredstatements="186" conditionals="98" coveredconditionals="63" methods="99" coveredmethods="91"/>
       <file name="CategoryDao.js" path="D:\Proyectos\PuntoDeVenta\PosDesktop\dist-electron\data\datasource\ds-sqlite\CategoryDao.js">
-        <metrics statements="39" coveredstatements="39" conditionals="12" coveredconditionals="12" methods="22" coveredmethods="22"/>
-        <line num="5" count="19" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="11" count="2" type="cond" truecount="2" falsecount="0"/>
+        <metrics statements="48" coveredstatements="48" conditionals="16" coveredconditionals="16" methods="26" coveredmethods="25"/>
+        <line num="5" count="35" type="stmt"/>
+        <line num="8" count="17" type="stmt"/>
+        <line num="9" count="17" type="stmt"/>
+        <line num="10" count="17" type="stmt"/>
+        <line num="11" count="17" type="cond" truecount="2" falsecount="0"/>
         <line num="12" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="15" count="3" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
+        <line num="15" count="16" type="stmt"/>
+        <line num="16" count="16" type="stmt"/>
         <line num="22" count="6" type="stmt"/>
         <line num="23" count="6" type="stmt"/>
         <line num="24" count="6" type="stmt"/>
@@ -24,93 +24,195 @@
         <line num="29" count="3" type="stmt"/>
         <line num="31" count="2" type="stmt"/>
         <line num="32" count="2" type="stmt"/>
-        <line num="38" count="7" type="stmt"/>
-        <line num="39" count="7" type="stmt"/>
-        <line num="40" count="7" type="stmt"/>
-        <line num="41" count="7" type="stmt"/>
-        <line num="42" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="43" count="1" type="stmt"/>
-        <line num="46" count="6" type="stmt"/>
-        <line num="53" count="2" type="stmt"/>
-        <line num="54" count="2" type="stmt"/>
-        <line num="55" count="2" type="stmt"/>
-        <line num="56" count="2" type="stmt"/>
-        <line num="57" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="58" count="1" type="stmt"/>
-        <line num="61" count="1" type="stmt"/>
-        <line num="68" count="2" type="stmt"/>
+        <line num="38" count="11" type="stmt"/>
+        <line num="39" count="11" type="stmt"/>
+        <line num="40" count="11" type="stmt"/>
+        <line num="41" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="44" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="47" count="9" type="stmt"/>
+        <line num="48" count="9" type="stmt"/>
+        <line num="54" count="27" type="stmt"/>
+        <line num="55" count="27" type="stmt"/>
+        <line num="56" count="27" type="stmt"/>
+        <line num="57" count="27" type="stmt"/>
+        <line num="58" count="27" type="cond" truecount="2" falsecount="0"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="62" count="26" type="stmt"/>
         <line num="69" count="2" type="stmt"/>
         <line num="70" count="2" type="stmt"/>
         <line num="71" count="2" type="stmt"/>
-        <line num="72" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="73" count="1" type="stmt"/>
-        <line num="76" count="1" type="stmt"/>
+        <line num="72" count="2" type="stmt"/>
+        <line num="73" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="84" count="2" type="stmt"/>
+        <line num="85" count="2" type="stmt"/>
+        <line num="86" count="2" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
+        <line num="88" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="92" count="1" type="stmt"/>
       </file>
       <file name="PosDatabase.js" path="D:\Proyectos\PuntoDeVenta\PosDesktop\dist-electron\data\datasource\ds-sqlite\PosDatabase.js">
-        <metrics statements="51" coveredstatements="27" conditionals="24" coveredconditionals="8" methods="15" coveredmethods="10"/>
-        <line num="5" count="8" type="stmt"/>
-        <line num="7" count="8" type="stmt"/>
-        <line num="8" count="8" type="stmt"/>
-        <line num="10" count="8" type="stmt"/>
-        <line num="13" count="8" type="stmt"/>
-        <line num="14" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="15" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="16" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="17" count="8" type="stmt"/>
-        <line num="18" count="8" type="stmt"/>
-        <line num="19" count="8" type="stmt"/>
-        <line num="20" count="8" type="stmt"/>
-        <line num="21" count="8" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="30" count="24" type="cond" truecount="1" falsecount="1"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="33" count="24" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
+        <metrics statements="73" coveredstatements="43" conditionals="34" coveredconditionals="13" methods="20" coveredmethods="14"/>
+        <line num="7" count="15" type="stmt"/>
+        <line num="9" count="15" type="stmt"/>
+        <line num="10" count="15" type="stmt"/>
+        <line num="11" count="15" type="stmt"/>
+        <line num="13" count="15" type="stmt"/>
+        <line num="16" count="15" type="stmt"/>
+        <line num="17" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="15" type="stmt"/>
+        <line num="21" count="15" type="stmt"/>
+        <line num="22" count="15" type="stmt"/>
+        <line num="23" count="15" type="stmt"/>
+        <line num="24" count="15" type="stmt"/>
+        <line num="25" count="15" type="stmt"/>
+        <line num="26" count="15" type="stmt"/>
+        <line num="27" count="15" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="36" count="66" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="39" count="66" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="44" count="0" type="stmt"/>
-        <line num="45" count="0" type="stmt"/>
+        <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
         <line num="51" count="0" type="stmt"/>
-        <line num="56" count="8" type="stmt"/>
-        <line num="57" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="60" count="8" type="stmt"/>
-        <line num="66" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="71" count="8" type="stmt"/>
-        <line num="72" count="8" type="stmt"/>
-        <line num="78" count="8" type="stmt"/>
-        <line num="79" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="80" count="0" type="stmt"/>
-        <line num="82" count="8" type="stmt"/>
-        <line num="86" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="87" count="0" type="stmt"/>
-        <line num="88" count="0" type="stmt"/>
-        <line num="91" count="8" type="stmt"/>
-        <line num="92" count="8" type="stmt"/>
-        <line num="98" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="99" count="0" type="stmt"/>
-        <line num="101" count="0" type="stmt"/>
-        <line num="104" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="105" count="0" type="stmt"/>
-        <line num="107" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="62" count="15" type="stmt"/>
+        <line num="63" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="66" count="15" type="stmt"/>
+        <line num="72" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="77" count="15" type="stmt"/>
+        <line num="78" count="15" type="stmt"/>
+        <line num="84" count="15" type="stmt"/>
+        <line num="85" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="88" count="15" type="stmt"/>
+        <line num="92" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="97" count="15" type="stmt"/>
+        <line num="98" count="15" type="stmt"/>
+        <line num="104" count="15" type="stmt"/>
+        <line num="105" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="106" count="0" type="stmt"/>
+        <line num="108" count="15" type="stmt"/>
+        <line num="116" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="117" count="0" type="stmt"/>
+        <line num="118" count="0" type="stmt"/>
+        <line num="121" count="15" type="stmt"/>
+        <line num="122" count="15" type="stmt"/>
+        <line num="128" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="129" count="0" type="stmt"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="134" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="135" count="0" type="stmt"/>
+        <line num="137" count="0" type="stmt"/>
+        <line num="140" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="141" count="0" type="stmt"/>
+        <line num="143" count="0" type="stmt"/>
+        <line num="146" count="15" type="stmt"/>
+        <line num="147" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="148" count="15" type="stmt"/>
+        <line num="150" count="15" type="stmt"/>
+        <line num="151" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="152" count="12" type="stmt"/>
+      </file>
+      <file name="ProductDao.js" path="D:\Proyectos\PuntoDeVenta\PosDesktop\dist-electron\data\datasource\ds-sqlite\ProductDao.js">
+        <metrics statements="68" coveredstatements="62" conditionals="32" coveredconditionals="25" methods="31" coveredmethods="30"/>
+        <line num="6" count="30" type="stmt"/>
+        <line num="7" count="30" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="34" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="45" count="5" type="stmt"/>
+        <line num="46" count="5" type="stmt"/>
+        <line num="47" count="5" type="stmt"/>
+        <line num="55" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="58" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="61" count="3" type="stmt"/>
+        <line num="62" count="3" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+        <line num="70" count="2" type="stmt"/>
+        <line num="78" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="81" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="91" count="9" type="stmt"/>
+        <line num="92" count="9" type="stmt"/>
+        <line num="93" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="94" count="8" type="stmt"/>
+        <line num="95" count="8" type="stmt"/>
+        <line num="96" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="97" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="101" count="7" type="stmt"/>
+        <line num="107" count="1" type="stmt"/>
+        <line num="112" count="2" type="stmt"/>
+        <line num="113" count="2" type="stmt"/>
+        <line num="114" count="2" type="stmt"/>
+        <line num="115" count="2" type="stmt"/>
+        <line num="116" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="117" count="1" type="stmt"/>
+        <line num="120" count="1" type="stmt"/>
+        <line num="127" count="3" type="stmt"/>
+        <line num="128" count="3" type="stmt"/>
+        <line num="129" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="130" count="2" type="stmt"/>
+        <line num="131" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="132" count="0" type="stmt"/>
+        <line num="133" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="134" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="135" count="0" type="stmt"/>
+        <line num="138" count="0" type="stmt"/>
+        <line num="143" count="2" type="stmt"/>
+        <line num="144" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="145" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="146" count="1" type="stmt"/>
+        <line num="149" count="1" type="stmt"/>
+        <line num="156" count="1" type="stmt"/>
       </file>
       <file name="UserDao.js" path="D:\Proyectos\PuntoDeVenta\PosDesktop\dist-electron\data\datasource\ds-sqlite\UserDao.js">
-        <metrics statements="39" coveredstatements="27" conditionals="16" coveredconditionals="8" methods="22" coveredmethods="17"/>
-        <line num="5" count="11" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="39" coveredstatements="33" conditionals="16" coveredconditionals="9" methods="22" coveredmethods="22"/>
+        <line num="5" count="18" type="stmt"/>
+        <line num="8" count="15" type="stmt"/>
+        <line num="9" count="15" type="stmt"/>
+        <line num="10" count="15" type="stmt"/>
+        <line num="11" count="14" type="cond" truecount="1" falsecount="1"/>
         <line num="12" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
+        <line num="15" count="14" type="stmt"/>
+        <line num="16" count="14" type="stmt"/>
         <line num="22" count="5" type="stmt"/>
         <line num="23" count="5" type="stmt"/>
         <line num="24" count="5" type="stmt"/>
@@ -120,13 +222,13 @@
         <line num="29" count="1" type="stmt"/>
         <line num="31" count="4" type="stmt"/>
         <line num="32" count="4" type="stmt"/>
-        <line num="38" count="3" type="stmt"/>
-        <line num="39" count="3" type="stmt"/>
-        <line num="40" count="3" type="stmt"/>
-        <line num="41" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="42" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="38" count="15" type="stmt"/>
+        <line num="39" count="15" type="stmt"/>
+        <line num="40" count="15" type="stmt"/>
+        <line num="41" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="42" count="14" type="cond" truecount="1" falsecount="1"/>
         <line num="43" count="0" type="stmt"/>
-        <line num="46" count="3" type="stmt"/>
+        <line num="46" count="14" type="stmt"/>
         <line num="53" count="1" type="stmt"/>
         <line num="54" count="1" type="stmt"/>
         <line num="55" count="1" type="stmt"/>
@@ -144,26 +246,36 @@
       </file>
     </package>
     <package name="dist-electron.data.model">
-      <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <metrics statements="15" coveredstatements="15" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
       <file name="Category.js" path="D:\Proyectos\PuntoDeVenta\PosDesktop\dist-electron\data\model\Category.js">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="5" count="12" type="stmt"/>
-        <line num="6" count="12" type="stmt"/>
+        <line num="5" count="17" type="stmt"/>
+        <line num="6" count="17" type="stmt"/>
+      </file>
+      <file name="Product.js" path="D:\Proyectos\PuntoDeVenta\PosDesktop\dist-electron\data\model\Product.js">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="14" type="stmt"/>
+        <line num="9" count="14" type="stmt"/>
+        <line num="10" count="14" type="stmt"/>
+        <line num="11" count="14" type="stmt"/>
+        <line num="12" count="14" type="stmt"/>
+        <line num="13" count="14" type="stmt"/>
+        <line num="14" count="14" type="stmt"/>
       </file>
       <file name="User.js" path="D:\Proyectos\PuntoDeVenta\PosDesktop\dist-electron\data\model\User.js">
         <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
-        <line num="5" count="8" type="stmt"/>
-        <line num="7" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="8" count="8" type="stmt"/>
-        <line num="9" count="8" type="stmt"/>
-        <line num="10" count="8" type="stmt"/>
-        <line num="11" count="8" type="stmt"/>
+        <line num="5" count="22" type="stmt"/>
+        <line num="7" count="22" type="cond" truecount="1" falsecount="1"/>
+        <line num="8" count="22" type="stmt"/>
+        <line num="9" count="22" type="stmt"/>
+        <line num="10" count="22" type="stmt"/>
+        <line num="11" count="22" type="stmt"/>
       </file>
     </package>
     <package name="dist-electron.data.repository">
-      <metrics statements="28" coveredstatements="9" conditionals="19" coveredconditionals="5" methods="10" coveredmethods="5"/>
+      <metrics statements="33" coveredstatements="10" conditionals="23" coveredconditionals="6" methods="11" coveredmethods="5"/>
       <file name="UserRepository.js" path="D:\Proyectos\PuntoDeVenta\PosDesktop\dist-electron\data\repository\UserRepository.js">
-        <metrics statements="28" coveredstatements="9" conditionals="19" coveredconditionals="5" methods="10" coveredmethods="5"/>
+        <metrics statements="33" coveredstatements="10" conditionals="23" coveredconditionals="6" methods="11" coveredmethods="5"/>
         <line num="7" count="4" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
@@ -180,18 +292,23 @@
         <line num="32" count="1" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
-        <line num="44" count="1" type="stmt"/>
-        <line num="47" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="47" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="48" count="0" type="stmt"/>
         <line num="49" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="50" count="0" type="stmt"/>
-        <line num="51" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="56" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="57" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
+        <line num="58" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="60" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="61" count="0" type="stmt"/>
         <line num="62" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="71" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.data.model">
@@ -203,20 +320,30 @@
       </file>
     </package>
     <package name="src.data.repository">
-      <metrics statements="11" coveredstatements="11" conditionals="9" coveredconditionals="7" methods="7" coveredmethods="7"/>
+      <metrics statements="21" coveredstatements="14" conditionals="13" coveredconditionals="8" methods="7" coveredmethods="7"/>
       <file name="CategoryRepository.ts" path="D:\Proyectos\PuntoDeVenta\PosDesktop\src\data\repository\CategoryRepository.ts">
-        <metrics statements="11" coveredstatements="11" conditionals="9" coveredconditionals="7" methods="7" coveredmethods="7"/>
-        <line num="9" count="7" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="21" count="2" type="cond" truecount="1" falsecount="1"/>
+        <metrics statements="21" coveredstatements="14" conditionals="13" coveredconditionals="8" methods="7" coveredmethods="7"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="20" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="21" count="1" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
-        <line num="27" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="37" count="4" type="cond" truecount="5" falsecount="0"/>
-        <line num="38" count="2" type="stmt"/>
-        <line num="40" count="2" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="30" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="33" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="54" count="2" type="cond" truecount="5" falsecount="0"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
       </file>
     </package>
   </project>

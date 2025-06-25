@@ -1,5 +1,9 @@
+*{
+  user-select: none;
+}
+
 body {
-  background-color: #F9FAEF;
+  background-color: #ffffff;
 }
 
 .pos-header {

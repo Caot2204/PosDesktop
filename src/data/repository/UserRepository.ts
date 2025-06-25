@@ -48,7 +48,13 @@ class UserRepository {
         }
     }
 
-    async deleteUser(id: string) {
+    async deleteUser(id: string, isAdmin: boolean) {
+        if (isAdmin) {
+            const admins = (await this.getAllUsers()).filter(user => user.isAdmin);
+            if (admins.length === 1) {
+                throw new Error("Debe haber al menos un administrador");
+            }
+        }
         this.userDataSource.deleteUser(id);
     }
 

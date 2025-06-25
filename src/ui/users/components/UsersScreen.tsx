@@ -7,6 +7,7 @@ import PosButton from '../../common/components/PosButton';
 import { UserForm } from './UserForm';
 import User from '../../../data/model/User';
 import { showErrorNotify, showSuccessNotify } from '../../utils/NotifyUtils';
+import { handleErrorMessage } from '../../utils/ErrorUtils';
 
 function UsersScreen() {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -37,9 +38,13 @@ function UsersScreen() {
     setUserForForm(user)
   };
 
-  const handleDeleteUser = async (userId: string) => {
-    await window.userAPI?.deleteUser(userId);
-    showSuccessNotify("Usuario eliminado");
+  const handleDeleteUser = async (userId: string, isAdmin: boolean) => {
+    try {
+      await window.userAPI?.deleteUser(userId, isAdmin);
+      showSuccessNotify("Usuario eliminado");
+    } catch (error) {
+      handleErrorMessage(error, showErrorNotify);
+    }
   };
 
   useEffect(() => {

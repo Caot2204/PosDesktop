@@ -6,6 +6,8 @@ export interface ICategoryDataSource {
 
     getCategoryById(categoryId: number): Promise<Category>;
 
+    getCategoryByName(name: string): Promise<Category>;
+
     saveCategory(name: string): Promise<void>;
     
     updateCategory(category: Category): Promise<void>;

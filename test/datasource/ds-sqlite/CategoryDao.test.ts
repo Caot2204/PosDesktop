@@ -13,19 +13,22 @@ describe('CategoryDao', () => {
   });
 
   it('getAllCategories should resolve with categories', async () => {
-    const categories = [new Category(1, "Abarrotes"), new Category(2, "Papeleria"), new Category(3, "Ropa")];
-    await dao.saveCategory("Abarrotes");
-    await dao.saveCategory("Papeleria");
-    await dao.saveCategory("Ropa");
-
     const recived = await dao.getAllCategories();
-    expect(categories).toEqual(recived);
+    expect(recived).toEqual([new Category(1, "Todos")]);
   });
 
   it('getCategoryById should resolve with a category', async () => {
     const category = new Category(1, "Abarrotes");
     await dao.saveCategory("Abarrotes");
     const recived = await dao.getCategoryById(1);
+    expect(category).toEqual(recived);
+  });
+
+  it('getCategoryByName should resolve with a category', async () => {
+    const category = new Category(1, "Abarrotes");
+    await dao.saveCategory("Abarrotes");
+    await dao.saveCategory("Papeleria");
+    const recived = await dao.getCategoryByName("Abarrotes");
     expect(category).toEqual(recived);
   });
 
@@ -82,9 +85,20 @@ describe('CategoryDaoError', () => {
     expect(result).toBeUndefined();
   });
 
+  it('getCategoryByName should resolve undefined if not found', async () => {
+    mockDb.get.mockImplementation((query, params, cb) => cb(null, undefined));
+    const result = await dao.getCategoryByName("Verduras");
+    expect(result).toBeUndefined();
+  });
+
   it('getCategoryById should reject on error', async () => {
     mockDb.get.mockImplementation((query, params, cb) => cb(new Error('fail')));
     await expect(dao.getCategoryById(1)).rejects.toThrow('fail');
+  });
+
+  it('getCategoryByName should reject on error', async () => {
+    mockDb.get.mockImplementation((query, params, cb) => cb(new Error('fail')));
+    await expect(dao.getCategoryByName("Abarrotes")).rejects.toThrow('fail');
   });
 
   it('saveCategory should reject on error', async () => {

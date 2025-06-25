@@ -6,7 +6,7 @@ interface UserSectionProps {
   role: string;
   users: User[];
   onUpdateUser: (user: User) => void;
-  onDeleteUser: (userId: string) => void;
+  onDeleteUser: (userId: string, isAdmin: boolean) => void;
 }
 
 function UserSection(prop: UserSectionProps) {
@@ -19,7 +19,7 @@ function UserSection(prop: UserSectionProps) {
             key={user.id} 
             name={user.name}
             onUpdate={() => prop.onUpdateUser(user)}
-            onDelete={() => prop.onDeleteUser(user.id!!)} />
+            onDelete={() => prop.onDeleteUser(user.id!!, user.isAdmin)} />
         ))
       }
     </div>

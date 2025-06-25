@@ -1,18 +1,18 @@
 import './App.css';
-import UsersScreen from './users/components/UsersScreen';
+import { Outlet } from 'react-router';
 import PosMenu from './common/components/PosMenu';
 import UserAvatar from './common/components/UserAvatar';
 
 import User from '../data/model/User';
 import type Category from '../data/model/Category';
-import CategoryScreen from './inventory/categories/components/CategoryScreen';
+import { ToastContainer } from 'react-toastify';
 
 declare global {
   interface Window {
     userAPI?: {
       saveUser: (name: string, password: string, isAdmin: boolean) => Promise<void>;
       updateUser: (id: string, name: string, isAdmin: boolean) => Promise<void>;
-      deleteUser: (id: string) => Promise<void>;
+      deleteUser: (id: string, isAdmin: boolean) => Promise<void>;
       getAllUsers: () => Promise<User[]>;
       getUserById: (id: string) => Promise<User>;
     };
@@ -38,7 +38,8 @@ function App() {
           onSettingsClicked={() => console.log('Configuración clicked')} />
         <UserAvatar />
       </div>
-      <CategoryScreen />
+      <Outlet />
+      <ToastContainer />
     </>
   )
 }

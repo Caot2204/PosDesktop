@@ -66,6 +66,7 @@ function CategoryScreen() {
               <CategoryItem
                 key={category.id}
                 name={category.name}
+                isAbleToDelete={category.id !== 1}
                 onDelete={() => handleDelete(category.id!!)}
                 onUpdate={() => handleEdit(category)} />
             ))

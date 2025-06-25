@@ -6,6 +6,7 @@ import PosConfirmDialog from '../../../common/components/PosConfirmDialog';
 
 interface CategoryItemProps {
   name: string;
+  isAbleToDelete: boolean;
   onUpdate: () => void;
   onDelete: () => void;
 }
@@ -22,10 +23,16 @@ function CategoryItem(prop: CategoryItemProps) {
     <>
       <div className="category-container">
         <p className="category-name">{prop.name}</p>
-        <div className="category-icons-container">
-          <AiOutlineEdit className="category-icon edit" onClick={prop.onUpdate} />
-          <RiDeleteBin6Line className="category-icon delete" onClick={() => setShowConfirmDialog(true)} />
-        </div>
+        {
+          prop.isAbleToDelete
+            ?
+            <div className="category-icons-container">
+              <AiOutlineEdit className="category-icon edit" onClick={prop.onUpdate} />
+              <RiDeleteBin6Line className="category-icon delete" onClick={() => setShowConfirmDialog(true)} />
+            </div>
+            :
+            <></>
+        }
       </div>
       <PosConfirmDialog
         message="¿Desea eliminar esta categoría?"

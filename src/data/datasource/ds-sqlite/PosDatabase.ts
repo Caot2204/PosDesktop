@@ -1,6 +1,8 @@
-import sqlite3 from "sqlite3";
-import UserDao from "./UserDao.js";
-import CategoryDao from "./CategoryDao.js";
+import sqlite3 from 'sqlite3';
+import UserDao from './UserDao.js';
+import User from '../../model/User.js';
+import CategoryDao from './CategoryDao.js';
+import ProductDao from './ProductDao.js';
 
 class PosDatabase {
 
@@ -8,6 +10,7 @@ class PosDatabase {
     private dbPath: string | 'test';
     private userDao: UserDao | null = null;
     private categoryDao: CategoryDao | null = null;
+    private productDao: ProductDao | null = null;
 
     constructor(dbPath: string | 'test') {
         this.dbPath = dbPath;
@@ -20,8 +23,11 @@ class PosDatabase {
                 if (this.db) {
                     this.createUserTable();
                     this.createCategoryTable();
+                    this.createProductTable();
                     this.userDao = new UserDao(this);
                     this.categoryDao = new CategoryDao(this);
+                    this.productDao = new ProductDao(this, this.categoryDao);
+                    this.insertDefaultData();
                     resolve();
                 } else {
                     reject(new Error("Database is not initialized"));
@@ -62,10 +68,10 @@ class PosDatabase {
                 return reject(new Error("Database is not initialized"));
             }
             this.db.run(`CREATE TABLE IF NOT EXISTS users(
-                id VARCHAR(255) PRIMARY KEY,
-                name VARCHAR(50),
-                password VARCHAR(255),
-                isAdmin TINYINT
+                id VARCHAR(255) PRIMARY KEY NOT NULL,
+                name VARCHAR(50) NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                isAdmin TINYINT NOT NULL
             )`, (error: Error) => {
                 if (error) {
                     console.error('Error creating users table: ', error.message);
@@ -85,13 +91,37 @@ class PosDatabase {
             }
             this.db.run(`CREATE TABLE IF NOT EXISTS categories(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name VARCHAR(50) NOT NULL            
+                name VARCHAR(50) UNIQUE NOT NULL            
             )`, (error: Error) => {
                 if (error) {
                     console.error('Error creating categories table: ', error.message);
                     reject(error);
                 } else {
                     console.log('Categories table checked/created');
+                    resolve();
+                }
+            });
+        });
+    }
+
+    private createProductTable(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (!this.db) {
+                return reject(new Error("Database is not initialized"));
+            }
+            this.db.run(`CREATE TABLE IF NOT EXISTS products(
+                code VARCHAR(50) PRIMARY KEY NOT NULL,
+                name VARCHAR(100) NOT NULL,
+                unitPrice DOUBLE NOT NULL,
+                stock INT NOT NULL,
+                isInfinityStock TINYINT NOT NULL,
+                categoryId INT NOT NULL
+            )`, (error: Error) => {
+                if (error) {
+                    console.error('Error creating products table: ', error.message);
+                    reject(error);
+                } else {
+                    console.log('Products table checked/created');
                     resolve();
                 }
             });
@@ -110,6 +140,29 @@ class PosDatabase {
             this.categoryDao = new CategoryDao(this);
         }
         return this.categoryDao;
+    }
+
+    getProductDao(): ProductDao {
+        if (!this.productDao) {
+            this.productDao = new ProductDao(this, this.getCategoryDao());
+        }
+        return this.productDao;
+    }
+
+    private async insertDefaultData() {
+        const category = await this.categoryDao?.getAllCategories();
+        if (category?.length === 0) {
+            await this.categoryDao?.saveCategory("Todos");
+        }
+        const users = await this.userDao?.getAllUsers();
+        if (users?.length === 0) {
+            await this.userDao?.saveUser(new User(
+                "adminDefault",
+                "Admin",
+                "12345678",
+                true
+            ));
+        }
     }
 
 }

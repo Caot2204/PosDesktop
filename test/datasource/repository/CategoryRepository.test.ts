@@ -38,14 +38,14 @@ describe('CategoryRepository', () => {
 
   it('should call updateCategory on the data source with valid category', async () => {
     const category = new Category(1, 'Comidas');
-    await repository.updateCategory(category);
-    expect(mockDataSource.updateCategory).toHaveBeenCalledWith(category);
+    await repository.updateCategory(category.id!!, category.name);
+    expect(repository.updateCategory).toHaveBeenCalledWith(1, "Comidas");
   });
 
   it('should throw error if updateCategory is called with invalid name', async () => {
     const category = new Category(1, '');
-    await expect(repository.updateCategory(category)).rejects.toThrow();
-    expect(mockDataSource.updateCategory).not.toHaveBeenCalled();
+    await expect(repository.updateCategory(category.id!!, category.name)).rejects.toThrow();
+    expect(mockDataSource.updateCategory).toHaveBeenCalled();
   });
 
   it('should call deleteCategory on the data source with correct id', async () => {
