@@ -1,7 +1,6 @@
 import '../stylesheets/CategoryScreen.css';
 import { useEffect, useRef, useState } from 'react';
 import { IoAddOutline } from 'react-icons/io5';
-import { ToastContainer } from 'react-toastify';
 import PosButton from '../../../common/components/PosButton';
 import CategoryItem from './CategoryItem';
 import Category from '../../../../data/model/Category';
@@ -16,9 +15,9 @@ function CategoryScreen() {
 
   const fetchCategories = async () => {
     try {
-      const categoriesRecuperated = await window.categoryAPI?.getAllCategories();
-      if (categoriesRecuperated !== undefined) {
-        setCategories(categoriesRecuperated);
+      const fetchedCategories = await window.categoryAPI?.getAllCategories();
+      if (fetchedCategories !== undefined) {
+        setCategories(fetchedCategories);
       }
     } catch (error) {
       showErrorNotify("Error al recuperar las categorías");
@@ -56,7 +55,7 @@ function CategoryScreen() {
       <h3>Categorías</h3>
       <div className="categories-section">
         <PosButton
-          className="add-user-button"
+          className="add-category-button"
           icon={<IoAddOutline />}
           label="Nueva categoría"
           onClick={handleOpenDialog} />
@@ -67,13 +66,13 @@ function CategoryScreen() {
                 key={category.id}
                 name={category.name}
                 isAbleToDelete={category.id !== 1}
-                onDelete={() => handleDelete(category.id!!)}
+                onDelete={() => category.id && handleDelete(category.id)}
                 onUpdate={() => handleEdit(category)} />
             ))
           }
         </div>
       </div>
-      <dialog className="category-form-dialog" ref={dialogRef}>
+      <dialog className="category-form-dialog" ref={dialogRef} aria-modal="true">
         <CategoryForm
           id={categoryForForm?.id ? categoryForForm.id : undefined}
           name={categoryForForm ? categoryForForm.name : ""}
@@ -83,7 +82,6 @@ function CategoryScreen() {
           }}
           onCancel={handleCloseDialog} />
       </dialog>
-      <ToastContainer />
     </div>
   );
 }

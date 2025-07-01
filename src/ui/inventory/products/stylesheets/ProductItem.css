@@ -1,0 +1,42 @@
+.product-data-container {
+	min-width: 200px;
+	height: fit-content;
+	padding: 8px;
+	background-color: #F9FAEF;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px 0px #838282;
+}
+
+.product-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.button-actions > * {
+	margin: 4px;
+}
+
+.product-name {
+	font-weight: bold;
+	font-size: 1.3em;
+}
+
+.edit-button {
+	cursor: pointer;
+	color: black;
+
+}
+
+.delete-button {
+	cursor: pointer;
+	color: red;
+}
+
+span {
+	font-weight: bold;
+}
+
+li {
+	margin-bottom: 10px;
+}

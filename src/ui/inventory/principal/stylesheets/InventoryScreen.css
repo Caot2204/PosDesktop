@@ -1,0 +1,82 @@
+.search-input {
+  border-radius: 10px;
+  border: 2px solid #d9d9d9;
+}
+
+.inventory-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.actions-container {
+  width: 300px;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 1px 3px 0px #838282;
+  background-color: white;
+}
+
+.actions-container > * {
+  margin: 8px;
+}
+
+.label-section {
+  width: 100%;
+  text-align: start;
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.products-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.search-product-container {
+  width: auto;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.search-product-container > * {
+  margin: 4px;
+  align-items: center;
+}
+
+.categories-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.pos-dialog {
+  width: calc(50%);
+  height: fit-content;
+  border: none;
+  box-shadow: 0px 1px 3px 0px #838282;
+  border-radius: 10px;
+}
+
+.close-dialog-button {
+  cursor: pointer;
+  color: red;
+  width: 25px;
+  height: 25px;
+}
+
+.filter-blur {
+  filter: blur(4px);
+  pointer-events: none; /* Optional: prevent interaction with blurred content */
+  user-select: none;    /* Optional: prevent text selection */
+}

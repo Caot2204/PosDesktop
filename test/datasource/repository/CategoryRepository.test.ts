@@ -38,18 +38,43 @@ describe('CategoryRepository', () => {
 
   it('should call updateCategory on the data source with valid category', async () => {
     const category = new Category(1, 'Comidas');
+    mockDataSource.getCategoryById.mockResolvedValue(category);
     await repository.updateCategory(category.id!!, category.name);
-    expect(repository.updateCategory).toHaveBeenCalledWith(1, "Comidas");
+    expect(mockDataSource.updateCategory).toHaveBeenCalledWith(category);
   });
 
   it('should throw error if updateCategory is called with invalid name', async () => {
     const category = new Category(1, '');
+    mockDataSource.getCategoryById.mockResolvedValue(category);
     await expect(repository.updateCategory(category.id!!, category.name)).rejects.toThrow();
-    expect(mockDataSource.updateCategory).toHaveBeenCalled();
+    expect(mockDataSource.updateCategory).not.toHaveBeenCalled();
+  });
+
+  it('should not call updateCategory if category does not exist', async () => {
+    mockDataSource.getCategoryById.mockResolvedValue(undefined);
+    await repository.updateCategory(999, 'Test');
+    expect(mockDataSource.updateCategory).not.toHaveBeenCalled();
   });
 
   it('should call deleteCategory on the data source with correct id', async () => {
     await repository.deleteCategory(2);
     expect(mockDataSource.deleteCategory).toHaveBeenCalledWith(2);
+  });
+
+  it('should throw error if saveCategory throws', async () => {
+    mockDataSource.saveCategory.mockImplementation(() => { throw new Error('fail'); });
+    await expect(repository.saveCategory('Valid')).rejects.toThrow('Ha ocurrido un error al guardar, intente de nuevo');
+  });
+
+  it('should throw error if updateCategory throws', async () => {
+    const category = new Category(1, 'Comidas');
+    mockDataSource.getCategoryById.mockResolvedValue(category);
+    mockDataSource.updateCategory.mockImplementation(() => { throw new Error('fail'); });
+    await expect(repository.updateCategory(category.id!!, category.name)).rejects.toThrow('Ha ocurrido un error al guardar, intente de nuevo');
+  });
+
+  it('should not throw if deleteCategory throws', async () => {
+    mockDataSource.deleteCategory.mockImplementation(() => { throw new Error('fail'); });
+    await expect(repository.deleteCategory(1)).resolves.toBeUndefined();
   });
 });

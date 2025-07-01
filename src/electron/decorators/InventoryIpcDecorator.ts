@@ -50,10 +50,6 @@ class InventoryIpcDecorator {
             return await this.productRepository.getProductByCode(code);
         });
 
-        this.ipcMain.handle('productApi:getProductByName', async (event, name: string) => {
-            return await this.productRepository.getProductByName(name);
-        });
-
         this.ipcMain.handle('productApi:increaseStock', async (event, code: string, unitsToIncrease: number) => {
             await this.productRepository.increaseStock(code, unitsToIncrease);
         });

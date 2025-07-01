@@ -23,10 +23,6 @@ class ProductRepository {
         return this.productDataSource.getProductByCode(code);
     }
 
-    async getProductByName(name: string): Promise<Product> {
-        return this.productDataSource.getProductByName(name);
-    }
-
     async increaseStock(code: string, unitsToIncrease: number): Promise<void> {
         const product = await this.getProductByCode(code);
         const newStock = product.stock + unitsToIncrease;
@@ -55,6 +51,7 @@ class ProductRepository {
                 productToUpdate.category = category;
                 try {
                     if (previousCode) {
+                        productToUpdate.code = code;
                         this.productDataSource.updateProduct(productToUpdate, previousCode);
                     } else {
                         this.productDataSource.updateProduct(productToUpdate);
@@ -73,7 +70,9 @@ class ProductRepository {
         if (!code || code.length > 50) { throw new Error("El código no puede estar vacío y debe contener máximo 50 carácteres"); }
         if (!name || name.length > 100) { throw new Error("El nombre no puede estar vacío y debe contener máximo 100 carácteres"); }
         if (!unitPrice) { throw new Error("El precio unitario no puede estar vacío"); }
-        if (!stock || stock < 0) { throw new Error("El stock debe ser mayor o igual a 0"); }
+        if (!isInfinityStock) {
+            if (!stock || stock < 0) { throw new Error("El stock debe ser mayor o igual a 0"); }
+        }
         if (!category) { throw new Error("Debe especificar una categoría") }
         return true;
     }

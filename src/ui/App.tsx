@@ -5,7 +5,7 @@ import UserAvatar from './common/components/UserAvatar';
 
 import User from '../data/model/User';
 import type Category from '../data/model/Category';
-import { ToastContainer } from 'react-toastify';
+import type Product from '../data/model/Product';
 
 declare global {
   interface Window {
@@ -22,6 +22,14 @@ declare global {
       deleteCategory: (categoryId: number) => Promise<void>;
       getAllCategories: () => Promise<Category[]>;
     };
+    productAPI?: {
+      deleteProduct: (code: string) => Promise<void>;
+      getAllProducts: () => Promise<Product[]>;
+      getProductByCode: (code: string) => Promise<Product>;
+      increaseStock: (code: string, unitsToIncrease: number) => Promise<void>;
+      saveProduct: (code: string, name: string, unitPrice: number, stock: number, isInfinityStock: boolean, category: string) => Promise<void>;
+      updateProduct: (code: string, name: string, unitPrice: number, stock: number, isInfinityStock: boolean, category: string, previuosCode?: string) => Promise<void>;
+    };
   }
 }
 
@@ -30,16 +38,10 @@ function App() {
     <>
       <div className="pos-header">
         <PosMenu
-          className="pos-menu"
-          onSalesClicked={() => console.log('Ventas clicked')}
-          onEgressClicked={() => console.log('Egresos clicked')}
-          onInventoryClicked={() => console.log('Inventario clicked')}
-          onUsersClicked={() => console.log('Usuarios clicked')}
-          onSettingsClicked={() => console.log('Configuración clicked')} />
+          className="pos-menu" />
         <UserAvatar />
       </div>
       <Outlet />
-      <ToastContainer />
     </>
   )
 }

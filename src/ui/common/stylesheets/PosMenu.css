@@ -32,4 +32,5 @@ a {
   background-color: #586249;
   color: white;
   border-radius: 10px;
+  transition: 0.3s;
 }

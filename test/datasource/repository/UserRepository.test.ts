@@ -14,13 +14,11 @@ describe('UserRepository', () => {
     let userRepository: UserRepository;
 
     beforeEach(() => {
-        // Create a new UserRepository instance before each test
         userRepository = new UserRepository(mockUserDataSource);
-        // Clear mock calls before each test
         jest.clearAllMocks();
     });
 
-    it('should call getAllUsers on the data source when getAllUsers is called', async () => {
+    it('should call getAllUsers on the data source', async () => {
         const mockUsers: User[] = [{ id: '1', name: 'Test User', password: 'password test', isAdmin: false }];
         mockUserDataSource.getAllUsers.mockResolvedValue(mockUsers);
 
@@ -42,28 +40,37 @@ describe('UserRepository', () => {
         expect(user).toEqual(mockUser);
     });
 
-    /*it('should call saveUser on the data source with the correct user', async () => {
-
+    it('should call saveUser on the data source with the correct user', async () => {
         await userRepository.saveUser('New User', 'password test', false);
 
         expect(mockUserDataSource.saveUser).toHaveBeenCalledTimes(1);
         expect(mockUserDataSource.saveUser).toHaveBeenCalledWith({
-            "name": 'New User', 
-            "password": '2b$10$D760iqL4Phj3VyRPuIh0iOYrltToRra5zKLVVaKfU8LkfTEmjCVIS', 
-            "isAdmin": false
+            name: 'New User',
+            password: expect.any(String), // password is usually hashed
+            isAdmin: false
         });
-    });*/
+    });
+
+    it('should throw error if saveUser is called with invalid name', async () => {
+        await expect(userRepository.saveUser('', 'password', false)).rejects.toThrow();
+        expect(mockUserDataSource.saveUser).not.toHaveBeenCalled();
+    });
 
     it('should call updateUser on the data source with the correct user', async () => {
         await userRepository.updateUser('update-id', 'Updated User', false);
 
         expect(mockUserDataSource.updateUser).toHaveBeenCalledTimes(1);
         expect(mockUserDataSource.updateUser).toHaveBeenCalledWith({
-            "id": 'update-id',
-            "name": 'Updated User', 
-            "password": undefined, 
-            "isAdmin": false
+            id: 'update-id',
+            name: 'Updated User',
+            password: undefined,
+            isAdmin: false
         });
+    });
+
+    it('should throw error if updateUser is called with invalid name', async () => {
+        await expect(userRepository.updateUser('id', '', false)).rejects.toThrow();
+        expect(mockUserDataSource.updateUser).not.toHaveBeenCalled();
     });
 
     it('should call deleteUser on the data source with the correct id', async () => {
@@ -73,5 +80,20 @@ describe('UserRepository', () => {
 
         expect(mockUserDataSource.deleteUser).toHaveBeenCalledTimes(1);
         expect(mockUserDataSource.deleteUser).toHaveBeenCalledWith(userId);
+    });
+
+    it('should handle errors thrown by saveUser', async () => {
+        mockUserDataSource.saveUser.mockImplementation(() => { throw new Error('fail'); });
+        await expect(userRepository.saveUser('Valid', 'password', false)).rejects.toThrow();
+    });
+
+    it('should handle errors thrown by updateUser', async () => {
+        mockUserDataSource.updateUser.mockImplementation(() => { throw new Error('fail'); });
+        await expect(userRepository.updateUser('id', 'Valid', false)).rejects.toThrow();
+    });
+
+    it('should not throw if deleteUser throws', async () => {
+        mockUserDataSource.deleteUser.mockImplementation(() => { throw new Error('fail'); });
+        await expect(userRepository.deleteUser('id')).resolves.toBeUndefined();
     });
 });

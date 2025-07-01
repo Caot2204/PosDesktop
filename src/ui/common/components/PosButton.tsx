@@ -11,7 +11,13 @@ interface PosButtonProps {
 function PosButton(prop: PosButtonProps) {
   return (
     <button className={`primary-button ${prop.className ? prop.className : ""}`.trim()} onClick={prop.onClick}>
-      <div className="trailing-icon">{prop.icon ? prop.icon : <></>}</div>
+      {
+        prop.icon 
+        ?
+          <div className="trailing-icon">{prop.icon}</div>
+        :
+        <></>
+      }
       {prop.label}
     </button>
   );

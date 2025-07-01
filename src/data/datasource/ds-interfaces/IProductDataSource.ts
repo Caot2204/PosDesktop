@@ -7,8 +7,6 @@ export interface IProductDataSource {
     getAllProducts(): Promise<Product[]>;
 
     getProductByCode(code: string): Promise<Product>;
-    
-    getProductByName(name: string): Promise<Product>;
 
     saveProduct(product: Product): Promise<void>;
 

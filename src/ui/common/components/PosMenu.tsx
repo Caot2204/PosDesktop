@@ -2,24 +2,13 @@ import '../stylesheets/PosMenu.css';
 import { MdOutlinePointOfSale, MdOutlineInventory, MdOutlineSettings } from "react-icons/md";
 import { BiArchiveOut } from "react-icons/bi";
 import { FaUserTie } from "react-icons/fa6";
-import { Link, NavLink } from 'react-router';
-import { useEffect, useState } from 'react';
-
-const MenuOptions: 'ventas' | 'egresos' | 'inventario' | 'usuarios' | 'configuracion' = 'ventas';
+import { NavLink } from 'react-router';
 
 interface PosMenuProps {
   className?: string;
-  menuSelected?: string;
-  onSalesClicked: () => void,
-  onEgressClicked: () => void,
-  onInventoryClicked: () => void,
-  onUsersClicked: () => void,
-  onSettingsClicked: () => void,
 }
 
 function PosMenu(props: PosMenuProps) {
-
-  const [currentScreen, setCurrentScreen] = useState("ventas");
 
   return (
     <div className={props.className}>
@@ -45,7 +34,7 @@ function PosMenu(props: PosMenuProps) {
             label="Egresos" />
         </NavLink>
         <NavLink
-          to="/categories"
+          to="/inventory"
           className={({ isActive }) =>
             isActive ? "menu-item selected" : "menu-item"
           }

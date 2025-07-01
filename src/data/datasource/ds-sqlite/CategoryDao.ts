@@ -108,6 +108,16 @@ class CategoryDao implements ICategoryDataSource {
     deleteCategory(categoryId: number): Promise<void> {
         return new Promise((resolve: any, reject: any) => {
             this.dbInstance.serialize(() => {
+                const updateProductsStatment = this.dbInstance.prepare(
+                    'UPDATE products SET categoryId=1 WHERE categoryId=?'
+                );
+                updateProductsStatment.run(
+                    categoryId,
+                    (error: Error | null) => {
+                        if (error) { reject(error); }
+                    }
+                );
+
                 const statement = this.dbInstance.prepare(
                     'DELETE FROM categories WHERE id=?'
                 );

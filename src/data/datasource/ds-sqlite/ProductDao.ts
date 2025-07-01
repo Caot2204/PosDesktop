@@ -96,40 +96,6 @@ class ProductDao implements IProductDataSource {
         });
     }
 
-    getProductByName(name: string): Promise<Product> {
-        return new Promise<Product>((resolve: any, reject: any) => {
-            this.dbInstance.serialize(() => {
-                this.dbInstance.get(
-                    `SELECT 
-                        p.code, p.name, p.unitPrice, p.stock, p.isInfinityStock,
-                        c.name AS category
-                    FROM products AS p
-                    INNER JOIN categories AS c 
-                    ON p.categoryId = c.id
-                    WHERE p.name = ? 
-                    ORDER BY p.name ASC`,
-                    [name], (error: Error | null, row: any) => {
-                        if (error) {
-                            return reject(error);
-                        }
-                        if (!row) {
-                            return resolve(undefined);
-                        }
-                        const productRecived: Product = new Product(
-                            row.code,
-                            row.name,
-                            row.unitPrice,
-                            row.stock,
-                            Boolean(row.isInfinityStock),
-                            row.category
-                        );
-                        resolve(productRecived);
-                    }
-                );
-            });
-        });
-    }
-
     saveProduct(product: Product): Promise<void> {
         return new Promise(async (resolve: any, reject: any) => {
             const category = await this.categoryDao.getCategoryByName(product.category);

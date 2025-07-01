@@ -32,13 +32,6 @@ describe('ProductDao', () => {
     expect(products).toEqual([product1, product2]);
   });
 
-  it('getProductByName should return the correct product', async () => {
-    const product = new Product('P001', 'Arroz', 10, 100, false, 'Abarrotes');
-    await dao.saveProduct(product);
-    const received = await dao.getProductByName('Arroz');
-    expect(received).toEqual(product);
-  });
-
   it('setNewStockForProduct should update stock', async () => {
     const product = new Product('P001', 'Arroz', 10, 100, false, 'Abarrotes');
     await dao.saveProduct(product);
@@ -95,11 +88,6 @@ describe('ProductDaoError', () => {
   it('getProductByCode should reject on error', async () => {
     mockDb.get.mockImplementation((query, params, cb) => cb(new Error('fail')));
     await expect(dao.getProductByCode('P001')).rejects.toThrow('fail');
-  });
-
-  it('getProductByName should reject on error', async () => {
-    mockDb.get.mockImplementation((query, params, cb) => cb(new Error('fail')));
-    await expect(dao.getProductByName('Arroz')).rejects.toThrow('fail');
   });
 
   it('saveProduct should reject if category not found', async () => {
