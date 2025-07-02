@@ -1,7 +1,8 @@
 import '../stylesheets/InventoryScreen.css';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
+import { ToastContainer } from 'react-toastify';
 import PosButton from '../../../common/components/PosButton';
 import CategoryScreen from '../../categories/components/CategoryScreen';
 import ProductForm from '../../products/components/ProductForm';
@@ -9,14 +10,15 @@ import Product from '../../../../data/model/Product';
 import { showErrorNotify, showSuccessNotify } from '../../../utils/NotifyUtils';
 import CategorySelect from '../../categories/components/CategorySelect';
 import type Category from '../../../../data/model/Category';
-import { ToastContainer } from 'react-toastify';
 import ProductList from './ProductList';
+import IncreaseStockScreen from './IncreaseStockScreen';
 
 function InventoryScreen() {
   const categoriesDialogRef = useRef<HTMLDialogElement>(null);
   const productFormDialogRef = useRef<HTMLDialogElement>(null);
+  const increaseStockDialogRef = useRef<HTMLDialogElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState<null | 'categories' | 'productForm' | 'increaseStock'>(null);
   const [loadingData, setLoadingData] = useState(true);
 
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
@@ -25,34 +27,35 @@ function InventoryScreen() {
   const [searchFilter, setSearchFilter] = useState("");
   const [productToEdit, setProductToEdit] = useState<Product | undefined>(undefined)
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       const fetchedProducts = await window.productAPI?.getAllProducts();
       if (fetchedProducts !== undefined) {
         setFetchedProducts(fetchedProducts);
+        setLoadingData(false);
       }
     } catch (error) {
       showErrorNotify("Error al recuperar los productos");
     }
-  };
+  }, []);
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const fetchedCategories = await window.categoryAPI?.getAllCategories();
       if (fetchedCategories !== undefined) {
         setCategories(fetchedCategories);
+        setLoadingData(false);
       }
     } catch (error) {
       showErrorNotify("Error al recuperar las categorias");
     }
-  };
+  }, []);
 
-  const handleCloseProductDialog = () => {
-    setIsOpenDialog(false);
+  const handleCloseProductDialog = useCallback(() => {
+    setOpenDialog(null);
     setProductToEdit(undefined);
-    productFormDialogRef.current?.close();
-  };
-  
+  }, []);
+
   const handleClearSearch = () => {
     if (searchInputRef.current) {
       searchInputRef.current.value = "";
@@ -60,23 +63,21 @@ function InventoryScreen() {
     setSearchFilter("");
   };
 
-  const handleEditProduct = (product: Product) => {
-    setIsOpenDialog(true);
+  const handleEditProduct = useCallback((product: Product) => {
+    setOpenDialog("productForm");
     setProductToEdit(product);
     fetchProducts();
-    productFormDialogRef.current?.show();
-  };
+  }, []);
 
   useEffect(() => {
     fetchCategories();
     fetchProducts();
     setCategoryFilter("Todos");
-    setLoadingData(false);
-  }, [loadingData]);
+  }, [fetchCategories, fetchProducts, loadingData]);
 
   return (
     <div className="inventory-container">
-      <div className={isOpenDialog ? "actions-container filter-blur" : "actions-container"}>
+      <div className={openDialog ? "actions-container filter-blur" : "actions-container"}>
         <span className="label-section">Categoría: </span>
         <CategorySelect
           selected={categoryFilter}
@@ -87,26 +88,24 @@ function InventoryScreen() {
         <PosButton
           label="Nuevo producto"
           onClick={() => {
-            setIsOpenDialog(true);
-            productFormDialogRef.current?.show()
-            categoriesDialogRef.current?.close();
+            setOpenDialog("productForm");
           }} />
         <PosButton
           label="Admin. categorías"
           onClick={() => {
-            setIsOpenDialog(true);
-            categoriesDialogRef.current?.show()
-            productFormDialogRef.current?.close();
+            setOpenDialog("categories");
           }} />
         <PosButton
           label="Incrementar stock"
-          onClick={() => { }} />
+          onClick={() => {
+            setOpenDialog("increaseStock");
+          }} />
       </div>
-      <div className={isOpenDialog ? "products-container filter-blur" : "products-container"}>
+      <div className={openDialog ? "products-container filter-blur" : "products-container"}>
         <div className="search-product-container">
           <FaSearch />
           <input className="search-input" ref={searchInputRef} type="text" placeholder="Ingrese el nombre o código del producto..." onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
-          <MdOutlineCancel onClick={handleClearSearch}/>
+          <MdOutlineCancel onClick={handleClearSearch} />
         </div>
         <ProductList
           products={fetchedProducts}
@@ -118,17 +117,16 @@ function InventoryScreen() {
             fetchProducts();
           }} />
       </div>
-      <dialog className="pos-dialog" ref={categoriesDialogRef}>
-        <div className="categories-header">
+      <dialog className="pos-dialog" ref={categoriesDialogRef} open={openDialog === "categories"}>
+        <div className="header-dialog">
           <MdOutlineCancel className="close-dialog-button" onClick={() => {
-            setIsOpenDialog(false);
-            categoriesDialogRef.current?.close();
-            setLoadingData(true);
+            setOpenDialog(null);
           }} />
         </div>
-        <CategoryScreen />
+        <CategoryScreen
+          onChangeCategories={() => setLoadingData(true)} />
       </dialog>
-      <dialog className="pos-dialog" ref={productFormDialogRef}>
+      <dialog className="pos-dialog" ref={productFormDialogRef} open={openDialog === "productForm"}>
         <ProductForm
           code={productToEdit ? productToEdit.code : ""}
           name={productToEdit ? productToEdit.name : ""}
@@ -145,6 +143,16 @@ function InventoryScreen() {
           onCancel={() => {
             handleCloseProductDialog();
           }} />
+      </dialog>
+      <dialog className="pos-dialog" ref={increaseStockDialogRef} open={openDialog === "increaseStock"}>
+        <div className="header-dialog">
+          <MdOutlineCancel className="close-dialog-button" onClick={() => {
+            setOpenDialog(null);
+          }} />
+        </div>
+        <IncreaseStockScreen
+          products={fetchedProducts}
+          onIncreaseSuccesfully={() => fetchProducts()} />
       </dialog>
       <ToastContainer />
     </div>

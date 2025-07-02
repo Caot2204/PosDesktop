@@ -25,8 +25,16 @@ class ProductRepository {
 
     async increaseStock(code: string, unitsToIncrease: number): Promise<void> {
         const product = await this.getProductByCode(code);
-        const newStock = product.stock + unitsToIncrease;
-        this.productDataSource.setNewStockForProduct(product.code, newStock);
+        if (product) {
+            if (!product.isInfinityStock) {
+                const newStock = product.stock + unitsToIncrease;
+                this.productDataSource.setNewStockForProduct(product.code, newStock);
+            } else {
+                throw new Error("El producto tiene stock infinito");
+            }
+        } else {
+            throw new Error("Producto no encontrado");
+        }
     }
 
     async saveProduct(code: string, name: string, unitPrice: number, stock: number, isInfinityStock: boolean, category: string): Promise<void> {

@@ -1,0 +1,27 @@
+.search-product-dialog {
+  width: 90%;
+}
+
+.code-product-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-icon {
+  width: 2em;
+  height: 2em;
+  margin-left: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.search-icon:hover {
+  color: blue;
+  transition: 0.3s;
+}
+
+.button-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

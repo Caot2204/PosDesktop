@@ -7,7 +7,11 @@ import Category from '../../../../data/model/Category';
 import CategoryForm from './CategoryForm';
 import { showErrorNotify, showSuccessNotify } from '../../../utils/NotifyUtils';
 
-function CategoryScreen() {
+interface CategoryScreenProps {
+  onChangeCategories: () => void;
+}
+
+function CategoryScreen(props: CategoryScreenProps) {
 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -34,6 +38,7 @@ function CategoryScreen() {
       await window.categoryAPI.deleteCategory(id);
       showSuccessNotify("Categoría eliminada!");
       fetchCategories();
+      props.onChangeCategories();
     }
   };
 
@@ -79,6 +84,7 @@ function CategoryScreen() {
           onSaveSuccess={() => {
             fetchCategories();
             handleCloseDialog();
+            props.onChangeCategories();
           }}
           onCancel={handleCloseDialog} />
       </dialog>
