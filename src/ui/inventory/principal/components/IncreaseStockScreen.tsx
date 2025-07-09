@@ -24,8 +24,8 @@ function IncreaseStockScreen(props: IncreaseStockScreen) {
     setUnitsToIncrease(0);
   };
 
-  const handleProductSearchedClicked = (productCode: string) => {
-    setProductCode(productCode);
+  const handleProductSearchedClicked = (product: Product) => {
+    setProductCode(product.code);
     searchDialogRef.current?.close();
   };
 

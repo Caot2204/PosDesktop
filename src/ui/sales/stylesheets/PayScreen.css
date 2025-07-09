@@ -1,0 +1,65 @@
+.payscreen-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payscreen-container h1 {
+  width: 100%;
+  text-align: center;
+}
+
+.payment-inputs {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.payment-inputs > * {
+  margin-bottom: 30px;
+}
+
+.payment-inputs h3 {
+  width: 100%;
+  text-align: start;
+}
+
+.payamount-input-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.payamount-input {
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.payment-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.money-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 20px;
+}
+
+.money-label {
+  display: inline;
+}
+
+.payment-label {
+  font-size: 1.5em;
+}
+
+.total-sale-label {
+  font-size: 2.5em;
+}
+
+.cambio-label {
+  font-size: 2em;
+}

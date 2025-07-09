@@ -1,0 +1,106 @@
+.sales-product-container {
+  flex: 1;
+  border: 1px solid rgb(140 140 140);
+  min-width: 0;
+  overflow-y: auto;
+}
+
+.sales-product-list {
+  width: 100%;
+  border-collapse: collapse;
+  letter-spacing: 1px;
+}
+
+.sales-product-list th {
+  position: sticky;
+  top: 0;
+  background-color: rgb(192, 255, 137); /* same as your header */
+  z-index: 2;
+}
+
+.sales-product-list td {
+  padding: 0;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+
+.sales-product-list > thead > th {
+  background-color: rgb(192, 255, 137);
+  padding: 8px 10px;
+}
+
+.sales-product-list th:nth-child(1),
+.sales-product-list td:nth-child(1) {
+  width: 15%; /* Adjust as needed for "Código" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
+.sales-product-list th:nth-child(2),
+.sales-product-list td:nth-child(2) {
+  width: 45%; /* Adjust as needed for "Nombre" */
+  min-width: 200px;
+  max-width: 600px;
+}
+
+.sales-product-list th:nth-child(3),
+.sales-product-list td:nth-child(3) {
+  width: 15%; /* Adjust as needed for "Precio" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
+.sales-product-list th:nth-child(4),
+.sales-product-list td:nth-child(4) {
+  width: 10%; /* Adjust as needed for "Unidades" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
+.sales-product-list th:nth-child(5),
+.sales-product-list td:nth-child(5) {
+  width: 15%; /* Adjust as needed for "Subtotal" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
+.product-sale-item > th, td {
+  text-align: center;
+  border: 1px solid rgb(160, 160, 160);
+}
+
+.product-list > tbody > tr:nth-of-type(even) {
+  background-color: rgb(232, 255, 230);
+}
+
+.units-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding: 0 20px;
+  gap: 5px;
+}
+
+.units-input {
+  height: 13px;
+  text-align: center;
+  border: transparent;
+  background-color: transparent;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.units-icon {
+  width: 20px;
+  height: auto;
+  color: #000;
+}
+
+/* Hide default arrows in Chrome, Safari, Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

@@ -14,7 +14,7 @@ function PosMenu(props: PosMenuProps) {
     <div className={props.className}>
       <div className="menu-container">
         <NavLink
-          to=""
+          to="/sales"
           className={({ isActive }) =>
             isActive ? "menu-item selected" : "menu-item"
           }

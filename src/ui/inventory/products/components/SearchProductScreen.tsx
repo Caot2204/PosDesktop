@@ -6,8 +6,8 @@ import type Product from '../../../../data/model/Product';
 import { formatNumberToCurrentPrice } from '../../../utils/FormatUtils';
 
 interface SearchProductProps {
-  products: Product[];
-  onProductClicked: (productCode: string) => void;
+  products?: Product[];
+  onProductClicked: (product: Product) => void;
 }
 
 interface ProductSearchedRowProps {
@@ -15,12 +15,12 @@ interface ProductSearchedRowProps {
   name: string;
   category: string;
   unitPrice: number;
-  onProductClicked: (productCode: string) => void;
+  onProductClicked: () => void;
 }
 
 function ProductSearchedRow(props: ProductSearchedRowProps) {
   return (
-    <tr onClick={() => props.onProductClicked(props.code)}>
+    <tr onClick={props.onProductClicked}>
       <th scope="row">{props.code}</th>
       <td>{props.name}</td>
       <td>{props.category}</td>
@@ -42,18 +42,29 @@ function SearchProductScreen(props: SearchProductProps) {
   };
 
   useEffect(() => {
-    let products = props.products;
-    if (searchFilter.trim() !== "") {
-      products = products.filter(product => product.code.toLowerCase().includes(searchFilter.toLowerCase()) || product.name.toLowerCase().includes(searchFilter.toLowerCase()));
-    }
-    setProductsToShow(products);
+    const getProducts = async () => {
+      let products: Product[] = props.products ?? await window.productAPI?.getAllProducts() ?? [];
+      if (searchFilter.trim() !== "") {
+        products = products.filter(product => 
+          product.code.toLowerCase().includes(searchFilter.toLowerCase()) || 
+          product.name.toLowerCase().includes(searchFilter.toLowerCase()));
+      }
+      setProductsToShow(products);
+    };
+    getProducts();
   }, [props.products, searchFilter]);
 
   return (
     <div className="search-screen-container">
       <div className="search-product-container">
         <FaSearch />
-        <input className="search-input" ref={searchInputRef} type="text" placeholder="Ingrese el nombre o código del producto..." onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
+        <input 
+          autoFocus
+          className="search-input" 
+          ref={searchInputRef} 
+          type="text" 
+          placeholder="Ingrese el nombre o código del producto..." 
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
         <MdOutlineCancel onClick={handleClearSearch} />
       </div>
       <hr />
@@ -71,11 +82,12 @@ function SearchProductScreen(props: SearchProductProps) {
             searchFilter.trim() !== "" ?
               productsToShow.map(product => (
                 <ProductSearchedRow
+                  key={product.code}
                   code={product.code}
                   name={product.name}
                   category={product.category}
                   unitPrice={product.unitPrice}
-                  onProductClicked={props.onProductClicked} />
+                  onProductClicked={() => props.onProductClicked(product)} />
               ))
               :
               <></>

@@ -12,6 +12,12 @@
   justify-content: center;
 }
 
+.primary-button:disabled {
+  filter: grayscale(10px);
+  cursor: not-allowed;
+  background-color: gray;
+}
+
 .trailing-icon {
   display: flex;
   align-items: center;

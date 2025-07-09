@@ -1,3 +1,4 @@
+import '../stylesheets/ProductForm.css';
 import { useEffect, useState } from 'react';
 import { MdErrorOutline } from 'react-icons/md';
 import SaveCancelButtons from '../../../common/components/SaveCancelButtons';

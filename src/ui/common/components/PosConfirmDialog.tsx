@@ -22,6 +22,11 @@ function PosConfirmDialog(props: PosConfirmDialogProps) {
     dialogRef.current?.showModal();
   }
 
+  const handleOk = () => {
+    dialogRef.current?.close();
+    props.onOk();
+  };
+
   return (
     <dialog className="message-container" ref={dialogRef}>
       <p className="message">{props.message}</p>
@@ -34,7 +39,7 @@ function PosConfirmDialog(props: PosConfirmDialogProps) {
         <PosButton
           label="Aceptar"
           icon={<MdOutlineCheck />}
-          onClick={props.onOk} />
+          onClick={handleOk} />
       </div>
     </dialog>
   );
