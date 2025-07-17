@@ -3,6 +3,7 @@ import UserDao from './UserDao.js';
 import User from '../../model/User.js';
 import CategoryDao from './CategoryDao.js';
 import ProductDao from './ProductDao.js';
+import SaleDao from './SaleDao.js';
 
 class PosDatabase {
 
@@ -11,6 +12,7 @@ class PosDatabase {
     private userDao: UserDao | null = null;
     private categoryDao: CategoryDao | null = null;
     private productDao: ProductDao | null = null;
+    private saleDao: SaleDao | null = null;
 
     constructor(dbPath: string | 'test') {
         this.dbPath = dbPath;
@@ -24,9 +26,12 @@ class PosDatabase {
                     this.createUserTable();
                     this.createCategoryTable();
                     this.createProductTable();
+                    this.createSaleTable();
+                    this.createSalesProductsTable();
                     this.userDao = new UserDao(this);
                     this.categoryDao = new CategoryDao(this);
                     this.productDao = new ProductDao(this, this.categoryDao);
+                    this.saleDao = new SaleDao(this);
                     this.insertDefaultData();
                     resolve();
                 } else {
@@ -128,6 +133,50 @@ class PosDatabase {
         });
     }
 
+    private createSaleTable(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (!this.db) {
+                return reject(new Error("Database is not initialized"));
+            }
+            this.db.run(`CREATE TABLE IF NOT EXISTS sales(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                dateOfSale DATETIME NOT NULL,
+                userToGenerateSale VARCHAR(255) NOT NULL,
+                totalSale DOUBLE NOT NULL
+            )`, (error: Error) => {
+                if (error) {
+                    console.error("Error creating sales table: ", error.message);
+                    reject(error);
+                } else {
+                    console.log("Sales table checked/created");
+                    resolve();
+                }
+            });
+        });
+    }
+
+    private createSalesProductsTable(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (!this.db) {
+                return reject(new Error("Database is not initialized"));
+            }
+            this.db.run(`CREATE TABLE IF NOT EXISTS sales_products(
+                saleId INT NOT NULL,
+                productName VARCHAR(100) NOT NULL,
+                unitPrice DOUBLE NOT NULL,
+                unitsSold INT NOT NULL
+            )`, (error: Error) => {
+                if (error) {
+                    console.error("Error creating sales table: ", error.message);
+                    reject(error);
+                } else {
+                    console.log("Sales_products table checked/created");
+                    resolve();
+                }
+            });
+        });
+    }
+
     getUserDao(): UserDao {
         if (!this.userDao) {
             this.userDao = new UserDao(this);
@@ -147,6 +196,13 @@ class PosDatabase {
             this.productDao = new ProductDao(this, this.getCategoryDao());
         }
         return this.productDao;
+    }
+
+    getSaleDao(): SaleDao {
+        if (!this.saleDao) {
+            this.saleDao = new SaleDao(this);
+        }
+        return this.saleDao;
     }
 
     private async insertDefaultData() {

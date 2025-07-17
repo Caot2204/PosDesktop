@@ -1,17 +1,20 @@
 import '../stylesheets/SalesProductList.css';
 import { MdOutlineAdd } from "react-icons/md";
 import { FaMinus } from "react-icons/fa";
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import { formatNumberToCurrentPrice } from '../../utils/FormatUtils';
 import type SaleProductModel from '../model/SalesProductModel';
 
 interface SalesProductItemProps {
   product: SaleProductModel;
   onModifyProductUnits: (code: string, units: number) => void;
+  onDeleteProductOfSale: (code: string) => void;
 }
 
 interface SalesProductListProps {
   products: SaleProductModel[];
   onModifyProductUnits: (code: string, units: number) => void;
+  onDeleteProductOfSale: (code: string) => void;
 }
 
 function SalesProductItem(props: SalesProductItemProps) {
@@ -36,6 +39,9 @@ function SalesProductItem(props: SalesProductItemProps) {
         </div>
       </td>
       <td>{formatNumberToCurrentPrice(props.product.unitPrice * props.product.unitsToSale)}</td>
+      <td>
+        <RiDeleteBin6Line className="delete-button" onClick={() => props.onDeleteProductOfSale(props.product.code)}/>
+      </td>
     </tr>
   );
 }
@@ -59,7 +65,8 @@ function SalesProductList(props: SalesProductListProps) {
               <SalesProductItem
                 key={product.code}
                 product={product}
-                onModifyProductUnits={props.onModifyProductUnits} />
+                onModifyProductUnits={props.onModifyProductUnits}
+                onDeleteProductOfSale={props.onDeleteProductOfSale} />
             ))
           }
         </tbody>

@@ -7,6 +7,8 @@ import UserIpcDecorator from './decorators/UserIpcDecorator.js';
 import CategoryRepository from '../data/repository/CategoryRepository.js';
 import ProductRepository from '../data/repository/ProductRepository.js';
 import InventoryIpcDecorator from './decorators/InventoryIpcDecorator.js';
+import SaleRepository from '../data/repository/SaleRepository.js';
+import SaleIpcDecorator from './decorators/SaleIpcDecorators.js';
 
 
 class DataSourceConfigurator {
@@ -28,6 +30,10 @@ class DataSourceConfigurator {
             const productRepository = new ProductRepository(posDatabase.getProductDao());
             const inventoryDecorator = new InventoryIpcDecorator(this.ipcMain, categoryRepository, productRepository);
             inventoryDecorator.configure();
+
+            const saleRepository = new SaleRepository(posDatabase.getSaleDao());
+            const saleDecorator = new SaleIpcDecorator(this.ipcMain, saleRepository);
+            saleDecorator.configure();
 
             const userRepository = new UserRepository(posDatabase.getUserDao());
             const userDecorator = new UserIpcDecorator(userRepository, this.ipcMain);

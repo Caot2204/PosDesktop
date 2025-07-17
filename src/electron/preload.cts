@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
+import SaleProductModel from "../ui/sales/model/SalesProductModel";
 
 contextBridge.exposeInMainWorld('userAPI',
   {
@@ -29,5 +30,13 @@ contextBridge.exposeInMainWorld('productAPI',
     increaseStock: (code: string, unitsToIncrease: number) => ipcRenderer.invoke('productApi:increaseStock', code, unitsToIncrease),
     saveProduct: (code: string, name: string, unitPrice: number, stock: number, isInfinityStock: boolean, category: string) => ipcRenderer.invoke('productApi:saveProduct', code, name, unitPrice, stock, isInfinityStock, category),
     updateProduct: (code: string, name: string, unitPrice: number, stock: number, isInfinityStock: boolean, category: string, previousCode?: string) => ipcRenderer.invoke('productApi:updateProduct', code, name, unitPrice, stock, isInfinityStock, category, previousCode),
+  }
+);
+
+contextBridge.exposeInMainWorld('saleAPI',
+  {
+    getSaleById: (saleId: number) => ipcRenderer.invoke('saleApi:getSaleById', saleId),
+    getSalesByDate: (dateOfSale: Date) => ipcRenderer.invoke('saleApi:getSalesByDate', dateOfSale),
+    saveSale: (dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], totalSale: number) => ipcRenderer.invoke('saleApi:saveSale', dateOfSale, userToGenerateSale, productsSold, totalSale)
   }
 );

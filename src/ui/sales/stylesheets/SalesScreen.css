@@ -1,0 +1,63 @@
+.salesscreen-container {
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.sales-folio-input {
+  width: 100%;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-bottom: 50px;
+}
+
+.sales-label {
+  width: 100%;
+  text-align: start;
+}
+
+.sales-list-container {
+  width: 250px;
+}
+
+.sales-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.ticket-container {
+  border: 1px solid #000;
+  width: calc(100% - 200px);
+  overflow-y: auto;
+}
+
+.ticket-product-sold {
+  margin-top: 10px;
+}
+
+.ticket-product-sold span {
+  font-weight: normal;
+}
+
+.ticket-container p {
+  margin-left: 10px;
+}
+
+.ticket-products-header, .product-sold-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+.ticket-total-label {
+  width: 95%;
+  text-align: end;
+  font-size: 1.5em;
+}

@@ -13,12 +13,13 @@ import type Product from '../../../data/model/Product';
 import { showErrorNotify, showSuccessNotify } from '../../utils/NotifyUtils';
 import PosConfirmDialog from '../../common/components/PosConfirmDialog';
 import PayScreen from './PayScreen';
+import SalesScreen from './SalesScreen';
 
 function NewSaleScreen() {
   const searchDialogRef = useRef<HTMLDialogElement>(null);
   const payDialogRef = useRef<HTMLDialogElement>(null);
   const codeInputRef = useRef<HTMLInputElement>(null);
-  const [openDialog, setOpenDialog] = useState<null | 'confirmDialog' | 'searchProduct' | 'paydialog'>(null);
+  const [openDialog, setOpenDialog] = useState<null | 'confirmDialog' | 'searchProduct' | 'paydialog' | 'salesDialog'>(null);
 
   const [productCodeInput, setProductCodeInput] = useState("");
   const [productsOfSale, setProductsOfSale] = useState<SaleProductModel[]>([]);
@@ -73,10 +74,30 @@ function NewSaleScreen() {
     }
   };
 
+  const handleDeleteProductOfSale = (code: string) => {
+    const index = productsOfSale.findIndex(saleProduct => saleProduct.code === code);
+    if (index !== -1) {
+      const updateProducts: SaleProductModel[] = productsOfSale.filter(product => code !== product.code);
+      setProductsOfSale(updateProducts);
+    }
+  };
+
   const handlePaySale = () => {
     setOpenDialog(null);
     handleClearScreen();
-    showSuccessNotify("Venta realizada");
+    try {
+      const currentDate = new Date();
+      window.saleAPI?.saveSale(
+        currentDate,
+        "Carlos",
+        productsOfSale,
+        totalSale
+      );
+      showSuccessNotify("Venta realizada");
+    } catch (error) {
+      console.log(error);
+      showErrorNotify("Error al realizar la venta");
+    }
   };
 
   useEffect(() => {
@@ -155,7 +176,8 @@ function NewSaleScreen() {
       <div className={openDialog ? "filter-blur" : ""}>
         <SalesProductList
           products={productsOfSale}
-          onModifyProductUnits={handleModifyProductsUnits} />
+          onModifyProductUnits={handleModifyProductsUnits}
+          onDeleteProductOfSale={handleDeleteProductOfSale} />
       </div>
       <div className={openDialog ? "pay-container filter-blur" : "pay-container"} >
         <TotalForPayLabel
@@ -172,9 +194,15 @@ function NewSaleScreen() {
             onClick={() => setOpenDialog("paydialog")} />
         </div>
       </div>
-      <div className={openDialog ? "date-container filter-blur" : "date-container"} >
+      <div className={openDialog ? "extras-container filter-blur" : "extras-container"} >
         <MdDateRange className="date-icon" />
         <span className="date-label">{getCurrentDate()}</span>
+        <div className="sale-buttons-extra">
+          <PosButton
+            className="extra-button"
+            label="Ventas del día"
+            onClick={() => setOpenDialog("salesDialog")} />
+        </div>
       </div>
       <dialog className="pos-dialog search-product-dialog" ref={searchDialogRef} open={openDialog === "searchProduct"}>
         <div className="header-dialog">
@@ -190,6 +218,15 @@ function NewSaleScreen() {
           totalSale={totalSale}
           onCancel={() => setOpenDialog(null)}
           onPaySale={handlePaySale} />
+      </dialog>
+      <dialog className="pos-dialog sales-dialog" open={openDialog === "salesDialog"}>
+        <div className="header-dialog">
+          <MdOutlineCancel className="close-dialog-button" onClick={() => {
+            setOpenDialog(null);
+          }} />
+        </div>
+        <SalesScreen
+          isShowed={openDialog === "salesDialog"} />        
       </dialog>
       <PosConfirmDialog
         message="¿Quitar los producto de la venta actual?"

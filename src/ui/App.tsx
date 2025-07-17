@@ -6,6 +6,8 @@ import UserAvatar from './common/components/UserAvatar';
 import User from '../data/model/User';
 import type Category from '../data/model/Category';
 import type Product from '../data/model/Product';
+import type Sale from '../data/model/Sale';
+import type SaleProductModel from './sales/model/SalesProductModel';
 
 declare global {
   interface Window {
@@ -29,6 +31,11 @@ declare global {
       increaseStock: (code: string, unitsToIncrease: number) => Promise<void>;
       saveProduct: (code: string, name: string, unitPrice: number, stock: number, isInfinityStock: boolean, category: string) => Promise<void>;
       updateProduct: (code: string, name: string, unitPrice: number, stock: number, isInfinityStock: boolean, category: string, previuosCode?: string) => Promise<void>;
+    };
+    saleAPI?: {
+      getSaleById: (saleId: number) => Promise<Sale>;
+      getSalesByDate: (dateOfSale: Date) => Promise<Sale[]>;
+      saveSale: (dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], totalSale: number) => Promise<void>;
     };
   }
 }

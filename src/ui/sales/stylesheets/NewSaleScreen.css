@@ -23,6 +23,10 @@
   user-select: none;    /* Optional: prevent text selection */
 }
 
+.header-dialog {
+  margin-bottom: 10px;
+}
+
 .code-input {
   display: flex;
   flex-direction: row;
@@ -77,8 +81,14 @@
   width: 200px;
 }
 
+.extras-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .date-container {
-  width: 100%;
+  width: fit-content;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -91,4 +101,17 @@
 
 .date-label {
   font-size: 1.5em;
+}
+
+.sale-buttons-extra {
+  display: flex;
+  flex-direction: row;
+  margin-left: 40px;
+}
+
+.extra-button {
+  width: 150px;
+  background-color: #BCECE7;
+  color: #000;
+  border: 1px solid #d9d9d9;
 }
