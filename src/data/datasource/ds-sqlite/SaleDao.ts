@@ -34,24 +34,38 @@ class SaleDao implements ISaleDataSource {
         });
     }
 
-    getSaleById(saleId: number): Promise<Sale> {
-        return new Promise<Sale>((resolve, reject) => {
-            this.dbInstance.all(
-                `SELECT * FROM sales WHERE id=?`,
+    getSaleById(saleId: number): Promise<Sale | undefined> {
+        return new Promise<Sale | undefined>((resolve, reject) => {
+            this.dbInstance.get(
+                `SELECT * FROM sales WHERE id = ?`,
+                [saleId],
                 async (error: Error | null, row: any) => {
                     if (error) {
                         reject(error);
                         return;
                     }
-                    const productsSold = await this.getSalesProductSold(saleId);
-                    const sale: Sale = new Sale(
-                        row.id,
-                        row.dayOfSale,
-                        row.userToGenerateSale,
-                        productsSold,
-                        row.totalSale
-                    );
-                    resolve(sale);
+                    if (row) {
+                        try {
+                            const saleDate = fromMysqlDatetime(row.dateOfSale);
+                            if (!saleDate) {
+                                throw new Error("Fecha invalida");
+                            }
+                            const productsSold = await this.getSalesProductSold(saleId);
+                            resolve(new Sale(
+                                row.id,
+                                saleDate,
+                                row.userToGenerateSale,
+                                productsSold,
+                                row.paymentType,
+                                row.amountPayed,
+                                row.totalSale
+                            ));
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        resolve(undefined);
+                    }
                 }
             );
         });
@@ -66,7 +80,6 @@ class SaleDao implements ISaleDataSource {
                     [dateFormated],
                     (error: Error | null, rows: any[]) => {
                         if (error) {
-                            console.log(error);
                             reject(error);
                         }
                         if (rows) {
@@ -76,12 +89,13 @@ class SaleDao implements ISaleDataSource {
                                     throw new Error("Fecha invalida");
                                 }
                                 const productsOfSale = await this.getSalesProductSold(Number(row.id));
-                                console.log(productsOfSale.length);
                                 return new Sale(
                                     row.id,
                                     saleDate,
                                     row.userToGenerateSale,
                                     productsOfSale,
+                                    row.paymentType,
+                                    row.amountPayed,
                                     row.totalSale
                                 );
                             })).then(sales => {
@@ -109,16 +123,24 @@ class SaleDao implements ISaleDataSource {
         });
     }
 
-    saveSale(dayOfSale: Date, userToGenerateSale: string, productsSold: SalesProduct[], totalSale: number): Promise<void> {
+    saveSale(
+        dayOfSale: Date, 
+        userToGenerateSale: string, 
+        productsSold: SalesProduct[], 
+        paymentType: string,
+        amountPayed: number,
+        totalSale: number): Promise<void> {
         return new Promise((resolve, reject) => {
             this.dbInstance.serialize(() => {
                 const dateParsed = toMysqlDatetime(dayOfSale);
                 const statementSaveSale = this.dbInstance.prepare(
-                    'INSERT INTO sales(dateOfSale, userToGenerateSale, totalSale) VALUES(?,?,?)'
+                    'INSERT INTO sales(dateOfSale, userToGenerateSale, paymentType, amountPayed, totalSale) VALUES(?,?,?,?,?)'
                 );
                 statementSaveSale.run(
                     dateParsed,
                     userToGenerateSale,
+                    paymentType,
+                    amountPayed,
                     totalSale,
                     (error: Error | null) => {
                         if (error) {

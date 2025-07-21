@@ -82,7 +82,7 @@ function NewSaleScreen() {
     }
   };
 
-  const handlePaySale = () => {
+  const handlePaySale = (paymentType: string, amountPayed: number) => {
     setOpenDialog(null);
     handleClearScreen();
     try {
@@ -91,6 +91,8 @@ function NewSaleScreen() {
         currentDate,
         "Carlos",
         productsOfSale,
+        paymentType,
+        amountPayed,
         totalSale
       );
       showSuccessNotify("Venta realizada");
@@ -112,6 +114,9 @@ function NewSaleScreen() {
   }, [productsOfSale]);
 
   useEffect(() => {
+    if (openDialog === null) {
+      codeInputRef.current?.focus();
+    }
     const handleKeyDown = (e: KeyboardEvent) => {
       if (openDialog) return;
 
@@ -211,10 +216,12 @@ function NewSaleScreen() {
           }} />
         </div>
         <SearchProductScreen
+          isShowed={openDialog === "searchProduct"}
           onProductClicked={handleAddProduct} />
       </dialog>
       <dialog className="pos-dialog payscreen" ref={payDialogRef} open={openDialog === "paydialog"}>
         <PayScreen
+          isShowed={openDialog === "paydialog"}
           totalSale={totalSale}
           onCancel={() => setOpenDialog(null)}
           onPaySale={handlePaySale} />

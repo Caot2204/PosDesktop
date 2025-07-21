@@ -37,6 +37,13 @@ contextBridge.exposeInMainWorld('saleAPI',
   {
     getSaleById: (saleId: number) => ipcRenderer.invoke('saleApi:getSaleById', saleId),
     getSalesByDate: (dateOfSale: Date) => ipcRenderer.invoke('saleApi:getSalesByDate', dateOfSale),
-    saveSale: (dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], totalSale: number) => ipcRenderer.invoke('saleApi:saveSale', dateOfSale, userToGenerateSale, productsSold, totalSale)
+    saveSale: (
+      dateOfSale: Date, 
+      userToGenerateSale: string, 
+      productsSold: SaleProductModel[],
+      paymentType: string,
+      amountPayed: number,
+      totalSale: number
+    ) => ipcRenderer.invoke('saleApi:saveSale', dateOfSale, userToGenerateSale, productsSold, paymentType, amountPayed, totalSale)
   }
 );

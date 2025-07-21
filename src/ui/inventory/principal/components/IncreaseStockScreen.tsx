@@ -14,10 +14,9 @@ interface IncreaseStockScreen {
 }
 
 function IncreaseStockScreen(props: IncreaseStockScreen) {
-  const searchDialogRef = useRef<HTMLDialogElement>(null);
-
   const [productCode, setProductCode] = useState("");
   const [unitsToIncrease, setUnitsToIncrease] = useState(0);
+  const [openDialog, setOpenDialog] = useState<'searchProduct' | null>(null);
 
   const clearForm = () => {
     setProductCode("");
@@ -26,7 +25,7 @@ function IncreaseStockScreen(props: IncreaseStockScreen) {
 
   const handleProductSearchedClicked = (product: Product) => {
     setProductCode(product.code);
-    searchDialogRef.current?.close();
+    setOpenDialog(null);
   };
 
   const handleIncreaseStock = async () => {
@@ -46,7 +45,7 @@ function IncreaseStockScreen(props: IncreaseStockScreen) {
       <label>Código:</label>
       <div className="code-product-container">
         <input value={productCode} className="product-code-input" type="text" autoFocus onChange={(e) => setProductCode(e.target.value)} />
-        <FaSearch className="search-icon" onClick={() => searchDialogRef.current?.show()} />
+        <FaSearch className="search-icon" onClick={() => setOpenDialog("searchProduct")} />
       </div>
       <label>Unidades a agregar:</label>
       <input value={unitsToIncrease} type="number" onChange={(e) => setUnitsToIncrease(Number(e.target.value))} />
@@ -55,13 +54,14 @@ function IncreaseStockScreen(props: IncreaseStockScreen) {
           label="Agegar"
           onClick={handleIncreaseStock} />
       </div>
-      <dialog className="pos-dialog search-product-dialog" ref={searchDialogRef}>
+      <dialog className="pos-dialog search-product-dialog" open={openDialog === "searchProduct"}>
         <div className="header-dialog">
           <MdOutlineCancel className="close-dialog-button" onClick={() => {
-            searchDialogRef.current?.close();
+            setOpenDialog(null);
           }} />
         </div>
         <SearchProductScreen
+          isShowed={openDialog === "searchProduct"}
           products={props.products}
           onProductClicked={handleProductSearchedClicked} />
       </dialog>

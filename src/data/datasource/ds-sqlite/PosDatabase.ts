@@ -142,6 +142,8 @@ class PosDatabase {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 dateOfSale DATETIME NOT NULL,
                 userToGenerateSale VARCHAR(255) NOT NULL,
+                paymentType VARCHAR(100) NOT NULL,
+                amountPayed DOUBLE NOT NULL,
                 totalSale DOUBLE NOT NULL
             )`, (error: Error) => {
                 if (error) {
@@ -167,7 +169,7 @@ class PosDatabase {
                 unitsSold INT NOT NULL
             )`, (error: Error) => {
                 if (error) {
-                    console.error("Error creating sales table: ", error.message);
+                    console.error("Error creating sales_products table: ", error.message);
                     reject(error);
                 } else {
                     console.log("Sales_products table checked/created");

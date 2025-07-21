@@ -6,6 +6,7 @@ import type Product from '../../../../data/model/Product';
 import { formatNumberToCurrentPrice } from '../../../utils/FormatUtils';
 
 interface SearchProductProps {
+  isShowed: boolean;
   products?: Product[];
   onProductClicked: (product: Product) => void;
 }
@@ -53,6 +54,14 @@ function SearchProductScreen(props: SearchProductProps) {
     };
     getProducts();
   }, [props.products, searchFilter]);
+
+  useEffect(() => {
+    if (props.isShowed) {
+      searchInputRef.current?.focus();
+    } else {
+      handleClearSearch();
+    }
+  }, [props.isShowed]);
 
   return (
     <div className="search-screen-container">

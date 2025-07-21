@@ -31,7 +31,7 @@ class DataSourceConfigurator {
             const inventoryDecorator = new InventoryIpcDecorator(this.ipcMain, categoryRepository, productRepository);
             inventoryDecorator.configure();
 
-            const saleRepository = new SaleRepository(posDatabase.getSaleDao());
+            const saleRepository = new SaleRepository(posDatabase.getSaleDao(), productRepository);
             const saleDecorator = new SaleIpcDecorator(this.ipcMain, saleRepository);
             saleDecorator.configure();
 

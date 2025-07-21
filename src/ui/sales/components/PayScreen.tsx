@@ -6,22 +6,35 @@ import PosButton from '../../common/components/PosButton';
 import { formatNumberToCurrentPrice } from '../../utils/FormatUtils';
 
 interface PayScreenProps {
+  isShowed: boolean;
   totalSale: number;
   onCancel: () => void;
-  onPaySale: () => void;
+  onPaySale: (paymentType: string, amountPayed: number) => void;
 }
 
 function PayScreen(props: PayScreenProps) {
   const paymentInputRef = useRef<HTMLInputElement>(null);
 
   const [payAmount, setPayAmount] = useState(0.0);
-  const [paymentType, setPaymentType] = useState("");
+  const [paymentType, setPaymentType] = useState("cash");
+
+  useEffect(() => {
+    if (props.isShowed) {
+      paymentInputRef.current?.focus();
+    } else {
+      if (paymentInputRef.current) {
+        paymentInputRef.current.value = "";
+      }
+      setPayAmount(0.0);
+      setPaymentType("cash");
+    }
+  }, [props.isShowed]);
 
   return (
     <div className="payscreen-container">
       <h1>Cobrar venta</h1>
       <div className="payment-inputs">
-        <select onChange={(e) => setPaymentType(e.target.value)}>
+        <select value={paymentType} onChange={(e) => setPaymentType(e.target.value)}>
           <option value="cash" selected>Efectivo</option>
           <option value="card">Tarjeta</option>
         </select>
@@ -56,7 +69,7 @@ function PayScreen(props: PayScreenProps) {
           disabled={props.totalSale === 0}
           label="Pagar (F1)"
           icon={<MdOutlineCheck />}
-          onClick={props.onPaySale} />
+          onClick={() =>props.onPaySale(paymentType, payAmount)} />
       </div>
     </div>
   );

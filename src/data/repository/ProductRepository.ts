@@ -9,6 +9,18 @@ class ProductRepository {
         this.productDataSource = productDataSource;
     }
 
+    async decreaseStock(code: string, unitsToDecrease: number): Promise<void> {
+        const product = await this.getProductByCode(code);
+        if (product) {
+            if (!product.isInfinityStock) {
+                const newStock = product.stock - unitsToDecrease;
+                this.productDataSource.setNewStockForProduct(product.code, newStock);
+            }
+        } else {
+            throw new Error("Producto no encontrado");
+        }
+    }
+
     async deleteProduct(code: string): Promise<void> {
         if (code) {
             this.productDataSource.deleteProduct(code);

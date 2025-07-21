@@ -33,9 +33,9 @@ declare global {
       updateProduct: (code: string, name: string, unitPrice: number, stock: number, isInfinityStock: boolean, category: string, previuosCode?: string) => Promise<void>;
     };
     saleAPI?: {
-      getSaleById: (saleId: number) => Promise<Sale>;
+      getSaleById: (saleId: number) => Promise<Sale | undefined>;
       getSalesByDate: (dateOfSale: Date) => Promise<Sale[]>;
-      saveSale: (dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], totalSale: number) => Promise<void>;
+      saveSale: (dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], paymentType: string, amountPayed: number, totalSale: number) => Promise<void>;
     };
   }
 }
