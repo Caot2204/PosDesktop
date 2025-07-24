@@ -3,13 +3,14 @@ import { MdOutlinePointOfSale, MdOutlineInventory, MdOutlineSettings } from "rea
 import { BiArchiveOut } from "react-icons/bi";
 import { FaUserTie } from "react-icons/fa6";
 import { NavLink } from 'react-router';
+import type UserSession from '../../../data/model/UserSession';
 
 interface PosMenuProps {
   className?: string;
+  userSession: UserSession;
 }
 
 function PosMenu(props: PosMenuProps) {
-
   return (
     <div className={props.className}>
       <div className="menu-container">
@@ -24,7 +25,7 @@ function PosMenu(props: PosMenuProps) {
             label="Ventas" />
         </NavLink>
         <NavLink
-          to=""
+          to="/egress"
           className={({ isActive }) =>
             isActive ? "menu-item selected" : "menu-item"
           }
@@ -43,26 +44,33 @@ function PosMenu(props: PosMenuProps) {
             icon={<MdOutlineInventory />}
             label="Inventario" />
         </NavLink>
-        <NavLink
-          to="/users"
-          className={({ isActive }) =>
-            isActive ? "menu-item selected" : "menu-item"
-          }
-        >
-          <PosMenuItem
-            icon={<FaUserTie />}
-            label="Usuarios" />
-        </NavLink>
-        <NavLink
-          to=""
-          className={({ isActive }) =>
-            isActive ? "menu-item selected" : "menu-item"
-          }
-        >
-          <PosMenuItem
-            icon={<MdOutlineSettings />}
-            label="Configuración" />
-        </NavLink>
+        {
+          props.userSession.isAdmin ?
+            <>
+              <NavLink
+                to="/users"
+                className={({ isActive }) =>
+                  isActive ? "menu-item selected" : "menu-item"
+                }
+              >
+                <PosMenuItem
+                  icon={<FaUserTie />}
+                  label="Usuarios" />
+              </NavLink>
+              <NavLink
+                to="/configuration"
+                className={({ isActive }) =>
+                  isActive ? "menu-item selected" : "menu-item"
+                }
+              >
+                <PosMenuItem
+                  icon={<MdOutlineSettings />}
+                  label="Configuración" />
+              </NavLink>
+            </>
+            :
+            <></>
+        }
       </div>
     </div >
   );

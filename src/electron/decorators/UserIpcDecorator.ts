@@ -27,6 +27,10 @@ class UserIpcDecorator {
             await this.userRepository.deleteUser(userId, isAdmin);
         });
 
+        this.ipcMain.handle('userApi:login', async (event, name: string, password: string) => {
+            return await this.userRepository.login(name, password);
+        });
+
         this.ipcMain.handle('userApi:getAllUsers', async (event) => {
             return await this.userRepository.getAllUsers();
         });

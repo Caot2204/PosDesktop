@@ -85,32 +85,28 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  width: 100%;
 }
 
-.date-container {
-  width: fit-content;
+.bussiness-info-container {
   display: flex;
-  justify-content: start;
-  align-items: center;
-}
-
-.date-icon {
-  width: 30px;
-  height: 30px;
-}
-
-.date-label {
-  font-size: 1.5em;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 15px;
 }
 
 .sale-buttons-extra {
   display: flex;
   flex-direction: row;
   margin-left: 40px;
+  gap: 15px;
 }
 
 .extra-button {
   width: 150px;
+  height: 40px;
   background-color: #BCECE7;
   color: #000;
   border: 1px solid #d9d9d9;

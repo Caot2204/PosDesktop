@@ -1,17 +1,28 @@
 import './App.css';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 import PosMenu from './common/components/PosMenu';
 import UserAvatar from './common/components/UserAvatar';
+import { BrowserRouter, Route, Routes } from 'react-router'
+import UsersScreen from './users/components/UsersScreen';
+import InventoryScreen from './inventory/principal/components/InventoryScreen.tsx';
+import NewSaleScreen from './sales/components/NewSaleScreen.tsx';
+import EgressScreen from './egress/components/EgressScreen.tsx';
+import ConfigurationScreen from './configuration/components/ConfigurationScreen.tsx';
 
 import User from '../data/model/User';
 import type Category from '../data/model/Category';
 import type Product from '../data/model/Product';
 import type Sale from '../data/model/Sale';
 import type SaleProductModel from './sales/model/SalesProductModel';
+import { useEffect, useState } from 'react';
+import LoginScreen from './login/components/LoginScreen';
+import type UserSession from '../data/model/UserSession.ts';
+import FirstUseScreen from './firstuse/components/FirstUseScreen.tsx';
 
 declare global {
   interface Window {
     userAPI?: {
+      login: (userName: string, password: string) => Promise<UserSession>;
       saveUser: (name: string, password: string, isAdmin: boolean) => Promise<void>;
       updateUser: (id: string, name: string, isAdmin: boolean) => Promise<void>;
       deleteUser: (id: string, isAdmin: boolean) => Promise<void>;
@@ -41,16 +52,73 @@ declare global {
 }
 
 function App() {
+  const [isFirstUse, setIsFirstUSe] = useState(false);
+  const [userSession, setUserSession] = useState<UserSession | null>(null);
+
+  useEffect(() => {
+    window.userAPI?.getAllUsers().then((users) => {
+      if (users.length === 0) {
+        setIsFirstUSe(true);
+      }
+    });
+  }, []);
+
+  return (
+    isFirstUse ?
+      <FirstUseScreen
+        onSuccessfullyCreateAccount={() => setIsFirstUSe(false)} />
+      :
+      userSession ?
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PosScreen
+                  userSession={userSession}
+                  onLogout={() => {
+                    setUserSession(null);
+                  }}/>
+              }>
+              <Route index element={<NewSaleScreen currentUser={userSession} />} />
+              <Route path="sales" element={<NewSaleScreen currentUser={userSession} />} />
+              <Route path="egress" element={<EgressScreen />} />
+              <Route path="inventory" element={<InventoryScreen />} />
+              <Route path="users" element={<UsersScreen />} />
+              <Route path="configuration" element={<ConfigurationScreen />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+        :
+        <LoginScreen
+          onLogin={(userSession: UserSession) => setUserSession(userSession)} />
+  )
+}
+
+interface PosScreenProps {
+  userSession: UserSession;
+  onLogout: () => void;
+}
+
+function PosScreen(props: PosScreenProps) {
+  let navigate = useNavigate();
   return (
     <>
       <div className="pos-header">
         <PosMenu
-          className="pos-menu" />
-        <UserAvatar />
+          className="pos-menu"
+          userSession={props.userSession} />
+        <UserAvatar
+          name={props.userSession.userName}
+          isAdmin={props.userSession.isAdmin}
+          onLogout={() => {
+            props.onLogout();
+            navigate("/sales");
+          }} />
       </div>
       <Outlet />
     </>
-  )
+  );
 }
 
 export default App

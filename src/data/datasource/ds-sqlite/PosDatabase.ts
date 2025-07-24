@@ -212,15 +212,6 @@ class PosDatabase {
         if (category?.length === 0) {
             await this.categoryDao?.saveCategory("Todos");
         }
-        const users = await this.userDao?.getAllUsers();
-        if (users?.length === 0) {
-            await this.userDao?.saveUser(new User(
-                "adminDefault",
-                "Admin",
-                "12345678",
-                true
-            ));
-        }
     }
 
 }

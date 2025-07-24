@@ -1,0 +1,15 @@
+.cash-closing-container p {
+  font-size: 1.3em;
+}
+
+.physicalmoney-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.physicalmoney-input > p {
+  width: 30%;
+  height: 100%;
+}

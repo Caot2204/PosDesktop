@@ -2,6 +2,7 @@ import User from '../model/User.js';
 import type { IUserDataSource } from '../datasource/ds-interfaces/IUserDataSource.js';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
+import UserSession from '../model/UserSession.js';
 
 class UserRepository {
 
@@ -56,6 +57,19 @@ class UserRepository {
             }
         }
         this.userDataSource.deleteUser(id);
+    }
+
+    async login(name: string, password: string): Promise<UserSession> {
+        try {
+            const user = await this.userDataSource.getUserByName(name);
+            if (user && await bcrypt.compare(password, user.password!)) {
+                return new UserSession(user.name, user.isAdmin);
+            } else {
+                throw new Error("Contraseña incorrecta");
+            }            
+        } catch (error) {
+            throw error;
+        }
     }
 
     private validateUserData(name: string, password: string): boolean {

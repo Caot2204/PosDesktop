@@ -10,6 +10,31 @@ class UserDao implements IUserDataSource {
         this.dbInstance = dbInstance.getInstance();
     }
 
+    async getUserByName(userName: string): Promise<User> {
+        return new Promise<User>((resolve, reject) => {
+            this.dbInstance.serialize(() => {
+                this.dbInstance.get(
+                    'SELECT * FROM users WHERE name = ?',
+                    [userName],
+                    (error: Error | null, row: any) => {
+                        if (error) { reject(error) }
+                        if (row) {
+                            const user = new User(
+                                row.id,
+                                row.name,
+                                row.password,
+                                Boolean(row.isAdmin)
+                            );
+                            resolve(user);
+                        } else {
+                            reject("Usuario o contraseña inválida");
+                        }
+                    }
+                );
+            });
+        });
+    }
+
     async getAllUsers(): Promise<User[]> {
         return new Promise<User[]>((resolve: any, reject: any) => {
             this.dbInstance.serialize(() => {

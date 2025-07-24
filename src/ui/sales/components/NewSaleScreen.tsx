@@ -1,8 +1,9 @@
 import '../stylesheets/NewSaleScreen.css';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import userAvatarImg from '../../assets/react.svg';
+import { useEffect, useRef, useState } from 'react';
 import { CiBarcode } from "react-icons/ci";
 import { FaSearch } from 'react-icons/fa';
-import { MdDateRange, MdOutlineCancel } from "react-icons/md";
+import { MdOutlineCancel } from "react-icons/md";
 import { ToastContainer } from 'react-toastify';
 import PosButton from '../../common/components/PosButton';
 import SalesProductList from './SalesProductList';
@@ -14,24 +15,22 @@ import { showErrorNotify, showSuccessNotify } from '../../utils/NotifyUtils';
 import PosConfirmDialog from '../../common/components/PosConfirmDialog';
 import PayScreen from './PayScreen';
 import SalesScreen from './SalesScreen';
+import CashClosingScreen from './CashClosingScreen';
+import type UserSession from '../../../data/model/UserSession';
 
-function NewSaleScreen() {
+interface NewSaleScreenProps {
+  currentUser: UserSession;
+}
+
+function NewSaleScreen(props: NewSaleScreenProps) {
   const searchDialogRef = useRef<HTMLDialogElement>(null);
   const payDialogRef = useRef<HTMLDialogElement>(null);
   const codeInputRef = useRef<HTMLInputElement>(null);
-  const [openDialog, setOpenDialog] = useState<null | 'confirmDialog' | 'searchProduct' | 'paydialog' | 'salesDialog'>(null);
+  const [openDialog, setOpenDialog] = useState<null | 'confirmDialog' | 'searchProduct' | 'paydialog' | 'salesDialog' | 'cashClosingDialog'>(null);
 
   const [productCodeInput, setProductCodeInput] = useState("");
   const [productsOfSale, setProductsOfSale] = useState<SaleProductModel[]>([]);
   const [totalSale, setTotalSale] = useState(0.0);
-
-  const getCurrentDate = useCallback(() => {
-    const date = new Date();
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day} / ${month} / ${year}`;
-  }, []);
 
   const handleClearScreen = () => {
     searchDialogRef.current?.close();
@@ -89,7 +88,7 @@ function NewSaleScreen() {
       const currentDate = new Date();
       window.saleAPI?.saveSale(
         currentDate,
-        "Carlos",
+        props.currentUser.userName,
         productsOfSale,
         paymentType,
         amountPayed,
@@ -200,13 +199,19 @@ function NewSaleScreen() {
         </div>
       </div>
       <div className={openDialog ? "extras-container filter-blur" : "extras-container"} >
-        <MdDateRange className="date-icon" />
-        <span className="date-label">{getCurrentDate()}</span>
+        <div className="bussiness-info-container">
+          <img className="bussiness-logo" src={userAvatarImg} alt="bussiness-logo" />
+          <h3>Abarrotes El Pachon</h3>
+        </div>
         <div className="sale-buttons-extra">
           <PosButton
             className="extra-button"
             label="Ventas del día"
             onClick={() => setOpenDialog("salesDialog")} />
+          <PosButton
+            className="extra-button"
+            label="Corte de caja"
+            onClick={() => setOpenDialog("cashClosingDialog")} />
         </div>
       </div>
       <dialog className="pos-dialog search-product-dialog" ref={searchDialogRef} open={openDialog === "searchProduct"}>
@@ -233,7 +238,17 @@ function NewSaleScreen() {
           }} />
         </div>
         <SalesScreen
-          isShowed={openDialog === "salesDialog"} />        
+          isShowed={openDialog === "salesDialog"} />
+      </dialog>
+      <dialog className="pos-dialog cashclosing-dialog" open={openDialog === "cashClosingDialog"}>
+        <div className="header-dialog">
+          <MdOutlineCancel className="close-dialog-button" onClick={() => {
+            setOpenDialog(null);
+          }} />
+        </div>
+        <CashClosingScreen
+          isShowed={openDialog === "cashClosingDialog"}
+          currentUser={props.currentUser.userName} />
       </dialog>
       <PosConfirmDialog
         message="¿Quitar los producto de la venta actual?"

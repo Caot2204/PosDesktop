@@ -34,9 +34,9 @@ function PayScreen(props: PayScreenProps) {
     <div className="payscreen-container">
       <h1>Cobrar venta</h1>
       <div className="payment-inputs">
-        <select value={paymentType} onChange={(e) => setPaymentType(e.target.value)}>
-          <option value="cash" selected>Efectivo</option>
-          <option value="card">Tarjeta</option>
+        <select defaultValue={paymentType} onChange={(e) => setPaymentType(e.target.value)}>
+          <option value="Efectivo" selected>Efectivo</option>
+          <option value="Tarjeta">Tarjeta</option>
         </select>
         <div className="payamount-input-container">
           <FaDollarSign className="payment-icon" />

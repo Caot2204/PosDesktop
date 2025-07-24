@@ -2,6 +2,8 @@ import User from "../../model/User.js";
 
 export interface IUserDataSource {
 
+    getUserByName(userName: string): Promise<User>;
+
     getAllUsers(): Promise<User[]>;
 
     getUserById(user: string): Promise<User>;
