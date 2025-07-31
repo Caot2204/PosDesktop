@@ -25,7 +25,7 @@ const createWindow = () => {
 const initializeDatabaseAndIpcMethods = async (): Promise<boolean> => {
   try {
     const dataSourceConfigurator = new DataSourceConfigurator(ipcMain);
-    dataSourceConfigurator.configureWithSqlite();    
+    dataSourceConfigurator.configure();    
   } catch (error) {
     console.error('Error initializing database:', error);
     app.quit();

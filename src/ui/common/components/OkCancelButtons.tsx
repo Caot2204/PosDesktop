@@ -1,14 +1,15 @@
-import '../stylesheets/SaveCancelButtons.css';
+import '../stylesheets/OkCancelButtons.css';
 import PosButton from './PosButton';
 import { FiSave } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 
-interface SaveCancelButtonsProps {
+interface OkCancelButtonsProps {
+  labelForOkButton?: string;
   onSave: () => void;
   onCancel: () => void;
 }
 
-function SaveCancelButtons(props: SaveCancelButtonsProps) {
+function OkCancelButtons(props: OkCancelButtonsProps) {
   return (
     <div className="buttons-container">
       <PosButton
@@ -18,10 +19,10 @@ function SaveCancelButtons(props: SaveCancelButtonsProps) {
         onClick={props.onCancel} />
       <PosButton
         icon={<FiSave />}
-        label="Guardar"
+        label={props.labelForOkButton ? props.labelForOkButton : "Guardar"}
         onClick={props.onSave} />
     </div>
   );
 }
 
-export default SaveCancelButtons;
+export default OkCancelButtons;

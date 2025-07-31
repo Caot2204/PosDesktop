@@ -87,7 +87,7 @@ function SalesScreen(props: SalesScreenProps) {
         <h2>Detalles de la venta </h2>
         <p><strong>Folio:</strong> {saleToShow?.id}</p>
         <p><strong>Fecha/Hora:</strong> {saleToShow ? formatDate(saleToShow.dateOfSale) : ''}</p>
-        <p><strong>Le atendío:</strong> {saleToShow?.userToGeneretaSale}</p>
+        <p><strong>Le atendío:</strong> {saleToShow?.userToGenerateSale}</p>
         <p><strong>Forma de pago:</strong> {saleToShow?.paymentType}</p>
         <hr />
         {

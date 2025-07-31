@@ -6,7 +6,7 @@ export interface IUserDataSource {
 
     getAllUsers(): Promise<User[]>;
 
-    getUserById(user: string): Promise<User>;
+    getUserById(userId: string): Promise<User>;
 
     saveUser(user: User): Promise<void>;
 

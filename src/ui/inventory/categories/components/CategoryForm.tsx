@@ -1,7 +1,7 @@
 import '../stylesheets/CategoryForm.css';
 import { useEffect, useState } from 'react';
 import { MdErrorOutline } from 'react-icons/md';
-import SaveCancelButtons from '../../../common/components/SaveCancelButtons';
+import OkCancelButtons from '../../../common/components/OkCancelButtons';
 import { showSuccessNotify } from '../../../utils/NotifyUtils';
 import { handleErrorMessage } from '../../../utils/ErrorUtils';
 import PosInput from '../../../common/components/PosInput';
@@ -83,7 +83,7 @@ function CategoryForm(props: CategoryFormProps) {
         label="Nombre"
         value={name}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} />
-      <SaveCancelButtons
+      <OkCancelButtons
         onSave={handleSubmit}
         onCancel={handleCancel} />
     </div>

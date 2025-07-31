@@ -55,10 +55,10 @@ class UserDao implements IUserDataSource {
         });
     }
 
-    async getUserById(user: string): Promise<User> {
+    async getUserById(userId: string): Promise<User> {
         return new Promise<User>((resolve: any, reject: any) => {
             this.dbInstance.serialize(() => {
-                this.dbInstance.get('SELECT * FROM users WHERE id = ?', [user], (error: Error | null, row: any) => {
+                this.dbInstance.get('SELECT * FROM users WHERE id = ?', [userId], (error: Error | null, row: any) => {
                     if (error) {
                         return reject(error);
                     }

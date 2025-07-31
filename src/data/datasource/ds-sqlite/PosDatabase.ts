@@ -1,9 +1,9 @@
 import sqlite3 from 'sqlite3';
 import UserDao from './UserDao.js';
-import User from '../../model/User.js';
 import CategoryDao from './CategoryDao.js';
 import ProductDao from './ProductDao.js';
 import SaleDao from './SaleDao.js';
+import CashClosingDao from './CashClosingDao.js';
 
 class PosDatabase {
 
@@ -13,6 +13,7 @@ class PosDatabase {
     private categoryDao: CategoryDao | null = null;
     private productDao: ProductDao | null = null;
     private saleDao: SaleDao | null = null;
+    private cashClosingDao: CashClosingDao | null = null;
 
     constructor(dbPath: string | 'test') {
         this.dbPath = dbPath;
@@ -28,10 +29,12 @@ class PosDatabase {
                     this.createProductTable();
                     this.createSaleTable();
                     this.createSalesProductsTable();
+                    this.createCashClosingTable();
                     this.userDao = new UserDao(this);
                     this.categoryDao = new CategoryDao(this);
                     this.productDao = new ProductDao(this, this.categoryDao);
                     this.saleDao = new SaleDao(this);
+                    this.cashClosingDao = new CashClosingDao(this);
                     this.insertDefaultData();
                     resolve();
                 } else {
@@ -67,26 +70,28 @@ class PosDatabase {
         });
     }
 
-    private createUserTable(): Promise<void> {
+    private createCashClosingTable(): Promise<void> {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 return reject(new Error("Database is not initialized"));
             }
-            this.db.run(`CREATE TABLE IF NOT EXISTS users(
-                id VARCHAR(255) PRIMARY KEY NOT NULL,
-                name VARCHAR(50) NOT NULL,
-                password VARCHAR(255) NOT NULL,
-                isAdmin TINYINT NOT NULL
-            )`, (error: Error) => {
-                if (error) {
-                    console.error('Error creating users table: ', error.message);
-                    reject(error);
-                } else {
-                    console.log('Users table checked/created');
-                    resolve();
+            this.db.run(`CREATE TABLE IF NOT EXISTS cash_closings(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                date DATETIME NOT NULL,
+                physicalMoney DOUBLE NOT NULL,
+                totalOfDay DOUBLE NOT NULL,
+                userName VARCHAR(255) NOT NULL
+                )`, (error: Error) => {
+                    if (error) {
+                        console.log('Error creating cash_closing table: ', error);
+                        reject(error);
+                    } else {
+                        console.log('Cash_closing table checked/created');
+                        resolve();
+                    }
                 }
-            });
-        })
+            );
+        });
     }
 
     private createCategoryTable(): Promise<void> {
@@ -179,11 +184,40 @@ class PosDatabase {
         });
     }
 
+    private createUserTable(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (!this.db) {
+                return reject(new Error("Database is not initialized"));
+            }
+            this.db.run(`CREATE TABLE IF NOT EXISTS users(
+                id VARCHAR(255) PRIMARY KEY NOT NULL,
+                name VARCHAR(50) NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                isAdmin TINYINT NOT NULL
+            )`, (error: Error) => {
+                if (error) {
+                    console.error('Error creating users table: ', error.message);
+                    reject(error);
+                } else {
+                    console.log('Users table checked/created');
+                    resolve();
+                }
+            });
+        })
+    }
+
     getUserDao(): UserDao {
         if (!this.userDao) {
             this.userDao = new UserDao(this);
         }
         return this.userDao;
+    }
+
+    getCashClosingDao(): CashClosingDao {
+        if (!this.cashClosingDao) {
+            this.cashClosingDao = new CashClosingDao(this);
+        }
+        return this.cashClosingDao;
     }
 
     getCategoryDao(): CategoryDao {

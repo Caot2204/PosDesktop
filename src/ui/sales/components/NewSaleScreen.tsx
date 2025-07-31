@@ -248,7 +248,8 @@ function NewSaleScreen(props: NewSaleScreenProps) {
         </div>
         <CashClosingScreen
           isShowed={openDialog === "cashClosingDialog"}
-          currentUser={props.currentUser.userName} />
+          currentUser={props.currentUser.userName}
+          onClose={() => setOpenDialog(null)} />
       </dialog>
       <PosConfirmDialog
         message="¿Quitar los producto de la venta actual?"

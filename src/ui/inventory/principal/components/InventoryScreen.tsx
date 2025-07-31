@@ -27,29 +27,25 @@ function InventoryScreen() {
   const [searchFilter, setSearchFilter] = useState("");
   const [productToEdit, setProductToEdit] = useState<Product | undefined>(undefined)
 
-  const fetchProducts = useCallback(async () => {
+  const fetchProducts = async () => {
     try {
-      const fetchedProducts = await window.productAPI?.getAllProducts();
-      if (fetchedProducts !== undefined) {
+      window.productAPI?.getAllProducts().then((fetchedProducts: Product[]) => {
         setFetchedProducts(fetchedProducts);
-        setLoadingData(false);
-      }
+      });
     } catch (error) {
       showErrorNotify("Error al recuperar los productos");
     }
-  }, []);
+  };
 
-  const fetchCategories = useCallback(async () => {
+  const fetchCategories = async () => {
     try {
-      const fetchedCategories = await window.categoryAPI?.getAllCategories();
-      if (fetchedCategories !== undefined) {
+      window.categoryAPI?.getAllCategories().then((fetchedCategories: Category[]) => {
         setCategories(fetchedCategories);
-        setLoadingData(false);
-      }
+      });
     } catch (error) {
       showErrorNotify("Error al recuperar las categorias");
     }
-  }, []);
+  };
 
   const handleCloseProductDialog = useCallback(() => {
     setOpenDialog(null);
@@ -63,17 +59,17 @@ function InventoryScreen() {
     setSearchFilter("");
   };
 
-  const handleEditProduct = useCallback((product: Product) => {
+  const handleEditProduct = (product: Product) => {
     setOpenDialog("productForm");
     setProductToEdit(product);
-    fetchProducts();
-  }, []);
+  };
 
   useEffect(() => {
     fetchCategories();
     fetchProducts();
-    setCategoryFilter("Todos");
-  }, [fetchCategories, fetchProducts, loadingData]);
+    setCategoryFilter(categoryFilter);
+    setLoadingData(false);
+  }, [loadingData]);
 
   return (
     <div className="inventory-container">
@@ -137,7 +133,7 @@ function InventoryScreen() {
           forEdit={productToEdit ? true : false}
           categories={categories}
           onSaveSuccess={() => {
-            fetchProducts();
+            setLoadingData(true);
             handleCloseProductDialog();
           }}
           onCancel={() => {
@@ -152,7 +148,7 @@ function InventoryScreen() {
         </div>
         <IncreaseStockScreen
           products={fetchedProducts}
-          onIncreaseSuccesfully={() => fetchProducts()} />
+          onIncreaseSuccesfully={() => setLoadingData(true)} />
       </dialog>
       <ToastContainer />
     </div>

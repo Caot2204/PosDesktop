@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import LoginScreen from './login/components/LoginScreen';
 import type UserSession from '../data/model/UserSession.ts';
 import FirstUseScreen from './firstuse/components/FirstUseScreen.tsx';
+import type CashClosing from '../data/model/CashClosing.ts';
 
 declare global {
   interface Window {
@@ -48,6 +49,11 @@ declare global {
       getSalesByDate: (dateOfSale: Date) => Promise<Sale[]>;
       saveSale: (dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], paymentType: string, amountPayed: number, totalSale: number) => Promise<void>;
     };
+    cashClosingAPI?: {
+      getCashClosingOfDate: (date: Date) => Promise<CashClosing[]>;
+      getCashClosingOfUser: (userName: string) => Promise<CashClosing[]>;
+      saveCashClosing: (currentDate: Date, physicalMoney: number, totalOfDay: number, userName: string) => Promise<void>;
+    }
   }
 }
 

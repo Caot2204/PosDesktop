@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../stylesheets/UserForm.css';
 import { MdErrorOutline } from "react-icons/md";
-import SaveCancelButtons from '../../common/components/SaveCancelButtons';
+import OkCancelButtons from '../../common/components/OkCancelButtons';
 import { showSuccessNotify } from '../../utils/NotifyUtils';
 import { handleErrorMessage } from '../../utils/ErrorUtils';
 
@@ -102,7 +102,7 @@ export function UserForm(props: UserDataProps) {
           <label htmlFor="isAdminCheckBox">¿Es administrador?</label>
         </div>
       </div>
-      <SaveCancelButtons
+      <OkCancelButtons
         onSave={handleSubmit}
         onCancel={handleCancel} />
     </>

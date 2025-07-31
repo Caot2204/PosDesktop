@@ -1,10 +1,14 @@
 import '../stylesheets/CashClosingScreen.css';
-import {  useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { formatNumberToCurrentPrice } from '../../utils/FormatUtils';
+import OkCancelButtons from '../../common/components/OkCancelButtons';
+import { showErrorNotify, showSuccessNotify } from '../../utils/NotifyUtils';
+import PosConfirmDialog from '../../common/components/PosConfirmDialog';
 
 interface CashClosingScreenProps {
   isShowed: boolean;
   currentUser: string;
+  onClose: () => void;
 }
 
 function CashClosingScreen(props: CashClosingScreenProps) {
@@ -12,20 +16,43 @@ function CashClosingScreen(props: CashClosingScreenProps) {
 
   const [totalOfDay, setTotalOfDay] = useState(0.0);
   const [physicalMoney, setPhysicalMoney] = useState(0.0);
+  const [openDialog, setOpenDialog] = useState<'confirmDialog' | null>(null);
+
+  const handleCashClosing = async () => {
+    if (physicalMoney > 0.0) {
+      if (physicalMoney !== totalOfDay) {
+        setOpenDialog("confirmDialog");
+      } else {
+        try {
+          await window.cashClosingAPI?.saveCashClosing(
+            new Date(),
+            physicalMoney,
+            totalOfDay,
+            props.currentUser
+          );
+          showSuccessNotify("Corte de caja realizado");
+          props.onClose();
+        } catch (error) {
+          console.log(error);
+          showErrorNotify("Error al realizar el corte de caja, inténtelo de nuevo");
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     window.saleAPI?.getSalesByDate(new Date()).then(sales => {
-      const salesOfCurrentUser = sales.filter(sale => sale.userToGeneretaSale === props.currentUser);
+      const salesOfCurrentUser = sales.filter(sale => sale.userToGenerateSale === props.currentUser);
       let tempTotal = 0.0;
       salesOfCurrentUser.forEach(sale => {
         tempTotal += sale.totalSale;
       });
       setTotalOfDay(tempTotal);
-      if (physicalMoneyInputRef.current) {
-        physicalMoneyInputRef.current.value = "";
-        physicalMoneyInputRef.current.focus();
-      }    
     });
+    if (physicalMoneyInputRef.current) {
+      physicalMoneyInputRef.current.value = "";
+      physicalMoneyInputRef.current.focus();
+    }
   }, [props.isShowed]);
 
   return (
@@ -34,8 +61,23 @@ function CashClosingScreen(props: CashClosingScreenProps) {
       <p><strong>Venta del día:</strong>&emsp;&ensp;{formatNumberToCurrentPrice(totalOfDay)}</p>
       <div className="physicalmoney-input">
         <p><strong>Dinero en caja: </strong></p>
-        <input type="number" onChange={(e) => setPhysicalMoney(Number(e.target.value))} />
-      </div>      
+        <input type="number" ref={physicalMoneyInputRef} onChange={(e) => setPhysicalMoney(Number(e.target.value))} />
+      </div>
+      <OkCancelButtons
+        labelForOkButton="Aceptar"
+        onCancel={props.onClose}
+        onSave={handleCashClosing} />
+      <PosConfirmDialog
+        message="El dinero físico no coincide con el total de la ventas, ¿Desea continuar?"
+        isShowed={openDialog === "confirmDialog"}
+        onCancel={() => {
+          setOpenDialog(null);
+          physicalMoneyInputRef.current?.focus();
+        }}
+        onOk={() => {
+          setOpenDialog(null);
+          handleCashClosing();
+        }} />
     </div>
   );
 }

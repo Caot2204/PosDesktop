@@ -48,3 +48,11 @@ contextBridge.exposeInMainWorld('saleAPI',
     ) => ipcRenderer.invoke('saleApi:saveSale', dateOfSale, userToGenerateSale, productsSold, paymentType, amountPayed, totalSale)
   }
 );
+
+contextBridge.exposeInMainWorld('cashClosingApi',
+  {
+    getCashClosingOfDate: (date: Date) => ipcRenderer.invoke('cashClosingApi:getCashClosingOfDate', date),
+    getCashClosingOfUser: (userName: string) => ipcRenderer.invoke('cashClosingApi:getCashClosingOfUser', userName),
+    saveCashClosing: (currentDate: Date, physicalMoney: number, totalOfDay: number, userName: string) => ipcRenderer.invoke('cashClosingApi:saveCashClosing', currentDate, physicalMoney, totalOfDay, userName)
+  }
+);

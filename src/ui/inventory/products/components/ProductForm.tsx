@@ -1,7 +1,7 @@
 import '../stylesheets/ProductForm.css';
 import { useEffect, useState } from 'react';
 import { MdErrorOutline } from 'react-icons/md';
-import SaveCancelButtons from '../../../common/components/SaveCancelButtons';
+import OkCancelButtons from '../../../common/components/OkCancelButtons';
 import { handleErrorMessage } from '../../../utils/ErrorUtils';
 import type Category from '../../../../data/model/Category';
 import CategorySelect from '../../categories/components/CategorySelect';
@@ -112,7 +112,7 @@ function ProductForm(props: ProductDataProps) {
         selected={category}
         options={props.categories}
         onCategorySelected={setCategory} />
-      <SaveCancelButtons
+      <OkCancelButtons
         onSave={handleSubmit}
         onCancel={handleCancel} />
     </div>
