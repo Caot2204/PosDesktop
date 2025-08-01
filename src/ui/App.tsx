@@ -52,7 +52,7 @@ declare global {
     cashClosingAPI?: {
       getCashClosingOfDate: (date: Date) => Promise<CashClosing[]>;
       getCashClosingOfUser: (userName: string) => Promise<CashClosing[]>;
-      saveCashClosing: (currentDate: Date, physicalMoney: number, totalOfDay: number, userName: string) => Promise<void>;
+      saveCashClosing: (physicalMoney: number, totalOfDay: number, userName: string) => Promise<void>;
     }
   }
 }

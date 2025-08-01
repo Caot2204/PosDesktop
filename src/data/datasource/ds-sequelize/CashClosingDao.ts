@@ -57,7 +57,7 @@ class CashClosingDao implements ICashClosingDataSource {
     saveCashClosing(cashClosing: CashClosing): Promise<void> {
         return new Promise((resolve, reject) => {
             this.CashClosingSequelize.create({
-                date: toMysqlDatetime(cashClosing.currentDate),
+                date: cashClosing.currentDate,
                 physicalMoney: cashClosing.physicalMoney,
                 totalOfDay: cashClosing.totalOfDay,
                 userName: cashClosing.userName

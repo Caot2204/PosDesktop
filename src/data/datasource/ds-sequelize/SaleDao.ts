@@ -2,7 +2,7 @@ import { QueryTypes } from 'sequelize';
 import Sale from '../../model/Sale.js';
 import SalesProduct from '../../model/SalesProduct.js';
 import type ISaleDataSource from '../ds-interfaces/ISaleDataSource.js';
-import { fromMysqlDatetime, toMysqlDatetime } from '../utils/DateUtils.js';
+import { toMysqlDatetime } from '../utils/DateUtils.js';
 
 class SaleDao implements ISaleDataSource {
 

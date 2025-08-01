@@ -18,14 +18,13 @@ function CashClosingScreen(props: CashClosingScreenProps) {
   const [physicalMoney, setPhysicalMoney] = useState(0.0);
   const [openDialog, setOpenDialog] = useState<'confirmDialog' | null>(null);
 
-  const handleCashClosing = async () => {
+  const handleCashClosing = () => {
     if (physicalMoney > 0.0) {
       if (physicalMoney !== totalOfDay) {
         setOpenDialog("confirmDialog");
       } else {
         try {
-          await window.cashClosingAPI?.saveCashClosing(
-            new Date(),
+          window.cashClosingAPI?.saveCashClosing(
             physicalMoney,
             totalOfDay,
             props.currentUser

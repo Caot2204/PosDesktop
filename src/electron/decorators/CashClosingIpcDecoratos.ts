@@ -24,9 +24,10 @@ class CashClosingIpcDecorator {
             return await this.cashClosingRepository.getCashClosingOfUser(userName);
         });
 
-        this.ipcMain.handle('cashClosingApi:saveCashClosing', async (event, currentDate: Date, physicalMoney: number, totalOfDay: number, userName: string) => {
-            await this.cashClosingRepository.saveCashClosing(currentDate, physicalMoney, totalOfDay, userName);
+        this.ipcMain.handle('cashClosingApi:saveCashClosing', async (event, physicalMoney: number, totalOfDay: number, userName: string) => {
+            await this.cashClosingRepository.saveCashClosing(new Date(), physicalMoney, totalOfDay, userName);
         });
+        console.log("Cash closing methods configured succesfully");
     }
 }
 
