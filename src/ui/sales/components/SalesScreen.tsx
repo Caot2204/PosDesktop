@@ -2,7 +2,7 @@ import '../stylesheets/SalesScreen.css';
 import { useEffect, useState } from 'react';
 import type Sale from '../../../data/model/Sale';
 import SaleItem from './SaleItem';
-import { formatNumberToCurrentPrice } from '../../utils/FormatUtils';
+import { formatDate, formatDateForSearch, formatNumberToCurrentPrice } from '../../utils/FormatUtils';
 
 interface SalesScreenProps {
   isShowed: boolean;
@@ -12,22 +12,6 @@ function SalesScreen(props: SalesScreenProps) {
   const [sales, setSales] = useState<Sale[]>([]);
   const [dateToSearch, setDateToSearch] = useState(formatDateForSearch(new Date()));
   const [saleToShow, setSaleToShow] = useState<Sale | null>(null);
-
-  function formatDate(dateToFormat: Date): string {
-    const minutes = dateToFormat.getMinutes() < 10 ? "0" + dateToFormat.getMinutes() : dateToFormat.getMinutes();
-    const seconds = dateToFormat.getSeconds() < 10 ? "0" + dateToFormat.getSeconds() : dateToFormat.getSeconds();
-    return dateToFormat.getDate() + "-" +
-      (dateToFormat.getMonth() + 1) + "-" +
-      dateToFormat.getFullYear() + " " +
-      dateToFormat.getHours() + ":" +
-      minutes + ":" +
-      seconds;
-  }
-
-  function formatDateForSearch(dateToFormat: Date): string {
-    const month = dateToFormat.getMonth() + 1 < 10 ? "0" + (dateToFormat.getMonth() + 1) : dateToFormat.getMonth() + 1;
-    return dateToFormat.getFullYear() + "-" + month + "-" + dateToFormat.getDate();
-  }
 
   const handleGetSaleById = (saleId: number) => {
     window.saleAPI?.getSaleById(saleId).then(sale => {

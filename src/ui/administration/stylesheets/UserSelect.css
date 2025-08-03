@@ -1,0 +1,12 @@
+select {
+  background-color: white;
+  width: calc(100% - 10px);
+  height: 40px;
+  border-radius: 10px;
+  padding: 10px 8px;
+  margin-bottom: 10px;
+}
+
+option {
+  height: 40px;
+}

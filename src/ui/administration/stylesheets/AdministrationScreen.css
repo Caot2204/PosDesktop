@@ -1,0 +1,9 @@
+.header-dialog {
+  margin-bottom: 10px;
+}
+
+.filter-blur {
+  filter: blur(8px);
+  pointer-events: none; /* Optional: prevent interaction with blurred content */
+  user-select: none;    /* Optional: prevent text selection */
+}

@@ -23,7 +23,7 @@ class CashClosingDao implements ICashClosingDataSource {
             });
             if (cashClosingsDb) {
                 const cashClosings = cashClosingsDb.map((cashClosingDb: any) => new CashClosing(
-                    fromMysqlDatetime(cashClosingDb.date)!!,
+                    new Date(cashClosingDb.date),
                     cashClosingDb.physicalMoney,
                     cashClosingDb.totalOfDay,
                     cashClosingDb.userName,
@@ -41,7 +41,7 @@ class CashClosingDao implements ICashClosingDataSource {
             const cashClosingsDb = await this.CashClosingSequelize.findAll({ where: { userName: userName } });
             if (cashClosingsDb) {
                 const cashClosings = cashClosingsDb.map((cashClosingDb: any) => new CashClosing(
-                    fromMysqlDatetime(cashClosingDb.date)!!,
+                    new Date(cashClosingDb.date),
                     cashClosingDb.physicalMoney,
                     cashClosingDb.totalOfDay,
                     cashClosingDb.userName,

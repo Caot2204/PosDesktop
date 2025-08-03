@@ -1,0 +1,25 @@
+.cashclosingitem-container {
+  width: calc(100% - 50px);
+  padding: 0 8px 0 8px;
+  box-shadow: 0 1px 5px 0px #838282;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.cashclosingitem-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;  
+}
+
+.cashclosingitem-container > ul {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

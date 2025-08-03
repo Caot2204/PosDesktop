@@ -7,7 +7,7 @@ import UsersScreen from './users/components/UsersScreen';
 import InventoryScreen from './inventory/principal/components/InventoryScreen.tsx';
 import NewSaleScreen from './sales/components/NewSaleScreen.tsx';
 import EgressScreen from './egress/components/EgressScreen.tsx';
-import ConfigurationScreen from './configuration/components/ConfigurationScreen.tsx';
+import AdministrationScreen from './administration/components/AdministrationScreen.tsx';
 
 import User from '../data/model/User';
 import type Category from '../data/model/Category';
@@ -91,7 +91,7 @@ function App() {
               <Route path="egress" element={<EgressScreen />} />
               <Route path="inventory" element={<InventoryScreen />} />
               <Route path="users" element={<UsersScreen />} />
-              <Route path="configuration" element={<ConfigurationScreen />} />
+              <Route path="administration" element={<AdministrationScreen />} />
             </Route>
           </Routes>
         </BrowserRouter>

@@ -1,7 +1,7 @@
 import '../stylesheets/PosMenu.css';
-import { MdOutlinePointOfSale, MdOutlineInventory, MdOutlineSettings } from "react-icons/md";
+import { MdOutlinePointOfSale, MdOutlineInventory } from "react-icons/md";
 import { BiArchiveOut } from "react-icons/bi";
-import { FaUserTie } from "react-icons/fa6";
+import { FaUserTie, FaShop } from "react-icons/fa6";
 import { NavLink } from 'react-router';
 import type UserSession from '../../../data/model/UserSession';
 
@@ -58,14 +58,14 @@ function PosMenu(props: PosMenuProps) {
                   label="Usuarios" />
               </NavLink>
               <NavLink
-                to="/configuration"
+                to="/administration"
                 className={({ isActive }) =>
                   isActive ? "menu-item selected" : "menu-item"
                 }
               >
                 <PosMenuItem
-                  icon={<MdOutlineSettings />}
-                  label="Configuración" />
+                  icon={<FaShop />}
+                  label="Administración" />
               </NavLink>
             </>
             :
