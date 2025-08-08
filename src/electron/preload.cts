@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from "electron";
+import { contextBridge, ipcRenderer, nativeImage } from "electron";
 import SaleProductModel from "../ui/sales/model/SalesProductModel";
 
 contextBridge.exposeInMainWorld('userAPI',
@@ -7,7 +7,7 @@ contextBridge.exposeInMainWorld('userAPI',
       'userApi:saveUser', name, password, isAdmin
     ),
     deleteUser: (id: string, isAdmin: boolean) => ipcRenderer.invoke('userApi:deleteUser', id, isAdmin),
-    updateUser: (id: string, name: string, password: string, isAdmin: boolean) => 
+    updateUser: (id: string, name: string, password: string, isAdmin: boolean) =>
       ipcRenderer.invoke('userApi:updateUser', id, name, password, isAdmin),
     getAllUsers: () => ipcRenderer.invoke('userApi:getAllUsers'),
     login: (userName: string, password: string) => ipcRenderer.invoke('userApi:login', userName, password)
@@ -39,8 +39,8 @@ contextBridge.exposeInMainWorld('saleAPI',
     getSaleById: (saleId: number) => ipcRenderer.invoke('saleApi:getSaleById', saleId),
     getSalesByDate: (dateOfSale: Date) => ipcRenderer.invoke('saleApi:getSalesByDate', dateOfSale),
     saveSale: (
-      dateOfSale: Date, 
-      userToGenerateSale: string, 
+      dateOfSale: Date,
+      userToGenerateSale: string,
       productsSold: SaleProductModel[],
       paymentType: string,
       amountPayed: number,
@@ -55,4 +55,14 @@ contextBridge.exposeInMainWorld('cashClosingAPI',
     getCashClosingOfUser: (userName: string) => ipcRenderer.invoke('cashClosingApi:getCashClosingOfUser', userName),
     saveCashClosing: (physicalMoney: number, totalOfDay: number, userName: string) => ipcRenderer.invoke('cashClosingApi:saveCashClosing', physicalMoney, totalOfDay, userName)
   }
+);
+
+contextBridge.exposeInMainWorld('posConfigAPI',
+  {
+    getPosConfig: () => ipcRenderer.invoke('posConfigApi:getPosConfig'),
+    savePosConfig: (bussinessName: string, bussinessLogoUrl: string, minimunStock: number, posLanguage: string) => ipcRenderer.invoke('posConfigApi:savePosConfig', bussinessName, bussinessLogoUrl, minimunStock, posLanguage),
+    selectNewBussinessLogo: () => ipcRenderer.invoke('posConfigApi:selectNewBussinessLogo'),
+    getBussinessLogoDataUrl: (logoPath: string) => ipcRenderer.invoke('posConfigApi:getBussinessLogoDataUrl', logoPath)
+  }
+
 );

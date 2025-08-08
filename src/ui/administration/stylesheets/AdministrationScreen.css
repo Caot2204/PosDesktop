@@ -2,8 +2,52 @@
   margin-bottom: 10px;
 }
 
-.filter-blur {
-  filter: blur(8px);
-  pointer-events: none; /* Optional: prevent interaction with blurred content */
-  user-select: none;    /* Optional: prevent text selection */
+.administrationscreen-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  overflow-y: auto;
+}
+
+.administrationscreen-container h3 {
+  text-align: start;
+}
+
+.administration-bussiness-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.input-container {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 20px;
+  margin-left: 50px;
+}
+
+.bussiness-logo-administration {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px 0px #838282;
+}
+
+.pos-label {
+  width: fit-content;
+}
+
+.pos-input {
+  width: 500px;
+}
+
+.bussiness-logo-button {
+  width: 150px;
+  height: 30px;
+  font-size: 1em;
 }

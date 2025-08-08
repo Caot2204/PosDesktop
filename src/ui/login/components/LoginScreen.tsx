@@ -1,5 +1,5 @@
 import '../stylesheets/LoginScreen.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import userAvatarImg from '../../assets/react.svg';
 import PosButton from '../../common/components/PosButton';
 import UserSession from '../../../data/model/UserSession';
@@ -10,6 +10,8 @@ interface LoginScreenProps {
 }
 
 function LoginScreen(props: LoginScreenProps) {
+  const [bussinessName, setBussinessName] = useState("");
+  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('../assets/react.svg');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,10 +28,18 @@ function LoginScreen(props: LoginScreenProps) {
     }
   };
 
+  useEffect(() => {
+      window.posConfigAPI?.getPosConfig()
+        .then(posConfig => {
+          setBussinessName(posConfig?.bussinessName);
+          setBussinessLogoUrl(posConfig?.bussinessLogoUrl);
+        });    
+    }, []);
+
   return (
     <div className="loginscreen-container">
-      <img className="bussiness-logo" src={userAvatarImg} alt="user avatar" />
-      <h2>Abarrotes El Pachon</h2>
+      <img className="bussiness-logo" src={bussinessLogoUrl} alt="logo del negocio" />
+      <h2>{bussinessName}</h2>
       <input
         className="loginscreen-input"
         type="text"

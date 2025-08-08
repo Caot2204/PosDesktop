@@ -93,8 +93,15 @@
 .bussiness-info-container {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 15px;
+}
+
+.newsale-bussiness-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  box-shadow: 0px 1px 3px 0px #838282;
 }
 
 .sale-buttons-extra {

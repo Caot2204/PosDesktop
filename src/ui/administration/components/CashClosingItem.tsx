@@ -3,8 +3,6 @@ import type CashClosing from '../../../data/model/CashClosing';
 import { formatDate, formatNumberToCurrentPrice } from '../../utils/FormatUtils';
 
 function CashClosingItem(props: CashClosing) {
-
-  console.log(props.currentDate);
   return (
     <div className="cashclosingitem-container">
       <div className="cashclosingitem-header">

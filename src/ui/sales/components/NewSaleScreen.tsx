@@ -27,6 +27,8 @@ function NewSaleScreen(props: NewSaleScreenProps) {
   const payDialogRef = useRef<HTMLDialogElement>(null);
   const codeInputRef = useRef<HTMLInputElement>(null);
   const [openDialog, setOpenDialog] = useState<null | 'confirmDialog' | 'searchProduct' | 'paydialog' | 'salesDialog' | 'cashClosingDialog'>(null);
+  const [bussinessName, setBussinessName] = useState("");
+  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('../assets/react.svg');
 
   const [productCodeInput, setProductCodeInput] = useState("");
   const [productsOfSale, setProductsOfSale] = useState<SaleProductModel[]>([]);
@@ -147,6 +149,14 @@ function NewSaleScreen(props: NewSaleScreenProps) {
     }
   }, [openDialog]);
 
+  useEffect(() => {
+    window.posConfigAPI?.getPosConfig()
+      .then(posConfig => {
+        setBussinessName(posConfig?.bussinessName);
+        setBussinessLogoUrl(posConfig?.bussinessLogoUrl);
+      });    
+  }, []);
+
   return (
     <div className="new-sale-container">
       <div className={openDialog ? "code-input filter-blur" : "code-input"}>
@@ -200,8 +210,11 @@ function NewSaleScreen(props: NewSaleScreenProps) {
       </div>
       <div className={openDialog ? "extras-container filter-blur" : "extras-container"} >
         <div className="bussiness-info-container">
-          <img className="bussiness-logo" src={userAvatarImg} alt="bussiness-logo" />
-          <h3>Abarrotes El Pachon</h3>
+          <img 
+            className="newsale-bussiness-logo" 
+            src={bussinessLogoUrl} 
+            alt="bussiness-logo" />
+          <h3>{bussinessName}</h3>
         </div>
         <div className="sale-buttons-extra">
           <PosButton

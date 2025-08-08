@@ -19,6 +19,7 @@ import LoginScreen from './login/components/LoginScreen';
 import type UserSession from '../data/model/UserSession.ts';
 import FirstUseScreen from './firstuse/components/FirstUseScreen.tsx';
 import type CashClosing from '../data/model/CashClosing.ts';
+import type PosConfig from '../data/pos-config/PosConfig.ts';
 
 declare global {
   interface Window {
@@ -53,6 +54,12 @@ declare global {
       getCashClosingOfDate: (date: Date) => Promise<CashClosing[]>;
       getCashClosingOfUser: (userName: string) => Promise<CashClosing[]>;
       saveCashClosing: (physicalMoney: number, totalOfDay: number, userName: string) => Promise<void>;
+    };
+    posConfigAPI?: {
+      savePosConfig: (bussinessName: string, bussinessLogoUrl: string, minimunStock: number, posLanguage: string) => Promise<void>;
+      getPosConfig: () => Promise<PosConfig>;
+      selectNewBussinessLogo: () => Promise<string | undefined>;
+      getBussinessLogoDataUrl: (logoPath: string) => Promise<string | undefined>;
     }
   }
 }
