@@ -14,9 +14,20 @@ import { rendererConfig } from './webpack.renderer.config';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    icon: './src/icons/icon'
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [
+    new MakerSquirrel({
+      setupIcon: './src/icons/icon.ico'
+    }), 
+    new MakerZIP({}, ['darwin']), 
+    new MakerRpm({}), 
+    new MakerDeb({
+      options: {
+        icon: './src/icons/icon.png'
+      }
+    })],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
