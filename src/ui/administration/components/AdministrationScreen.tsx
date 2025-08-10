@@ -5,7 +5,8 @@ import CashClosingsListScreen from './CashClosingsListScreen';
 import { MdOutlineCancel } from 'react-icons/md';
 import { showSuccessNotify } from '../../utils/NotifyUtils';
 import { ToastContainer } from 'react-toastify';
-import defaultLogo from '../../assets/react.svg';
+
+const defaultLogo = '../../assets/react.svg';
 
 function AdministrationScreen() {
   const [openDialog, setOpenDialog] = useState<'cashClosingDialog' | null>(null);

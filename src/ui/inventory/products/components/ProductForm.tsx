@@ -99,7 +99,7 @@ function ProductForm(props: ProductDataProps) {
           <></>
       }
       <label>Código del producto:</label>
-      <input type="text" value={productCode} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductCode(e.target.value)} />
+      <input disabled={props.forEdit} type="text" value={productCode} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductCode(e.target.value)} />
       <label>Nombre:</label>
       <input type="text" value={productName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductName(e.target.value)} />
       <label>Precio unitario:</label>

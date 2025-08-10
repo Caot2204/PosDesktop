@@ -1,8 +1,8 @@
-import Sale from "../../model/Sale.js";
-import SalesProduct from "../../model/SalesProduct.js";
-import type ISaleDataSource from "../ds-interfaces/ISaleDataSource.js";
-import { fromMysqlDatetime, toMysqlDatetime } from "../utils/DateUtils.js";
-import type PosDatabase from "./PosDatabase.js";
+import Sale from "../../model/Sale";
+import SalesProduct from "../../model/SalesProduct";
+import type ISaleDataSource from "../ds-interfaces/ISaleDataSource";
+import { fromMysqlDatetime, toMysqlDatetime } from "../utils/DateUtils";
+import type PosDatabase from "./PosDatabase";
 
 class SaleDao implements ISaleDataSource {
 

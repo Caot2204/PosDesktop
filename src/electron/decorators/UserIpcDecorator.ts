@@ -1,4 +1,4 @@
-import UserRepository from '../../data/repository/UserRepository.js';
+import UserRepository from '../../data/repository/UserRepository';
 
 class UserIpcDecorator {
 

@@ -1,8 +1,8 @@
-import User from '../model/User.js';
-import type { IUserDataSource } from '../datasource/ds-interfaces/IUserDataSource.js';
+import User from '../model/User';
+import type { IUserDataSource } from '../datasource/ds-interfaces/IUserDataSource';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
-import UserSession from '../model/UserSession.js';
+import UserSession from '../model/UserSession';
 
 class UserRepository {
 

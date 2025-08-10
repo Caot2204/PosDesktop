@@ -1,6 +1,6 @@
 import path from 'path';
 import { app } from 'electron';
-import { isDev } from './util.js';
+import { isDev } from './util';
 
 export function getPreloadPath() {
   console.log("si pasa");

@@ -1,6 +1,6 @@
 import { IpcMain } from "electron";
-import SaleRepository from '../../data/repository/SaleRepository.js';
-import SaleProductModel from '../../ui/sales/model/SalesProductModel.js';
+import SaleRepository from '../../data/repository/SaleRepository';
+import SaleProductModel from '../../ui/sales/model/SalesProductModel';
 
 class SaleIpcDecorator {
 

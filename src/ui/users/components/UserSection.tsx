@@ -1,6 +1,6 @@
 import '../stylesheets/UserSection.css';
-import User from '../../../data/model/User.ts';
-import UserItem from './UserItem.tsx';
+import User from '../../../data/model/User';
+import UserItem from './UserItem';
 
 interface UserSectionProps {
   role: string;

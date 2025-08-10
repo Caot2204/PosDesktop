@@ -1,7 +1,7 @@
 import { QueryTypes } from 'sequelize';
-import CashClosing from '../../model/CashClosing.js';
-import type { ICashClosingDataSource } from '../ds-interfaces/ICashClosingDataSource.js';
-import { fromMysqlDatetime, toMysqlDatetime } from '../utils/DateUtils.js';
+import CashClosing from '../../model/CashClosing';
+import type { ICashClosingDataSource } from '../ds-interfaces/ICashClosingDataSource';
+import { fromMysqlDatetime, toMysqlDatetime } from '../utils/DateUtils';
 
 class CashClosingDao implements ICashClosingDataSource {
 

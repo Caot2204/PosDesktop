@@ -1,4 +1,4 @@
-import type Product from "../../model/Product.js";
+import type Product from "../../model/Product";
 
 export interface IProductDataSource {
 

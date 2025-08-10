@@ -1,5 +1,5 @@
-import type { IProductDataSource } from "../datasource/ds-interfaces/IProductDataSource.js";
-import Product from '../model/Product.js'
+import type { IProductDataSource } from "../datasource/ds-interfaces/IProductDataSource";
+import Product from '../model/Product'
 
 class ProductRepository {
 

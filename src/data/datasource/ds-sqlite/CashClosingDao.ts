@@ -1,7 +1,7 @@
-import CashClosing from "../../model/CashClosing.js";
-import type { ICashClosingDataSource } from "../ds-interfaces/ICashClosingDataSource.js";
-import { fromMysqlDatetime, toMysqlDatetime } from "../utils/DateUtils.js";
-import type PosDatabase from "./PosDatabase.js";
+import CashClosing from "../../model/CashClosing";
+import type { ICashClosingDataSource } from "../ds-interfaces/ICashClosingDataSource";
+import { fromMysqlDatetime, toMysqlDatetime } from "../utils/DateUtils";
+import type PosDatabase from "./PosDatabase";
 
 class CashClosingDao implements ICashClosingDataSource {
 

@@ -1,5 +1,5 @@
 import { IpcMain } from "electron";
-import CashClosingRepository from "../../data/repository/CashClosingRepository.js";
+import CashClosingRepository from "../../data/repository/CashClosingRepository";
 
 class CashClosingIpcDecorator {
     

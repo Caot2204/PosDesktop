@@ -1,19 +1,19 @@
 import { app, IpcMain } from 'electron';
 import fs from 'fs';
 import path from 'path';
-import { isDev } from './util.js';
-import PosDatabase from '../data/datasource/ds-sequelize/PosDatabase.js';
-import UserRepository from '../data/repository/UserRepository.js';
-import UserIpcDecorator from './decorators/UserIpcDecorator.js';
-import CategoryRepository from '../data/repository/CategoryRepository.js';
-import ProductRepository from '../data/repository/ProductRepository.js';
-import InventoryIpcDecorator from './decorators/InventoryIpcDecorator.js';
-import SaleRepository from '../data/repository/SaleRepository.js';
-import SaleIpcDecorator from './decorators/SaleIpcDecorators.js';
-import CashClosingRepository from '../data/repository/CashClosingRepository.js';
-import CashClosingIpcDecorator from './decorators/CashClosingIpcDecoratos.js';
-import PosConfigRepository from '../data/pos-config/PosConfigRepository.js';
-import PosConfigIpcDecorator from './decorators/PosConfigIpcDecorator.js';
+import { isDev } from '../electron/util';
+import PosDatabase from '../data/datasource/ds-sequelize/PosDatabase';
+import UserRepository from '../data/repository/UserRepository';
+import UserIpcDecorator from './decorators/UserIpcDecorator';
+import CategoryRepository from '../data/repository/CategoryRepository';
+import ProductRepository from '../data/repository/ProductRepository';
+import InventoryIpcDecorator from './decorators/InventoryIpcDecorator';
+import SaleRepository from '../data/repository/SaleRepository';
+import SaleIpcDecorator from './decorators/SaleIpcDecorators';
+import CashClosingRepository from '../data/repository/CashClosingRepository';
+import CashClosingIpcDecorator from './decorators/CashClosingIpcDecoratos';
+import PosConfigRepository from '../data/pos-config/PosConfigRepository';
+import PosConfigIpcDecorator from './decorators/PosConfigIpcDecorator';
 
 class DataSourceConfigurator {
 
@@ -36,7 +36,7 @@ class DataSourceConfigurator {
                 if (!fs.existsSync(configFilePath)) {
                     const defaultConfig = {
                         bussinessName: "Mi tienda",
-                        bussinessLogoUrl: null,
+                        bussinessLogoUrl: null as string | null,
                         minimunStock: 5,
                         posLanguage: "es"
                     };

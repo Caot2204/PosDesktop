@@ -1,8 +1,8 @@
-import type SaleProductModel from "../../ui/sales/model/SalesProductModel.js";
-import type ISaleDataSource from "../datasource/ds-interfaces/ISaleDataSource.js";
-import type Sale from "../model/Sale.js";
-import SalesProduct from "../model/SalesProduct.js";
-import type ProductRepository from "./ProductRepository.js";
+import type SaleProductModel from "../../ui/sales/model/SalesProductModel";
+import type ISaleDataSource from "../datasource/ds-interfaces/ISaleDataSource";
+import type Sale from "../model/Sale";
+import SalesProduct from "../model/SalesProduct";
+import type ProductRepository from "./ProductRepository";
 
 class SaleRepository {
 

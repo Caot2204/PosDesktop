@@ -1,6 +1,5 @@
 import '../stylesheets/LoginScreen.css';
 import { useEffect, useState } from 'react';
-import userAvatarImg from '../../assets/react.svg';
 import PosButton from '../../common/components/PosButton';
 import UserSession from '../../../data/model/UserSession';
 import { showErrorNotify } from '../../utils/NotifyUtils';
@@ -11,7 +10,7 @@ interface LoginScreenProps {
 
 function LoginScreen(props: LoginScreenProps) {
   const [bussinessName, setBussinessName] = useState("");
-  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('../assets/react.svg');
+  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

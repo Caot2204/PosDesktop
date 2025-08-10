@@ -1,4 +1,4 @@
-import CategoryRepository from '../../data/repository/CategoryRepository.js';
+import CategoryRepository from '../../data/repository/CategoryRepository';
 
 class CategoryIpcDecorator {
 

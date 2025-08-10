@@ -1,6 +1,6 @@
 import { IpcMain, nativeImage } from 'electron';
 import fs from 'fs';
-import PosConfigRepository from '../../data/pos-config/PosConfigRepository.js';
+import PosConfigRepository from '../../data/pos-config/PosConfigRepository';
 
 class PosConfigIpcDecorator {
     private ipcMain: IpcMain;

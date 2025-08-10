@@ -1,4 +1,4 @@
-import type { ICategoryDataSource } from '../datasource/ds-interfaces/ICategoryDataSource.js';
+import type { ICategoryDataSource } from '../datasource/ds-interfaces/ICategoryDataSource';
 
 class CategoryRepository {
 

@@ -1,4 +1,4 @@
-import type SalesProduct from "./SalesProduct.js";
+import type SalesProduct from "./SalesProduct";
 
 export default class Sale {
     id: number;

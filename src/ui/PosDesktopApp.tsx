@@ -1,25 +1,25 @@
-import './App.css';
-import { Outlet, useNavigate } from 'react-router';
+import './PosDesktopApp.css';
+import { useEffect, useState } from 'react';
+import { HashRouter, Outlet, useNavigate } from 'react-router';
 import PosMenu from './common/components/PosMenu';
 import UserAvatar from './common/components/UserAvatar';
-import { BrowserRouter, Route, Routes } from 'react-router'
+import { Route, Routes } from 'react-router'
 import UsersScreen from './users/components/UsersScreen';
-import InventoryScreen from './inventory/principal/components/InventoryScreen.tsx';
-import NewSaleScreen from './sales/components/NewSaleScreen.tsx';
-import EgressScreen from './egress/components/EgressScreen.tsx';
-import AdministrationScreen from './administration/components/AdministrationScreen.tsx';
+import InventoryScreen from './inventory/principal/components/InventoryScreen';
+import NewSaleScreen from './sales/components/NewSaleScreen';
+import EgressScreen from './egress/components/EgressScreen';
+import AdministrationScreen from './administration/components/AdministrationScreen';
 
 import User from '../data/model/User';
 import type Category from '../data/model/Category';
 import type Product from '../data/model/Product';
 import type Sale from '../data/model/Sale';
 import type SaleProductModel from './sales/model/SalesProductModel';
-import { useEffect, useState } from 'react';
 import LoginScreen from './login/components/LoginScreen';
-import type UserSession from '../data/model/UserSession.ts';
-import FirstUseScreen from './firstuse/components/FirstUseScreen.tsx';
-import type CashClosing from '../data/model/CashClosing.ts';
-import type PosConfig from '../data/pos-config/PosConfig.ts';
+import type UserSession from '../data/model/UserSession';
+import FirstUseScreen from './firstuse/components/FirstUseScreen';
+import type CashClosing from '../data/model/CashClosing';
+import type PosConfig from '../data/pos-config/PosConfig';
 
 declare global {
   interface Window {
@@ -64,7 +64,7 @@ declare global {
   }
 }
 
-function App() {
+function PosDesktopApp() {
   const [isFirstUse, setIsFirstUSe] = useState(false);
   const [userSession, setUserSession] = useState<UserSession | null>(null);
 
@@ -82,7 +82,7 @@ function App() {
         onSuccessfullyCreateAccount={() => setIsFirstUSe(false)} />
       :
       userSession ?
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route
               path="/"
@@ -101,7 +101,7 @@ function App() {
               <Route path="administration" element={<AdministrationScreen />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
         :
         <LoginScreen
           onLogin={(userSession: UserSession) => setUserSession(userSession)} />
@@ -134,4 +134,4 @@ function PosScreen(props: PosScreenProps) {
   );
 }
 
-export default App
+export default PosDesktopApp

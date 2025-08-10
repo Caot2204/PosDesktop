@@ -1,5 +1,5 @@
-import type { ICashClosingDataSource } from "../datasource/ds-interfaces/ICashClosingDataSource.js";
-import CashClosing from "../model/CashClosing.js";
+import type { ICashClosingDataSource } from "../datasource/ds-interfaces/ICashClosingDataSource";
+import CashClosing from "../model/CashClosing";
 
 class CashClosingRepository {
 

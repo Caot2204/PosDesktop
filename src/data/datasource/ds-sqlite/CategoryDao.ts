@@ -1,6 +1,6 @@
-import Category from "../../model/Category.js";
-import type { ICategoryDataSource } from "../ds-interfaces/ICategoryDataSource.js";
-import type PosDatabase from "./PosDatabase.js";
+import Category from "../../model/Category";
+import type { ICategoryDataSource } from "../ds-interfaces/ICategoryDataSource";
+import type PosDatabase from "./PosDatabase";
 
 class CategoryDao implements ICategoryDataSource {
 

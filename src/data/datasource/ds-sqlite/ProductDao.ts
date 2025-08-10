@@ -1,7 +1,7 @@
-import type PosDatabase from './PosDatabase.js';
-import Product from '../../model/Product.js';
-import type { IProductDataSource } from '../ds-interfaces/IProductDataSource.js';
-import type CategoryDao from './CategoryDao.js';
+import type PosDatabase from './PosDatabase';
+import Product from '../../model/Product';
+import type { IProductDataSource } from '../ds-interfaces/IProductDataSource';
+import type CategoryDao from './CategoryDao';
 
 class ProductDao implements IProductDataSource {
 

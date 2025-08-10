@@ -1,9 +1,9 @@
 import { DataTypes, Sequelize } from "sequelize";
-import UserDao from "./UserDao.js";
-import CategoryDao from "./CategoryDao.js";
-import ProductDao from "./ProductDao.js";
-import SaleDao from "./SaleDao.js";
-import CashClosingDao from "./CashClosingDao.js";
+import UserDao from "./UserDao";
+import CategoryDao from "./CategoryDao";
+import ProductDao from "./ProductDao";
+import SaleDao from "./SaleDao";
+import CashClosingDao from "./CashClosingDao";
 
 class PosDatabase {
 

@@ -1,5 +1,5 @@
-import CategoryRepository from '../../data/repository/CategoryRepository.js';
-import ProductRepository from '../../data/repository/ProductRepository.js';
+import CategoryRepository from '../../data/repository/CategoryRepository';
+import ProductRepository from '../../data/repository/ProductRepository';
 
 class InventoryIpcDecorator {
 

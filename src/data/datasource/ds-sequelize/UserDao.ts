@@ -1,5 +1,5 @@
-import User from '../../model/User.js';
-import type { IUserDataSource } from '../ds-interfaces/IUserDataSource.js';
+import User from '../../model/User';
+import type { IUserDataSource } from '../ds-interfaces/IUserDataSource';
 
 class UserDao implements IUserDataSource {
 

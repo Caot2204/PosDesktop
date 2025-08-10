@@ -1,4 +1,4 @@
-import PosConfig from './PosConfig.js';
+import PosConfig from './PosConfig';
 import fs from 'fs';
 import path from 'path';
 import { app, dialog } from 'electron';

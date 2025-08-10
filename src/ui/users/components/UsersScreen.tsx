@@ -49,7 +49,7 @@ function UsersScreen() {
 
   useEffect(() => {
     fetchUsers();
-  });
+  }, []);
 
   useEffect(() => {
     if (userForForm) {

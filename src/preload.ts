@@ -1,5 +1,5 @@
-import { contextBridge, ipcRenderer, nativeImage } from "electron";
-import SaleProductModel from "../ui/sales/model/SalesProductModel";
+import { contextBridge, ipcRenderer } from "electron";
+import SaleProductModel from "./ui/sales/model/SalesProductModel";
 
 contextBridge.exposeInMainWorld('userAPI',
   {

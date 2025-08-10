@@ -1,4 +1,4 @@
-import type Category from "../../model/Category.js";
+import type Category from "../../model/Category";
 
 export interface ICategoryDataSource {
     

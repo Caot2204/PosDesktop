@@ -1,4 +1,4 @@
-import type CashClosing from "../../model/CashClosing.js";
+import type CashClosing from "../../model/CashClosing";
 
 export interface ICashClosingDataSource {
     

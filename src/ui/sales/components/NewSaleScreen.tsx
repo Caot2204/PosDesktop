@@ -1,5 +1,4 @@
 import '../stylesheets/NewSaleScreen.css';
-import userAvatarImg from '../../assets/react.svg';
 import { useEffect, useRef, useState } from 'react';
 import { CiBarcode } from "react-icons/ci";
 import { FaSearch } from 'react-icons/fa';
@@ -28,7 +27,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
   const codeInputRef = useRef<HTMLInputElement>(null);
   const [openDialog, setOpenDialog] = useState<null | 'confirmDialog' | 'searchProduct' | 'paydialog' | 'salesDialog' | 'cashClosingDialog'>(null);
   const [bussinessName, setBussinessName] = useState("");
-  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('../assets/react.svg');
+  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('');
 
   const [productCodeInput, setProductCodeInput] = useState("");
   const [productsOfSale, setProductsOfSale] = useState<SaleProductModel[]>([]);

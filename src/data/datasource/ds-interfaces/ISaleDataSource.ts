@@ -1,5 +1,5 @@
-import type Sale from "../../model/Sale.js";
-import type SalesProduct from "../../model/SalesProduct.js";
+import type Sale from "../../model/Sale";
+import type SalesProduct from "../../model/SalesProduct";
 
 export default interface ISaleDataSource {
     

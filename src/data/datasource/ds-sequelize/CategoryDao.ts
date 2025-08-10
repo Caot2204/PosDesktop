@@ -1,5 +1,5 @@
-import Category from '../../model/Category.js';
-import type { ICategoryDataSource } from '../ds-interfaces/ICategoryDataSource.js';
+import Category from '../../model/Category';
+import type { ICategoryDataSource } from '../ds-interfaces/ICategoryDataSource';
 
 class CategoryDao implements ICategoryDataSource {
 

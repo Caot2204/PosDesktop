@@ -1,5 +1,5 @@
-import Product from '../../model/Product.js';
-import type { IProductDataSource } from '../ds-interfaces/IProductDataSource.js';
+import Product from '../../model/Product';
+import type { IProductDataSource } from '../ds-interfaces/IProductDataSource';
 
 class ProductDao implements IProductDataSource {
 
@@ -118,6 +118,8 @@ class ProductDao implements IProductDataSource {
                     :
                     await this.ProductSequelize.findByPk(product.code);
                 if (productDb) {
+                    console.log("Previuos code: ", previousCode);
+                    console.log("New code: ", product.code);
                     productDb.set({
                         code: product.code,
                         name: product.name,
