@@ -21,6 +21,7 @@ function InventoryScreen() {
   const [openDialog, setOpenDialog] = useState<null | 'categories' | 'productForm' | 'increaseStock'>(null);
   const [loadingData, setLoadingData] = useState(true);
 
+  const [minimumStock, setMinimumStock] = useState(5);
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryFilter, setCategoryFilter] = useState("Todos");
@@ -65,6 +66,13 @@ function InventoryScreen() {
   };
 
   useEffect(() => {
+    window.posConfigAPI?.getPosConfig()
+      .then(posConfig => {
+        setMinimumStock(posConfig.minimunStock);
+      });
+  }, []);
+
+  useEffect(() => {
     fetchCategories();
     fetchProducts();
     setCategoryFilter(categoryFilter);
@@ -107,6 +115,7 @@ function InventoryScreen() {
           products={fetchedProducts}
           categoryFilter={categoryFilter}
           searchFilter={searchFilter}
+          minimumStock={minimumStock}
           onEditProduct={handleEditProduct}
           onDeleteProductSuccess={() => {
             showSuccessNotify("Producto eliminado!");

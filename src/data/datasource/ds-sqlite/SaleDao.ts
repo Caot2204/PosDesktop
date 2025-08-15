@@ -58,6 +58,7 @@ class SaleDao implements ISaleDataSource {
                                 productsSold,
                                 row.paymentType,
                                 row.amountPayed,
+                                row.paymentFolio,
                                 row.totalSale
                             ));
                         } catch (err) {
@@ -96,6 +97,7 @@ class SaleDao implements ISaleDataSource {
                                     productsOfSale,
                                     row.paymentType,
                                     row.amountPayed,
+                                    row.paymentFolio,
                                     row.totalSale
                                 );
                             })).then(sales => {
@@ -129,18 +131,20 @@ class SaleDao implements ISaleDataSource {
         productsSold: SalesProduct[], 
         paymentType: string,
         amountPayed: number,
+        paymentFolio: string | null,
         totalSale: number): Promise<void> {
         return new Promise((resolve, reject) => {
             this.dbInstance.serialize(() => {
                 const dateParsed = toMysqlDatetime(dayOfSale);
                 const statementSaveSale = this.dbInstance.prepare(
-                    'INSERT INTO sales(dateOfSale, userToGenerateSale, paymentType, amountPayed, totalSale) VALUES(?,?,?,?,?)'
+                    'INSERT INTO sales(dateOfSale, userToGenerateSale, paymentType, amountPayed, paymentFolio totalSale) VALUES(?,?,?,?,?,?)'
                 );
                 statementSaveSale.run(
                     dateParsed,
                     userToGenerateSale,
                     paymentType,
                     amountPayed,
+                    paymentFolio,
                     totalSale,
                     (error: Error | null) => {
                         if (error) {

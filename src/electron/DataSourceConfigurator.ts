@@ -36,7 +36,7 @@ class DataSourceConfigurator {
                 if (!fs.existsSync(configFilePath)) {
                     const defaultConfig = {
                         bussinessName: "Mi tienda",
-                        bussinessLogoUrl: null as string | null,
+                        bussinessLogoUrl: '../icons/icon.png',
                         minimunStock: 5,
                         posLanguage: "es"
                     };

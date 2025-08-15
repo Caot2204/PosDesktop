@@ -1,4 +1,6 @@
 import { DataTypes, Sequelize } from "sequelize";
+import { SequelizeStorage, Umzug } from "umzug";
+import path from "path";
 import UserDao from "./UserDao";
 import CategoryDao from "./CategoryDao";
 import ProductDao from "./ProductDao";
@@ -40,6 +42,7 @@ class PosDatabase {
         this.createSalesProductsTable();
         this.createCashClosingTable();
         this.stableshRelationships();
+        //this.checkMigrations(this.sequelize);
         await this.sequelize.sync();
         try {
             await this.sequelize.authenticate();
@@ -184,6 +187,11 @@ class PosDatabase {
                     type: DataTypes.DOUBLE,
                     allowNull: false
                 },
+                paymentFolio: {
+                    type: DataTypes.TEXT,
+                    allowNull: true,
+                    defaultValue: null
+                },
                 totalSale: {
                     type: DataTypes.DOUBLE,
                     allowNull: false
@@ -237,7 +245,7 @@ class PosDatabase {
 
     getCategoryDao() {
         if (!this.categoryDao) {
-            this.categoryDao = new CategoryDao(this.CategorySequelize);
+            this.categoryDao = new CategoryDao(this.CategorySequelize, this.sequelize);
         }
         return this.categoryDao;
     }
@@ -268,6 +276,16 @@ class PosDatabase {
         if (categories && categories.length === 0) {
             await this.CategorySequelize.create({ name: "Todos" });
         }
+    }
+
+    private async checkMigrations(sequelize: any) {
+        const umzug = new Umzug({
+            migrations: {glob: path.join(__dirname, 'migrations', '*.js')},
+            context: sequelize.getQueryInterface(),
+            storage: new SequelizeStorage({sequelize}),
+            logger: console
+        });
+        await umzug.up();
     }
 }
 

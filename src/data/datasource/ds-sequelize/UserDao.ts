@@ -80,7 +80,6 @@ class UserDao implements IUserDataSource {
             const userDb = await this.UserSequelize.findByPk(user.id);
             if (userDb) {
                 userDb.name = user.name;
-                userDb.password = user.password;
                 userDb.isAdmin = user.isAdmin;
 
                 userDb.save()

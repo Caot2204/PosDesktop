@@ -13,6 +13,7 @@ export default interface ISaleDataSource {
         productsSold: SalesProduct[], 
         paymentType: string,
         amountPayed: number,
+        paymentFolio: string | null,
         totalSale: number): Promise<void>;
 
 }

@@ -7,6 +7,7 @@ interface ProductListProps {
   products: Product[];
   categoryFilter: string;
   searchFilter: string;
+  minimumStock: number;
   onEditProduct: (product: Product) => void;
   onDeleteProductSuccess: () => void;
 }
@@ -42,6 +43,7 @@ function ProductList(props: ProductListProps) {
             unitPrice={product.unitPrice}
             stock={product.isInfinityStock ? "Infinito" : String(product.stock)}
             category={product.category}
+            minimunStock={props.minimumStock}
             onUpdate={() => props.onEditProduct(product)}
             onDelete={() => handleDeleteProduct(product.code)} />
         ))

@@ -14,6 +14,12 @@
   text-align: start;
 }
 
+.filter-blur {
+  filter: blur(8px);
+  pointer-events: none; /* Optional: prevent interaction with blurred content */
+  user-select: none;    /* Optional: prevent text selection */
+}
+
 .administration-bussiness-info-container {
   display: flex;
   flex-direction: column;

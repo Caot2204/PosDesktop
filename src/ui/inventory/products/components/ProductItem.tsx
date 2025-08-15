@@ -10,7 +10,8 @@ interface ProductDataProps {
   name: string;
   unitPrice: number;
   stock: string;
-  category: string
+  category: string;
+  minimunStock: number;
   onUpdate: () => void;
   onDelete: () => void;
 }
@@ -36,16 +37,16 @@ function ProductItem(props: ProductDataProps) {
         </div>
         <ul>
           <li>
-            <span>Código:</span>&emsp;{props.code}
+            <span className="label-span">Código:</span>&emsp;{props.code}
           </li>
           <li>
-            <span>Precio:</span>&emsp;{formatNumberToCurrentPrice(props.unitPrice)}
+            <span className="label-span">Precio:</span>&emsp;{formatNumberToCurrentPrice(props.unitPrice)}
           </li>
           <li>
-            <span>Stock:</span>&emsp;{props.stock}
+            <span className="label-span">Stock:</span>&emsp;<span className={ Number(props.stock) <= props.minimunStock ? "low-stock" : "" }>{props.stock}</span>
           </li>
           <li>
-            <span>Categoría:</span>&emsp;{props.category}
+            <span className="label-span">Categoría:</span>&emsp;{props.category}
           </li>
         </ul>
       </div>

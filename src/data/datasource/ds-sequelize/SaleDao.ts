@@ -40,6 +40,7 @@ class SaleDao implements ISaleDataSource {
             productsSold: await this.getSalesProductSold(saleDb.id),
             paymentType: saleDb.paymentType,
             amountPayed: saleDb.amountPayed,
+            paymentFolio: saleDb.paymentFolio,
             totalSale: saleDb.totalSale
         }
     }
@@ -84,6 +85,7 @@ class SaleDao implements ISaleDataSource {
         productsSold: SalesProduct[],
         paymentType: string,
         amountPayed: number,
+        paymentFolio: string | null,
         totalSale: number): Promise<void> {
 
         return new Promise((resolve, reject) => {
@@ -93,6 +95,7 @@ class SaleDao implements ISaleDataSource {
                 userToGenerateSale: userToGenerateSale,
                 paymentType: paymentType,
                 amountPayed: amountPayed,
+                paymentFolio: paymentFolio,
                 totalSale: totalSale
             }).then(async () => {
                 const sale = await this.SaleSequelize.findOne({ where: { dateOfSale: dayOfSale } });

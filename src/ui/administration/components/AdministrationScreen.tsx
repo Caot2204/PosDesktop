@@ -12,7 +12,7 @@ function AdministrationScreen() {
   const [openDialog, setOpenDialog] = useState<'cashClosingDialog' | null>(null);
 
   const [bussinessName, setBussinessName] = useState('');
-  const [bussinessLogoUrl, setBussinessLogoUrl] = useState<string | undefined>('../../assets/react.svg');
+  const [bussinessLogoUrl, setBussinessLogoUrl] = useState<string | undefined>('../icons/icon.png');
   const [minimunStock, setMinimunStock] = useState(5);
   const [posLanguage, setPosLanguage] = useState('es');
 
@@ -42,14 +42,14 @@ function AdministrationScreen() {
 
   return (
     <div className="administrationscreen-container">
-      <div className="sales-container">
+      <div className={ openDialog ? "sales-container filter-blur" : "sales-container" }>
         <h3>Ventas</h3>
         <PosButton
           label="Ver cortes de caja"
           onClick={() => setOpenDialog("cashClosingDialog")} />
       </div>
       <hr />
-      <div className="pos-configurations-container">
+      <div className={ openDialog ? "pos-configurations-container filter-blur" : "pos-configurations-container" }>
         <h3>Configuraciones del punto de venta:</h3>
         <div className="input-container">
           <label className="pos-label">Unidades mínimas para el stock:</label>
@@ -61,7 +61,7 @@ function AdministrationScreen() {
         </div>
       </div>
       <hr />
-      <div className="administration-bussiness-info-container">
+      <div className={ openDialog ? "administration-bussiness-info-container filter-blur" : "administration-bussiness-info-container" }>
         <h3>Datos del negocio:</h3>
         <div className="input-container">
           <img
@@ -93,6 +93,7 @@ function AdministrationScreen() {
         </div>
       </div>
       <PosButton
+        className={ openDialog ? "filter-blur" : "" }
         label="Guardar configuración"
         onClick={handleSaveConfig} />
       <dialog className="pos-dialog" open={openDialog === "cashClosingDialog"}>

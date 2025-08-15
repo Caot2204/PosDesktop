@@ -12,18 +12,18 @@ interface CategoryScreenProps {
 }
 
 function CategoryScreen(props: CategoryScreenProps) {
-
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryForForm, setCategoryForForm] = useState<Category | null>(null);
 
+  const [loadingData, setLoadingData] = useState(false);
+
   const fetchCategories = async () => {
-    try {
-      const fetchedCategories = await window.categoryAPI?.getAllCategories();
-      if (fetchedCategories !== undefined) {
-        setCategories(fetchedCategories);
-      }
-    } catch (error) {
+    const categoriesFetched = await window.categoryAPI?.getAllCategories();
+    if (categoriesFetched) {
+      setCategories(categoriesFetched);
+      setLoadingData(false);
+    } else {
       showErrorNotify("Error al recuperar las categorías");
     }
   };
@@ -35,10 +35,16 @@ function CategoryScreen(props: CategoryScreenProps) {
 
   const handleDelete = async (id: number) => {
     if (window.categoryAPI && typeof window.categoryAPI.deleteCategory === 'function') {
-      await window.categoryAPI.deleteCategory(id);
-      showSuccessNotify("Categoría eliminada!");
-      fetchCategories();
-      props.onChangeCategories();
+      try {
+        await window.categoryAPI.deleteCategory(id);
+        showSuccessNotify("Categoría eliminada!");
+        setLoadingData(true);
+        props.onChangeCategories();
+      } catch (error) {
+        showErrorNotify("Error al eliminar la categoría");
+      }
+    } else {
+      console.log("deleteCategory is not available");
     }
   };
 
@@ -53,7 +59,7 @@ function CategoryScreen(props: CategoryScreenProps) {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [loadingData]);
 
   return (
     <div className="categories-container">
@@ -71,7 +77,7 @@ function CategoryScreen(props: CategoryScreenProps) {
                 key={category.id}
                 name={category.name}
                 isAbleToDelete={category.id !== 1}
-                onDelete={() => category.id && handleDelete(category.id)}
+                onDelete={() => handleDelete(category.id)}
                 onUpdate={() => handleEdit(category)} />
             ))
           }
@@ -82,7 +88,7 @@ function CategoryScreen(props: CategoryScreenProps) {
           id={categoryForForm?.id ? categoryForForm.id : undefined}
           name={categoryForForm ? categoryForForm.name : ""}
           onSaveSuccess={() => {
-            fetchCategories();
+            setLoadingData(true);
             handleCloseDialog();
             props.onChangeCategories();
           }}

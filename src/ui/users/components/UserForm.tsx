@@ -18,6 +18,7 @@ export function UserForm(props: UserDataProps) {
   const [userId, setUserId] = useState(props.id);
   const [name, setName] = useState(props.name);
   const [password, setPassword] = useState(props.password);
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [isAdmin, setIsAdmin] = useState(props.isAdmin);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -45,7 +46,7 @@ export function UserForm(props: UserDataProps) {
     if (userId) {
       if (window.userAPI && typeof window.userAPI.updateUser === 'function') {
         try {
-          await window.userAPI?.updateUser(userId!!, name, isAdmin)
+          await window.userAPI.updateUser(userId, name, isAdmin)
           showSuccessNotify("Usuario actualizado!");
           clearForm();
           props.onSaveSuccess();
@@ -58,6 +59,10 @@ export function UserForm(props: UserDataProps) {
       }
     } else {
       if (window.userAPI && typeof window.userAPI.saveUser === 'function') {
+        if (password !== passwordConfirm) {
+          setErrorMessage("Las contraseñas no coinciden");
+          return;
+        }
         try {
           await window.userAPI.saveUser(name, password, isAdmin);
           showSuccessNotify("Usuario guardado!");
@@ -78,10 +83,10 @@ export function UserForm(props: UserDataProps) {
       <div className="user-form">
         <h2>Datos del usuario:</h2>
         {
-          errorMessage ? 
+          errorMessage ?
             <div className="error-message-container">
               <MdErrorOutline />
-              <span>{ errorMessage }</span>
+              <span>{errorMessage}</span>
             </div>
             :
             <></>
@@ -95,6 +100,8 @@ export function UserForm(props: UserDataProps) {
             <>
               <label>Contraseña:</label>
               <input type="password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
+              <label>Confirme la contraseña:</label>
+              <input type="password" value={passwordConfirm} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPasswordConfirm(e.target.value)} />
             </>
         }
         <div className="checkbox-container">

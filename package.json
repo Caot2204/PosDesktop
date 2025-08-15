@@ -46,6 +46,7 @@
     "eslint-plugin-import": "^2.32.0",
     "fork-ts-checker-webpack-plugin": "^7.3.0",
     "node-loader": "^2.1.0",
+    "sequelize-cli": "^6.6.3",
     "style-loader": "^3.3.4",
     "ts-loader": "^9.5.2",
     "typescript": "^5.9.2"
@@ -61,6 +62,7 @@
     "react-toastify": "^11.0.5",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7",
+    "umzug": "^3.8.2",
     "update-electron-app": "^3.1.1",
     "uuid": "^11.1.0"
   }

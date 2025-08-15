@@ -25,8 +25,8 @@ class SaleIpcDecorator {
             return await this.saleRepository.getSalesByDate(dayOfSale);
         });
 
-        this.ipcMain.handle('saleApi:saveSale', async (event, dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], paymentType: string, amountPayed: number, totalSale: number) => {
-            await this.saleRepository.saveSale(dateOfSale, userToGenerateSale, productsSold, paymentType, amountPayed, totalSale);
+        this.ipcMain.handle('saleApi:saveSale', async (event, dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], paymentType: string, amountPayed: number, paymentFolio: string | null, totalSale: number) => {
+            await this.saleRepository.saveSale(dateOfSale, userToGenerateSale, productsSold, paymentType, amountPayed, paymentFolio, totalSale);
         });
     }
 }

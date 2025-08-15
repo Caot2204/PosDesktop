@@ -149,6 +149,7 @@ class PosDatabase {
                 userToGenerateSale VARCHAR(255) NOT NULL,
                 paymentType VARCHAR(100) NOT NULL,
                 amountPayed DOUBLE NOT NULL,
+                paymentFolio VARCHAR(100),
                 totalSale DOUBLE NOT NULL
             )`, (error: Error) => {
                 if (error) {

@@ -48,7 +48,7 @@ declare global {
     saleAPI?: {
       getSaleById: (saleId: number) => Promise<Sale | undefined>;
       getSalesByDate: (dateOfSale: Date) => Promise<Sale[]>;
-      saveSale: (dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], paymentType: string, amountPayed: number, totalSale: number) => Promise<void>;
+      saveSale: (dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], paymentType: string, amountPayed: number, paymentFolio: string | null, totalSale: number) => Promise<void>;
     };
     cashClosingAPI?: {
       getCashClosingOfDate: (date: Date) => Promise<CashClosing[]>;

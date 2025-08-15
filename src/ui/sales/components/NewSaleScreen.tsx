@@ -27,7 +27,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
   const codeInputRef = useRef<HTMLInputElement>(null);
   const [openDialog, setOpenDialog] = useState<null | 'confirmDialog' | 'searchProduct' | 'paydialog' | 'salesDialog' | 'cashClosingDialog'>(null);
   const [bussinessName, setBussinessName] = useState("");
-  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('');
+  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('../icons/icon.png');
 
   const [productCodeInput, setProductCodeInput] = useState("");
   const [productsOfSale, setProductsOfSale] = useState<SaleProductModel[]>([]);
@@ -82,7 +82,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
     }
   };
 
-  const handlePaySale = (paymentType: string, amountPayed: number) => {
+  const handlePaySale = (paymentType: string, amountPayed: number, paymentFolio: string | null) => {
     setOpenDialog(null);
     handleClearScreen();
     try {
@@ -92,7 +92,8 @@ function NewSaleScreen(props: NewSaleScreenProps) {
         props.currentUser.userName,
         productsOfSale,
         paymentType,
-        amountPayed,
+        paymentType === "Tarjeta" ? totalSale : amountPayed,
+        paymentFolio,
         totalSale
       );
       showSuccessNotify("Venta realizada");

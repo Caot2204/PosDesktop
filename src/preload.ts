@@ -44,8 +44,9 @@ contextBridge.exposeInMainWorld('saleAPI',
       productsSold: SaleProductModel[],
       paymentType: string,
       amountPayed: number,
+      paymentFolio: string | null,
       totalSale: number
-    ) => ipcRenderer.invoke('saleApi:saveSale', dateOfSale, userToGenerateSale, productsSold, paymentType, amountPayed, totalSale)
+    ) => ipcRenderer.invoke('saleApi:saveSale', dateOfSale, userToGenerateSale, productsSold, paymentType, amountPayed, paymentFolio, totalSale)
   }
 );
 

@@ -73,6 +73,12 @@ function SalesScreen(props: SalesScreenProps) {
         <p><strong>Fecha/Hora:</strong> {saleToShow ? formatDate(saleToShow.dateOfSale) : ''}</p>
         <p><strong>Le atendío:</strong> {saleToShow?.userToGenerateSale}</p>
         <p><strong>Forma de pago:</strong> {saleToShow?.paymentType}</p>
+        {
+          saleToShow?.paymentFolio ?
+            <p><strong>Folio de la transaccion:</strong> {saleToShow?.paymentFolio}</p>
+            :
+            <></>
+        }
         <hr />
         {
           saleToShow?.productsSold.map(product => (

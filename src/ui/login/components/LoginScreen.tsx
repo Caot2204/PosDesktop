@@ -9,8 +9,8 @@ interface LoginScreenProps {
 }
 
 function LoginScreen(props: LoginScreenProps) {
-  const [bussinessName, setBussinessName] = useState("");
-  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('');
+  const [bussinessName, setBussinessName] = useState('');
+  const [bussinessLogoUrl, setBussinessLogoUrl] = useState('../icons/icon.png');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

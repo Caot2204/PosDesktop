@@ -1,6 +1,8 @@
 import '../stylesheets/FirstUseScreen.css';
 import { useState } from 'react';
 import PosButton from '../../common/components/PosButton';
+import { ToastContainer } from 'react-toastify';
+import { showErrorNotify } from '../../utils/NotifyUtils';
 
 interface FirstUseScreenProps {
   onSuccessfullyCreateAccount: () => void;
@@ -9,10 +11,15 @@ interface FirstUseScreenProps {
 function FirstUseScreen(props: FirstUseScreenProps) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const handleCreateFirstUser = async () => {
-    await window.userAPI?.saveUser(userName, password, true);
-    props.onSuccessfullyCreateAccount();
+    if (password === passwordConfirm) {
+      await window.userAPI?.saveUser(userName, password, true);
+      props.onSuccessfullyCreateAccount();
+    } else {
+      showErrorNotify("Las contraseñas no coinciden");
+    }
   };
 
   return (
@@ -27,14 +34,19 @@ function FirstUseScreen(props: FirstUseScreenProps) {
         <input
           type="password"
           onChange={(e) => setPassword(e.target.value)} />
+        <label><strong>Confirme la contraseña:</strong></label>
+        <input
+          type="password"
+          onChange={(e) => setPasswordConfirm(e.target.value)} />
         <PosButton
           disabled={!userName || !password}
           label="Crear cuenta"
           onClick={handleCreateFirstUser} />
       </div>
       <div className="data-software">
-        <p>PosDesktop v1.0 - LastDreamSoft</p>
+        <p>PosDesktop - Punto de venta</p>
       </div>
+      <ToastContainer />
     </div>
   );
 }

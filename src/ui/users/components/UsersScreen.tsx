@@ -16,6 +16,8 @@ function UsersScreen() {
   const [cashiers, setCashiers] = useState<User[]>([]);
   const [userForForm, setUserForForm] = useState<User>();
 
+  const [loadingData, setLoadingData] = useState(false);
+
   const fetchUsers = async () => {
     try {
       const usersRecupered = await window.userAPI?.getAllUsers();
@@ -24,6 +26,7 @@ function UsersScreen() {
         const cashiers = usersRecupered.filter((user) => !user.isAdmin);
         setAdmins(admins);
         setCashiers(cashiers);
+        setLoadingData(false);
       }
     } catch (error) {
       showErrorNotify("Error al recuperar los usuarios");
@@ -42,6 +45,7 @@ function UsersScreen() {
     try {
       await window.userAPI?.deleteUser(userId, isAdmin);
       showSuccessNotify("Usuario eliminado");
+      setLoadingData(true);
     } catch (error) {
       handleErrorMessage(error, showErrorNotify);
     }
@@ -49,14 +53,13 @@ function UsersScreen() {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [loadingData]);
 
   useEffect(() => {
     if (userForForm) {
       dialogRef.current?.showModal();
     }
   }, [userForForm]);
-
 
   return (
     <div className="users-screen-container">
@@ -84,7 +87,7 @@ function UsersScreen() {
           password={userForForm?.password ? userForForm.password : ""}
           isAdmin={userForForm ? userForForm.isAdmin : false}
           onSaveSuccess={() => {
-            fetchUsers();
+            setLoadingData(true);
             dialogRef.current?.close();
           }}
           onCancel={() => {

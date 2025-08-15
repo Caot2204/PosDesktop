@@ -1,12 +1,15 @@
+import { replace } from 'react-router/dist/development';
 import Category from '../../model/Category';
 import type { ICategoryDataSource } from '../ds-interfaces/ICategoryDataSource';
 
 class CategoryDao implements ICategoryDataSource {
 
     private CategorySequelize: any;
+    private Sequelize: any;
 
-    constructor(categorySequelize: any) {
+    constructor(categorySequelize: any, sequelize: any) {
         this.CategorySequelize = categorySequelize;
+        this.Sequelize = sequelize;
     }
 
     getAllCategories(): Promise<Category[]> {
@@ -86,14 +89,25 @@ class CategoryDao implements ICategoryDataSource {
     deleteCategory(categoryId: number): Promise<void> {
         return new Promise(async (resolve, reject) => {
             const categoryDb = await this.CategorySequelize.findByPk(categoryId);
-            if (categoryDb) {
-                categoryDb.destroy()
-                    .then(() => {
-                        resolve();
-                    })
-                    .catch((error: Error) => {
-                        reject(error);
-                    });
+            const categoryIdTodos = await this.CategorySequelize.findOne({ where: { name: "Todos" } });
+            if (categoryDb && categoryIdTodos) {
+                this.Sequelize.query(
+                    'UPDATE products SET categoryId = ? WHERE categoryId = ?',
+                    {
+                        replacements: [categoryIdTodos.id, categoryDb.id],
+                        type: this.Sequelize.QueryTypes.UPDATE
+                    }
+                ).then(() => {
+                    categoryDb.destroy()
+                        .then(() => {
+                            resolve();
+                        })
+                        .catch((error: Error) => {
+                            reject(error);
+                        });
+                }).catch((error: Error) => {
+                    reject(error);
+                });
             } else {
                 reject(new Error("Categoria no encontrada"));
             }
