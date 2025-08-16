@@ -20,7 +20,9 @@ const createWindow = (): void => {
     height: 600,
     width: 800,
     webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      preload: process.env.NODE_ENV === 'production'
+        ? path.join(__dirname, '../renderer/main_window/preload.js')
+        : MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
 
