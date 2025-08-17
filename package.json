@@ -1,6 +1,6 @@
 {
   "name": "pos-desktop",
-  "productName": "PosDesktop(Punto de venta)",
+  "productName": "PosDesktop",
   "version": "1.0.0",
   "description": "A minimalist/lite point of sale, development on Electron.",
   "main": ".webpack/main",
@@ -10,10 +10,11 @@
   },
   "scripts": {
     "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
+    "package": "npm run rebuild && electron-forge package",
+    "make": "npm run rebuild && electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "rebuild": "electron-rebuild -f"
   },
   "keywords": [],
   "author": {
@@ -32,6 +33,7 @@
     "@electron-forge/plugin-fuses": "^7.8.3",
     "@electron-forge/plugin-webpack": "^7.8.3",
     "@electron/fuses": "^1.8.0",
+    "@electron/rebuild": "^4.0.1",
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.7",
     "@types/sqlite3": "^3.1.11",

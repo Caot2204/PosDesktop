@@ -28,30 +28,28 @@ class DataSourceConfigurator {
         await this.configureDatabase(posConfigPath);
     }
 
-    private async checkPosFileConfigAndGetPath(): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            try {
-                const configFilePath = isDev() ? 'pos_dev_config.json' : path.join(app.getAppPath(), 'pos_config.json');
-                console.log(`PosConfigFile path: ${configFilePath}`);
-                if (!fs.existsSync(configFilePath)) {
-                    const defaultConfig = {
-                        bussinessName: "Mi tienda",
-                        bussinessLogoUrl: '../icons/icon.png',
-                        minimunStock: 5,
-                        posLanguage: "es"
-                    };
-                    fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
-                }
-                resolve(configFilePath);
-
-            } catch (error) {
-                reject(error);
+    private async checkPosFileConfigAndGetPath() {
+        try {
+            const configFilePath = isDev() ? 'pos_dev_config.json' : path.join(app.getPath('userData'), 'pos_config.json');
+            console.log(`PosConfigFile path: ${configFilePath}`);
+            if (!fs.existsSync(configFilePath)) {
+                const defaultConfig = {
+                    bussinessName: "Mi tienda",
+                    bussinessLogoUrl: '../icons/icon.png',
+                    minimunStock: 5,
+                    posLanguage: "es"
+                };
+                fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2), 'utf-8');
             }
-        });
+            return configFilePath;
+
+        } catch (error) {
+            throw new Error("Error to set configFile: ", error);
+        }
     }
 
     private async configureDatabase(posConfigPath: string) {
-        const dbPath = isDev() ? 'pos_dev_database.sqlite' : path.join(app.getAppPath(), 'pos_database.sqlite');
+        const dbPath = isDev() ? 'pos_dev_database.sqlite' : path.join(app.getPath('userData'), 'pos_database.sqlite');
         console.log(`Database path:${dbPath}`);
         const posDatabase = new PosDatabase(dbPath);
         await posDatabase.initialize();

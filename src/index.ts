@@ -20,9 +20,7 @@ const createWindow = (): void => {
     height: 600,
     width: 800,
     webPreferences: {
-      preload: process.env.NODE_ENV === 'production'
-        ? path.join(__dirname, '../renderer/main_window/preload.js')
-        : MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     },
   });
 
@@ -34,26 +32,19 @@ const createWindow = (): void => {
   mainWindow.webContents.openDevTools();
 };
 
-const initializeDatabaseAndIpcMethods = async (): Promise<boolean> => {
-  try {
-    const dataSourceConfigurator = new DataSourceConfigurator(ipcMain);
-    dataSourceConfigurator.configure();
-  } catch (error) {
-    console.error('Error initializing database:', error);
-    app.quit();
-    return false;
-  }
-  return true;
-}
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', async () => {
-  const databaseReady = await initializeDatabaseAndIpcMethods();
-  if (databaseReady) {
-    createWindow()
-  }
+app.on('ready', () => {
+  const dataSourceConfigurator = new DataSourceConfigurator(ipcMain);
+  dataSourceConfigurator.configure()
+    .then(() => {
+      createWindow();
+    })
+    .catch(error => {
+      console.error('Error initializing database:', error);
+      app.quit();
+    });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -75,7 +66,7 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-updateElectronApp({
-  updateInterval: '1d',
-  notifyUser: true,
-});
+//updateElectronApp({
+//  updateInterval: '1d',
+//  notifyUser: true,
+//});
