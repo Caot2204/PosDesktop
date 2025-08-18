@@ -1,5 +1,6 @@
 import { DataTypes, Sequelize } from "sequelize";
 import { SequelizeStorage, Umzug } from "umzug";
+import sqlite3 from "sqlite3";
 import path from "path";
 import UserDao from "./UserDao";
 import CategoryDao from "./CategoryDao";
@@ -26,6 +27,7 @@ class PosDatabase {
     constructor(dbPath: string | 'test') {
         this.sequelize = new Sequelize({
             dialect: 'sqlite',
+            dialectModule: sqlite3,
             storage: dbPath === 'test' ? ':memory:' : dbPath,
         });
     }

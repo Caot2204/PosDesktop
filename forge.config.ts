@@ -10,6 +10,7 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
+import { DependenciesPlugin } from 'electron-forge-plugin-dependencies';
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -29,6 +30,9 @@ const config: ForgeConfig = {
       }
     })],
   plugins: [
+    new DependenciesPlugin({
+      dependencies: [ 'sqlite3' ]
+    }),
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
       mainConfig,
