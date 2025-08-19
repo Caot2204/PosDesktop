@@ -7,6 +7,8 @@ import CategoryDao from "./CategoryDao";
 import ProductDao from "./ProductDao";
 import SaleDao from "./SaleDao";
 import CashClosingDao from "./CashClosingDao";
+import { isDev } from "../../../electron/util";
+import fs from 'fs';
 
 class PosDatabase {
 
@@ -44,7 +46,7 @@ class PosDatabase {
         this.createSalesProductsTable();
         this.createCashClosingTable();
         this.stableshRelationships();
-        //this.checkMigrations(this.sequelize);
+        await this.checkMigrations(this.sequelize);
         await this.sequelize.sync();
         try {
             await this.sequelize.authenticate();
@@ -281,13 +283,20 @@ class PosDatabase {
     }
 
     private async checkMigrations(sequelize: any) {
+        const migrationsPath = isDev() ? path.join(__dirname, 'migrations', '*.js') : path.join(process.resourcesPath, 'migrations', '*.js');
+        console.log("Path migrations: ", migrationsPath);
+        console.log("Files found:", fs.readdirSync(path.dirname(migrationsPath)));
         const umzug = new Umzug({
-            migrations: {glob: path.join(__dirname, 'migrations', '*.js')},
+            migrations: {glob: migrationsPath},
             context: sequelize.getQueryInterface(),
             storage: new SequelizeStorage({sequelize}),
             logger: console
         });
-        await umzug.up();
+        try {
+            await umzug.up();
+        } catch(e) {
+            console.error("Migration error: ", e);
+        }
     }
 }
 

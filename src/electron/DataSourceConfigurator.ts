@@ -18,6 +18,7 @@ import PosConfigIpcDecorator from './decorators/PosConfigIpcDecorator';
 class DataSourceConfigurator {
 
     private ipcMain: IpcMain;
+    private posDatabase: PosDatabase;
 
     constructor(ipcMain: IpcMain) {
         this.ipcMain = ipcMain;
@@ -26,6 +27,10 @@ class DataSourceConfigurator {
     async configure() {
         const posConfigPath = await this.checkPosFileConfigAndGetPath();
         await this.configureDatabase(posConfigPath);
+    }
+
+    async close() {
+        await this.posDatabase.close();
     }
 
     private async checkPosFileConfigAndGetPath() {
@@ -51,28 +56,28 @@ class DataSourceConfigurator {
     private async configureDatabase(posConfigPath: string) {
         const dbPath = isDev() ? 'pos_dev_database.sqlite' : path.join(app.getPath('userData'), 'pos_database.sqlite');
         console.log(`Database path:${dbPath}`);
-        const posDatabase = new PosDatabase(dbPath);
-        await posDatabase.initialize();
+        this.posDatabase = new PosDatabase(dbPath);
+        await this.posDatabase.initialize();
         console.log('Database initialized');
-        if (posDatabase) {
+        if (this.posDatabase) {
             const posConfigRepository = new PosConfigRepository(posConfigPath);
             const posConfigDecorator = new PosConfigIpcDecorator(this.ipcMain, posConfigRepository);
             await posConfigDecorator.configure();
 
-            const categoryRepository = new CategoryRepository(posDatabase.getCategoryDao());
-            const productRepository = new ProductRepository(posDatabase.getProductDao());
+            const categoryRepository = new CategoryRepository(this.posDatabase.getCategoryDao());
+            const productRepository = new ProductRepository(this.posDatabase.getProductDao());
             const inventoryDecorator = new InventoryIpcDecorator(this.ipcMain, categoryRepository, productRepository);
             inventoryDecorator.configure();
 
-            const saleRepository = new SaleRepository(posDatabase.getSaleDao(), productRepository);
+            const saleRepository = new SaleRepository(this.posDatabase.getSaleDao(), productRepository);
             const saleDecorator = new SaleIpcDecorator(this.ipcMain, saleRepository);
             saleDecorator.configure();
 
-            const userRepository = new UserRepository(posDatabase.getUserDao());
+            const userRepository = new UserRepository(this.posDatabase.getUserDao());
             const userDecorator = new UserIpcDecorator(userRepository, this.ipcMain);
             await userDecorator.configure();
 
-            const cashClosingRepository = new CashClosingRepository(posDatabase.getCashClosingDao());
+            const cashClosingRepository = new CashClosingRepository(this.posDatabase.getCashClosingDao());
             const cashClosingDecorator = new CashClosingIpcDecorator(this.ipcMain, cashClosingRepository);
             await cashClosingDecorator.configure();
         }

@@ -15,7 +15,8 @@ import { DependenciesPlugin } from 'electron-forge-plugin-dependencies';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    icon: './src/icons/icon'
+    icon: './src/icons/icon',
+    extraResource: ['./migrations']
   },
   rebuildConfig: {},
   makers: [

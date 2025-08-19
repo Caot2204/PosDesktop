@@ -20,6 +20,10 @@ export const rendererConfig: Configuration = {
             {
               from: 'src/icons',
               to: 'icons'
+            },
+            {
+              from: 'migrations',
+              to: 'migrations'
             }
           ]
         }

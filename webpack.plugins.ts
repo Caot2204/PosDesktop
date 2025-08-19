@@ -14,6 +14,10 @@ export const plugins = [
           {
             from: 'src/icons',
             to: 'icons'
+          },
+          {
+            from: 'migrations',
+            to: 'migrations'
           }
         ]
       }
