@@ -1,14 +1,10 @@
 import { DataTypes, Sequelize } from "sequelize";
-import { SequelizeStorage, Umzug } from "umzug";
 import sqlite3 from "sqlite3";
-import path from "path";
 import UserDao from "./UserDao";
 import CategoryDao from "./CategoryDao";
 import ProductDao from "./ProductDao";
 import SaleDao from "./SaleDao";
 import CashClosingDao from "./CashClosingDao";
-import { isDev } from "../../../electron/util";
-import fs from 'fs';
 
 class PosDatabase {
 
@@ -19,6 +15,7 @@ class PosDatabase {
     private SaleSequelize: any;
     private SaleProductsSequelize: any;
     private CashClosingSequelize: any;
+    private EgressSequelize: any;
 
     private userDao: UserDao | null = null;
     private categoryDao: CategoryDao | null = null;
@@ -39,14 +36,7 @@ class PosDatabase {
     }
 
     async initialize() {
-        this.createUserTable();
-        this.createCategoryTable();
-        this.createProductTable();
-        this.createSaleTable();
-        this.createSalesProductsTable();
-        this.createCashClosingTable();
-        this.stableshRelationships();
-        await this.checkMigrations(this.sequelize);
+        this.defineModels();
         await this.sequelize.sync();
         try {
             await this.sequelize.authenticate();
@@ -58,7 +48,33 @@ class PosDatabase {
         }
     }
 
-    private createCashClosingTable() {
+    private defineModels() {
+        this.UserSequelize = this.sequelize.define('users',
+            {
+                id: {
+                    type: DataTypes.TEXT,
+                    primaryKey: true,
+                    allowNull: false
+                },
+                name: {
+                    type: DataTypes.TEXT,
+                    allowNull: false
+                },
+                password: {
+                    type: DataTypes.TEXT,
+                    allowNull: false
+                },
+                isAdmin: {
+                    type: DataTypes.BOOLEAN,
+                    allowNull: false,
+                    defaultValue: false
+                }
+            },
+            {
+                timestamps: false
+            }
+        );
+        
         this.CashClosingSequelize = this.sequelize.define('cash_closings',
             {
                 id: {
@@ -87,9 +103,7 @@ class PosDatabase {
                 timestamps: false
             }
         );
-    }
 
-    private createCategoryTable() {
         this.CategorySequelize = this.sequelize.define('categories',
             {
                 id: {
@@ -107,9 +121,7 @@ class PosDatabase {
                 timestamps: false
             }
         );
-    }
 
-    private createProductTable() {
         this.ProductSequelize = this.sequelize.define('products',
             {
                 code: {
@@ -139,35 +151,7 @@ class PosDatabase {
                 timestamps: false
             }
         );
-    }
 
-    private createSalesProductsTable() {
-        this.SaleProductsSequelize = this.sequelize.define('sales_products',
-            {
-                saleId: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false
-                },
-                productName: {
-                    type: DataTypes.TEXT,
-                    allowNull: false
-                },
-                unitPrice: {
-                    type: DataTypes.DOUBLE,
-                    allowNull: false
-                },
-                unitsSold: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false
-                }
-            },
-            {
-                timestamps: false
-            }
-        );
-    }
-
-    private createSaleTable() {
         this.SaleSequelize = this.sequelize.define('sales',
             {
                 id: {
@@ -205,38 +189,35 @@ class PosDatabase {
                 timestamps: false
             }
         );
-    }
 
-    private createUserTable() {
-        this.UserSequelize = this.sequelize.define('users',
+        this.SaleProductsSequelize = this.sequelize.define('sales_products',
             {
-                id: {
-                    type: DataTypes.TEXT,
-                    primaryKey: true,
+                saleId: {
+                    type: DataTypes.INTEGER,
                     allowNull: false
                 },
-                name: {
-                    type: DataTypes.TEXT,
-                    allowNull: false
-                },
-                password: {
+                productName: {
                     type: DataTypes.TEXT,
                     allowNull: false
                 },
-                isAdmin: {
-                    type: DataTypes.BOOLEAN,
-                    allowNull: false,
-                    defaultValue: false
+                unitPrice: {
+                    type: DataTypes.DOUBLE,
+                    allowNull: false
+                },
+                unitsSold: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false
                 }
             },
             {
                 timestamps: false
             }
         );
-    }
 
-    private stableshRelationships() {
         this.SaleSequelize.hasMany(this.SaleProductsSequelize);
+        this.SaleProductsSequelize.belongsTo(this.SaleSequelize);
+
+        this.CategorySequelize.hasMany(this.ProductSequelize);
         this.ProductSequelize.belongsTo(this.CategorySequelize);
     }
 
@@ -279,23 +260,6 @@ class PosDatabase {
         const categories = await this.CategorySequelize.findAll();
         if (categories && categories.length === 0) {
             await this.CategorySequelize.create({ name: "Todos" });
-        }
-    }
-
-    private async checkMigrations(sequelize: any) {
-        const migrationsPath = isDev() ? path.join(__dirname, 'migrations', '*.js') : path.join(process.resourcesPath, 'migrations', '*.js');
-        console.log("Path migrations: ", migrationsPath);
-        console.log("Files found:", fs.readdirSync(path.dirname(migrationsPath)));
-        const umzug = new Umzug({
-            migrations: {glob: migrationsPath},
-            context: sequelize.getQueryInterface(),
-            storage: new SequelizeStorage({sequelize}),
-            logger: console
-        });
-        try {
-            await umzug.up();
-        } catch(e) {
-            console.error("Migration error: ", e);
         }
     }
 }

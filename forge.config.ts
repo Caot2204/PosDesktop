@@ -15,8 +15,7 @@ import { DependenciesPlugin } from 'electron-forge-plugin-dependencies';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    icon: './src/icons/icon',
-    extraResource: ['./migrations']
+    icon: './src/icons/icon'
   },
   rebuildConfig: {},
   makers: [
@@ -63,6 +62,17 @@ const config: ForgeConfig = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'Caot2204',
+          name: 'PosDesktop'
+        }
+      }
+    }
+  ]
 };
 
 export default config;

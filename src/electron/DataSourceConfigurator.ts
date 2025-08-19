@@ -49,7 +49,7 @@ class DataSourceConfigurator {
             return configFilePath;
 
         } catch (error) {
-            throw new Error("Error to set configFile: ", error);
+            throw new Error(`Error to set configFile: ${error}`);
         }
     }
 
