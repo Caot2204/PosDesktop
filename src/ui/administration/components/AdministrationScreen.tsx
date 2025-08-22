@@ -89,6 +89,7 @@ function AdministrationScreen() {
             className="pos-input"
             type="text"
             value={bussinessName}
+            maxLength={150}
             onChange={(e) => setBussinessName(e.target.value)} />
         </div>
       </div>

@@ -30,22 +30,28 @@ class ProductDao implements IProductDataSource {
 
     getAllProducts(): Promise<Product[]> {
         return new Promise<Product[]>(async (resolve, reject) => {
-            const productsDb = await this.ProductSequelize.findAll({
+            this.ProductSequelize.findAll({
+                order: ['name'],
                 include: this.CategorySequelize
-            });
-            if (productsDb) {
-                const products = productsDb.map((productDb: any) => new Product(
-                    productDb.code,
-                    productDb.name,
-                    productDb.unitPrice,
-                    productDb.stock,
-                    productDb.isInfinityStock,
-                    productDb.category.name
-                ));
-                resolve(products);
-            } else {
-                reject(new Error("Error al recuperar productos"));
-            }
+            })
+                .then((productsDb: any[]) => {
+                    if (productsDb) {
+                        const products = productsDb.map((productDb: any) => new Product(
+                            productDb.code,
+                            productDb.name,
+                            productDb.unitPrice,
+                            productDb.stock,
+                            productDb.isInfinityStock,
+                            productDb.category.name
+                        ));
+                        resolve(products);
+                    } else {
+                        reject(new Error("Error al recuperar productos"));
+                    }
+                })
+                .catch((error: Error) => {
+                    console.log(error);
+                });
         });
     }
 

@@ -12,6 +12,7 @@ import CategorySelect from '../../categories/components/CategorySelect';
 import type Category from '../../../../data/model/Category';
 import ProductList from './ProductList';
 import IncreaseStockScreen from './IncreaseStockScreen';
+import { GridLoader } from 'react-spinners';
 
 function InventoryScreen() {
   const categoriesDialogRef = useRef<HTMLDialogElement>(null);
@@ -87,6 +88,7 @@ function InventoryScreen() {
           selected={categoryFilter}
           options={categories}
           onCategorySelected={setCategoryFilter} />
+        <span>Productos en inventario: {fetchedProducts.length}</span>
         <hr />
         <span className="label-section">Acciones: </span>
         <PosButton
@@ -108,19 +110,33 @@ function InventoryScreen() {
       <div className={openDialog ? "products-container filter-blur" : "products-container"}>
         <div className="search-product-container">
           <FaSearch />
-          <input className="search-input" ref={searchInputRef} type="text" placeholder="Ingrese el nombre o código del producto..." onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
+          <input 
+            className="search-input" 
+            ref={searchInputRef} 
+            type="text" 
+            maxLength={100}
+            placeholder="Ingrese el nombre o código del producto..." 
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
           <MdOutlineCancel onClick={handleClearSearch} />
         </div>
-        <ProductList
-          products={fetchedProducts}
-          categoryFilter={categoryFilter}
-          searchFilter={searchFilter}
-          minimumStock={minimumStock}
-          onEditProduct={handleEditProduct}
-          onDeleteProductSuccess={() => {
-            showSuccessNotify("Producto eliminado!");
-            fetchProducts();
-          }} />
+        {
+          loadingData ?
+            <div className="loader-container">
+              <GridLoader
+                color="#4C662B" />
+            </div>
+            :
+          <ProductList
+            products={fetchedProducts}
+            categoryFilter={categoryFilter}
+            searchFilter={searchFilter}
+            minimumStock={minimumStock}
+            onEditProduct={handleEditProduct}
+            onDeleteProductSuccess={() => {
+              showSuccessNotify("Producto eliminado!");
+              fetchProducts();
+            }} />
+        }
       </div>
       <dialog className="pos-dialog" ref={categoriesDialogRef} open={openDialog === "categories"}>
         <div className="header-dialog">

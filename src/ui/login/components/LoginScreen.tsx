@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import PosButton from '../../common/components/PosButton';
 import UserSession from '../../../data/model/UserSession';
 import { showErrorNotify } from '../../utils/NotifyUtils';
+import { ToastContainer } from 'react-toastify';
 
 interface LoginScreenProps {
   onLogin: (userSesion: UserSession) => void;
@@ -17,23 +18,19 @@ function LoginScreen(props: LoginScreenProps) {
   const handleLogin = async () => {
     try {
       const userSession = await window.userAPI?.login(username, password);
-      if (userSession) {
-        props.onLogin(userSession);
-      } else {
-        showErrorNotify("Usuario o contraseña inválidos");
-      }
+      props.onLogin(userSession);
     } catch (error) {
-      console.log(error);
+      showErrorNotify("Usuario o contraseña inválidos");
     }
   };
 
   useEffect(() => {
-      window.posConfigAPI?.getPosConfig()
-        .then(posConfig => {
-          setBussinessName(posConfig?.bussinessName);
-          setBussinessLogoUrl(posConfig?.bussinessLogoUrl);
-        });    
-    }, []);
+    window.posConfigAPI?.getPosConfig()
+      .then(posConfig => {
+        setBussinessName(posConfig?.bussinessName);
+        setBussinessLogoUrl(posConfig?.bussinessLogoUrl);
+      });
+  }, []);
 
   return (
     <div className="loginscreen-container">
@@ -53,6 +50,7 @@ function LoginScreen(props: LoginScreenProps) {
         disabled={!username || !password}
         label="Iniciar sesión"
         onClick={handleLogin} />
+      <ToastContainer />
     </div>
   );
 }

@@ -1,9 +1,11 @@
 import '../stylesheets/SalesProductList.css';
+import { useEffect, useState } from 'react';
 import { MdOutlineAdd } from "react-icons/md";
 import { FaMinus } from "react-icons/fa";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { formatNumberToCurrentPrice } from '../../utils/FormatUtils';
 import type SaleProductModel from '../model/SalesProductModel';
+import { showErrorNotify } from '../../utils/NotifyUtils';
 
 interface SalesProductItemProps {
   product: SaleProductModel;
@@ -18,6 +20,12 @@ interface SalesProductListProps {
 }
 
 function SalesProductItem(props: SalesProductItemProps) {
+  const [unitsToSale, setUnitsToSale] = useState(String(props.product.unitsToSale));
+
+  useEffect(() => {
+    setUnitsToSale(String(props.product.unitsToSale));
+  }, [props.product.unitsToSale]);
+
   return (
     <tr className="product-sale-item">
       <td>{props.product.code}</td>
@@ -28,19 +36,48 @@ function SalesProductItem(props: SalesProductItemProps) {
           <FaMinus className="units-icon" onClick={() => {
             if (props.product.unitsToSale > 1) {
               props.onModifyProductUnits(props.product.code, (props.product.unitsToSale - 1));
+            } else {
+              showErrorNotify("Las unidades vendidadas no pueden ser 0");
             }
           }} />
-          <input className="units-input" min={1} value={props.product.unitsToSale} type="number" />
+          <input
+            className="units-input"
+            min={1}
+            value={unitsToSale}
+            type="number"
+            max={9999}
+            onChange={(e) => setUnitsToSale(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                const units = Number(unitsToSale);
+                if (units > 9999) {
+                  showErrorNotify("Las unidades vendidas no pueden ser mas de 9999");
+                  setUnitsToSale(String(props.product.unitsToSale));
+                } else {
+                  if (units >= 1 && (props.product.stock === 'infinity' || typeof props.product.stock === 'number' && units <= props.product.stock)) {
+                    props.onModifyProductUnits(props.product.code, units);
+                  } else {
+                    showErrorNotify("Las unidades vendidas no pueden ser 0 o mayor al stock");
+                    setUnitsToSale(String(props.product.unitsToSale));
+                  }
+                }
+              }
+            }} />
           <MdOutlineAdd className="units-icon" onClick={() => {
-            if (props.product.stock === 'infinity' || (typeof props.product.stock === 'number' && ((props.product.unitsToSale + 1) <= props.product.stock))) {
-              props.onModifyProductUnits(props.product.code, (props.product.unitsToSale + 1))
+            if (props.product.unitsToSale + 1 > 9999) {
+              showErrorNotify("Las unidades vendidas no pueden ser mas de 9999");
+              setUnitsToSale(String(props.product.unitsToSale));
+            } else {
+              if (props.product.stock === 'infinity' || (typeof props.product.stock === 'number' && ((props.product.unitsToSale + 1) <= props.product.stock))) {
+                props.onModifyProductUnits(props.product.code, (props.product.unitsToSale + 1))
+              }
             }
           }} />
         </div>
       </td>
       <td>{formatNumberToCurrentPrice(props.product.unitPrice * props.product.unitsToSale)}</td>
       <td>
-        <RiDeleteBin6Line className="delete-button" onClick={() => props.onDeleteProductOfSale(props.product.code)}/>
+        <RiDeleteBin6Line className="delete-button" onClick={() => props.onDeleteProductOfSale(props.product.code)} />
       </td>
     </tr>
   );

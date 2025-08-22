@@ -23,8 +23,8 @@ interface ProductDataProps {
 function ProductForm(props: ProductDataProps) {
   const [productCode, setProductCode] = useState(props.code ? props.code : "");
   const [productName, setProductName] = useState(props.name ? props.name : "");
-  const [unitPrice, setUnitPrice] = useState(props.unitPrice ? props.unitPrice : 0.0);
-  const [stock, setStock] = useState(props.stock ? props.stock : 1);
+  const [unitPrice, setUnitPrice] = useState(props.unitPrice ? String(props.unitPrice) : "0");
+  const [stock, setStock] = useState(props.stock ? String(props.stock) : "1");
   const [isInfinityStock, setInfinityStock] = useState(props.isInfinityStock ? props.isInfinityStock : false);
   const [category, setCategory] = useState(props.category ? props.category : "Todos");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -32,8 +32,8 @@ function ProductForm(props: ProductDataProps) {
   const clearForm = () => {
     setProductCode("");
     setProductName("");
-    setUnitPrice(0.0);
-    setStock(0);
+    setUnitPrice("0");
+    setStock("1");
     setInfinityStock(false);
     setCategory("Todos");
     setErrorMessage(null);
@@ -48,11 +48,11 @@ function ProductForm(props: ProductDataProps) {
     if (props.forEdit) {
       try {
         await window.productAPI?.updateProduct(
-          productCode, 
-          productName, 
-          unitPrice, 
-          stock, 
-          isInfinityStock, 
+          productCode,
+          productName,
+          Number(unitPrice),
+          Number(stock),
+          isInfinityStock,
           category,
           productCode !== props.code ? props.code : undefined
         );
@@ -64,22 +64,23 @@ function ProductForm(props: ProductDataProps) {
       }
 
     } else {
-      try {
-        await window.productAPI?.saveProduct(productCode, productName, unitPrice, stock, isInfinityStock, category);
-        showSuccessNotify("Producto guardado!");
-        clearForm();
-        props.onSaveSuccess();
-      } catch (error) {
-        handleErrorMessage(error, setErrorMessage);
-      }
+      window.productAPI?.saveProduct(productCode, productName, Number(unitPrice), Number(stock), isInfinityStock, category)
+        .then(() => {
+          showSuccessNotify("Producto guardado!");
+          clearForm();
+          props.onSaveSuccess();
+        })
+        .catch((error) => {
+          handleErrorMessage(error, setErrorMessage);
+        });
     }
   };
 
   useEffect(() => {
     setProductCode(props.code ? props.code : "");
     setProductName(props.name ? props.name : "");
-    setUnitPrice(props.unitPrice ? props.unitPrice : 0.0);
-    setStock(props.stock ? props.stock : 1);
+    setUnitPrice(props.unitPrice ? String(props.unitPrice) : "0");
+    setStock(props.stock ? String(props.stock) : "1");
     setInfinityStock(props.isInfinityStock ? props.isInfinityStock : false);
     setCategory(props.category ? props.category : "Todos");
     setErrorMessage(null);
@@ -99,15 +100,33 @@ function ProductForm(props: ProductDataProps) {
           <></>
       }
       <label>Código del producto:</label>
-      <input disabled={props.forEdit} type="text" value={productCode} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductCode(e.target.value)} />
+      <input 
+        disabled={props.forEdit} 
+        type="text" 
+        value={productCode}
+        maxLength={50} 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductCode(e.target.value)} />
       <label>Nombre:</label>
-      <input type="text" value={productName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductName(e.target.value)} />
+      <input 
+        type="text" 
+        value={productName}
+        maxLength={100} 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductName(e.target.value)} />
       <label>Precio unitario:</label>
-      <input type="number" value={unitPrice} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUnitPrice(Number(e.target.value))} />
+      <input 
+        type="number" 
+        value={unitPrice} 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUnitPrice(e.target.value)} />
       <label>Stock:</label>
-      <input type="number" value={stock} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStock(Number(e.target.value))} />
+      <input 
+        type="number" 
+        value={stock} 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStock(e.target.value)} />
       <label>¿Stock infinito?</label>
-      <input type="checkbox" checked={isInfinityStock} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInfinityStock(e.target.checked)} />
+      <input 
+        type="checkbox" 
+        checked={isInfinityStock} 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInfinityStock(e.target.checked)} />
       <CategorySelect
         selected={category}
         options={props.categories}

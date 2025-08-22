@@ -14,7 +14,9 @@ class CategoryDao implements ICategoryDataSource {
 
     getAllCategories(): Promise<Category[]> {
         return new Promise<Category[]>(async (resolve, reject) => {
-            const categoriesDb = await this.CategorySequelize.findAll();
+            const categoriesDb = await this.CategorySequelize.findAll({
+                order: ['name']
+            });
             if (categoriesDb) {
                 const categories = categoriesDb.map((categoryDb: any) => new Category(
                     categoryDb.id,

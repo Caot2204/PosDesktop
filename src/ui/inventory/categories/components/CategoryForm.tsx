@@ -82,6 +82,7 @@ function CategoryForm(props: CategoryFormProps) {
       <PosInput
         label="Nombre"
         value={name}
+        maxLength={50}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} />
       <OkCancelButtons
         onSave={handleSubmit}

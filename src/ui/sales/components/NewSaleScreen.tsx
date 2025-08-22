@@ -83,24 +83,25 @@ function NewSaleScreen(props: NewSaleScreenProps) {
   };
 
   const handlePaySale = (paymentType: string, amountPayed: number, paymentFolio: string | null) => {
-    setOpenDialog(null);
-    handleClearScreen();
-    try {
-      const currentDate = new Date();
-      window.saleAPI?.saveSale(
-        currentDate,
-        props.currentUser.userName,
-        productsOfSale,
-        paymentType,
-        paymentType === "Tarjeta" ? totalSale : amountPayed,
-        paymentFolio,
-        totalSale
-      );
-      showSuccessNotify("Venta realizada");
-    } catch (error) {
-      console.log(error);
-      showErrorNotify("Error al realizar la venta");
-    }
+    const currentDate = new Date();
+    window.saleAPI?.saveSale(
+      currentDate,
+      props.currentUser.userName,
+      productsOfSale,
+      paymentType,
+      paymentType === "Tarjeta" ? totalSale : amountPayed,
+      paymentFolio,
+      totalSale
+    )
+      .then(() => {
+        showSuccessNotify("Venta realizada");
+        setOpenDialog(null);
+        handleClearScreen();
+      })
+      .catch((error) => {
+        console.log(error);
+        showErrorNotify("Error al realizar la venta");
+      });
   };
 
   useEffect(() => {
@@ -154,7 +155,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
       .then(posConfig => {
         setBussinessName(posConfig?.bussinessName);
         setBussinessLogoUrl(posConfig?.bussinessLogoUrl);
-      });    
+      });
   }, []);
 
   return (
@@ -165,21 +166,24 @@ function NewSaleScreen(props: NewSaleScreenProps) {
           ref={codeInputRef}
           className="code-input-sale"
           type="text"
+          maxLength={100}
           autoFocus
           placeholder="Ingrese el código del producto..."
           onChange={(e) => setProductCodeInput(e.target.value)}
           onKeyDown={async e => {
             if (e.key === 'Enter') {
-              const product = await window.productAPI?.getProductByCode(productCodeInput);
-              if (product) {
-                handleAddProduct(product);
-              } else {
+              try {
+                const product = await window.productAPI?.getProductByCode(productCodeInput);
+                if (product) {
+                  handleAddProduct(product);
+                }
+              } catch (e) {
                 showErrorNotify("Producto no encontrado");
                 if (codeInputRef.current) {
                   codeInputRef.current.value = "";
                 }
-              };
-            }
+              }
+            };
           }} />
         <PosButton
           className="search-button"
@@ -210,9 +214,9 @@ function NewSaleScreen(props: NewSaleScreenProps) {
       </div>
       <div className={openDialog ? "extras-container filter-blur" : "extras-container"} >
         <div className="bussiness-info-container">
-          <img 
-            className="newsale-bussiness-logo" 
-            src={bussinessLogoUrl} 
+          <img
+            className="newsale-bussiness-logo"
+            src={bussinessLogoUrl}
             alt="bussiness-logo" />
           <h3>{bussinessName}</h3>
         </div>

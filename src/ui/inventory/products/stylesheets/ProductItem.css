@@ -22,13 +22,13 @@
 	font-size: 1.3em;
 }
 
-.edit-button {
+.product-edit-button {
 	cursor: pointer;
 	color: black;
 	height: 100%;
 }
 
-.delete-button {
+.product-delete-button {
 	cursor: pointer;
 	color: red;
 }

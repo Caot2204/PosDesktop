@@ -25,7 +25,7 @@ function ProductSearchedRow(props: ProductSearchedRowProps) {
       <th scope="row">{props.code}</th>
       <td>{props.name}</td>
       <td>{props.category}</td>
-      <td>{formatNumberToCurrentPrice(props.unitPrice)}</td>
+      <td><strong>{formatNumberToCurrentPrice(props.unitPrice)}</strong></td>
     </tr>
   );
 }
@@ -46,8 +46,8 @@ function SearchProductScreen(props: SearchProductProps) {
     const getProducts = async () => {
       let products: Product[] = props.products ?? await window.productAPI?.getAllProducts() ?? [];
       if (searchFilter.trim() !== "") {
-        products = products.filter(product => 
-          product.code.toLowerCase().includes(searchFilter.toLowerCase()) || 
+        products = products.filter(product =>
+          product.code.toLowerCase().includes(searchFilter.toLowerCase()) ||
           product.name.toLowerCase().includes(searchFilter.toLowerCase()));
       }
       setProductsToShow(products);
@@ -67,42 +67,45 @@ function SearchProductScreen(props: SearchProductProps) {
     <div className="search-screen-container">
       <div className="search-product-container">
         <FaSearch />
-        <input 
+        <input
           autoFocus
-          className="search-input" 
-          ref={searchInputRef} 
-          type="text" 
-          placeholder="Ingrese el nombre o código del producto..." 
+          className="search-input"
+          ref={searchInputRef}
+          type="text"
+          maxLength={100}
+          placeholder="Ingrese el nombre o código del producto..."
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
         <MdOutlineCancel onClick={handleClearSearch} />
       </div>
       <hr />
-      <table className="product-list">
-        <thead>
-          <tr>
-            <th scope="col">Código</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Categoría</th>
-            <th scope="col">Precio</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            searchFilter.trim() !== "" ?
-              productsToShow.map(product => (
-                <ProductSearchedRow
-                  key={product.code}
-                  code={product.code}
-                  name={product.name}
-                  category={product.category}
-                  unitPrice={product.unitPrice}
-                  onProductClicked={() => props.onProductClicked(product)} />
-              ))
-              :
-              <></>
-          }
-        </tbody>
-      </table>
+      <div className="product-list">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Categoría</th>
+              <th scope="col">Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              searchFilter.trim() !== "" ?
+                productsToShow.map(product => (
+                  <ProductSearchedRow
+                    key={product.code}
+                    code={product.code}
+                    name={product.name}
+                    category={product.category}
+                    unitPrice={product.unitPrice}
+                    onProductClicked={() => props.onProductClicked(product)} />
+                ))
+                :
+                <></>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

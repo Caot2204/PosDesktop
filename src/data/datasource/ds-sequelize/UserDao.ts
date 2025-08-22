@@ -28,7 +28,9 @@ class UserDao implements IUserDataSource {
 
     getAllUsers(): Promise<User[]> {
         return new Promise<User[]>(async (resolve, reject) => {
-            const usersDb = await this.UserSequelize.findAll();
+            const usersDb = await this.UserSequelize.findAll({
+                order: ['name']
+            });
             if (usersDb) {
                 const users = usersDb.map((userDb: any) => new User(
                     userDb.id,

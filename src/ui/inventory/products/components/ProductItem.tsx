@@ -21,7 +21,6 @@ function ProductItem(props: ProductDataProps) {
 
   const handleConfirmDelete = () => {
     setShowConfirmDialog(false);
-    console.log("si pasa");
     props.onDelete();
   };
 
@@ -31,8 +30,8 @@ function ProductItem(props: ProductDataProps) {
         <div className="product-header">
           <span className="product-name">{props.name}</span>
           <div className="button-actions">
-            <AiOutlineEdit className="edit-button" onClick={props.onUpdate} />
-            <RiDeleteBin6Line className="delete-button" onClick={() => setShowConfirmDialog(true)} />
+            <AiOutlineEdit className="product-edit-button" onClick={props.onUpdate} />
+            <RiDeleteBin6Line className="product-delete-button" onClick={() => setShowConfirmDialog(true)} />
           </div>
         </div>
         <ul>

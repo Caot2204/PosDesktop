@@ -1,8 +1,17 @@
+.search-screen-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .product-list {
-  width: 100%;
+  flex: 1 1 auto;
+  height: 100%;
+  overflow-y: auto;
 }
 
 table {
+  width: 100%;
   border-collapse: collapse;
   border: 2px solid rgb(140 140 140);
   font-family: sans-serif;

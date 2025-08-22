@@ -92,7 +92,11 @@ export function UserForm(props: UserDataProps) {
             <></>
         }
         <label>Nombre:</label>
-        <input type="text" value={name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} />
+        <input 
+          type="text" 
+          value={name} 
+          maxLength={100}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} />
         {
           props.id ?
             <></>

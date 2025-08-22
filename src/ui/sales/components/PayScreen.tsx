@@ -5,6 +5,7 @@ import { BsTicketDetailed } from "react-icons/bs";
 import { FaDollarSign } from "react-icons/fa";
 import PosButton from '../../common/components/PosButton';
 import { formatNumberToCurrentPrice } from '../../utils/FormatUtils';
+import { showErrorNotify } from '../../utils/NotifyUtils';
 
 interface PayScreenProps {
   isShowed: boolean;
@@ -14,11 +15,28 @@ interface PayScreenProps {
 }
 
 function PayScreen(props: PayScreenProps) {
+  const paymentTypeOptionRef = useRef<HTMLOptionElement>(null);
   const paymentInputRef = useRef<HTMLInputElement>(null);
 
   const [payAmount, setPayAmount] = useState(0.0);
   const [paymentType, setPaymentType] = useState("Efectivo");
   const [paymentFolio, setPaymentFolio] = useState<string | null>(null);
+
+  const handlePayClicked = () => {
+    if (paymentType === 'Efectivo') {
+      if (payAmount >= props.totalSale) {
+        props.onPaySale(paymentType, payAmount, paymentFolio);
+      } else {
+        showErrorNotify("El monto pagado debe ser mayor al total de la venta");
+      }
+    } else {
+      if (paymentFolio && paymentFolio.length > 1) {
+        props.onPaySale(paymentType, payAmount, paymentFolio);
+      } else {
+        showErrorNotify("Debe ingresar el folio de la transaccion");
+      }
+    }
+  };
 
   useEffect(() => {
     if (props.isShowed) {
@@ -26,6 +44,9 @@ function PayScreen(props: PayScreenProps) {
     } else {
       if (paymentInputRef.current) {
         paymentInputRef.current.value = "";
+      }
+      if (paymentTypeOptionRef) {
+        paymentTypeOptionRef.current.selected = true;
       }
       setPayAmount(0.0);
       setPaymentType("Efectivo");
@@ -37,8 +58,8 @@ function PayScreen(props: PayScreenProps) {
     <div className="payscreen-container">
       <h1>Cobrar venta</h1>
       <div className="payment-inputs">
-        <select defaultValue={paymentType} onChange={(e) => setPaymentType(e.target.value)}>
-          <option value="Efectivo" selected defaultChecked={true}>Efectivo</option>
+        <select onChange={(e) => setPaymentType(e.target.value)}>
+          <option value="Efectivo" ref={paymentTypeOptionRef}>Efectivo</option>
           <option value="Tarjeta">Tarjeta</option>
         </select>
         {
@@ -91,9 +112,9 @@ function PayScreen(props: PayScreenProps) {
           onClick={props.onCancel} />
         <PosButton
           disabled={props.totalSale === 0}
-          label={ paymentType === "Tarjeta" ? "Registrar pago" : "Pagar"}
+          label={paymentType === "Tarjeta" ? "Registrar pago" : "Pagar"}
           icon={<MdOutlineCheck />}
-          onClick={() => props.onPaySale(paymentType, payAmount, paymentFolio)} />
+          onClick={handlePayClicked} />
       </div>
     </div>
   );
