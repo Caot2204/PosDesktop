@@ -2,7 +2,7 @@
   "name": "pos-desktop",
   "productName": "PosDesktop",
   "version": "1.0.0",
-  "description": "A minimalist/lite point of sale, development on Electron.",
+  "description": "A minimalist/lite point of sale",
   "main": ".webpack/main",
   "repository": {
     "type": "git",
