@@ -39,25 +39,25 @@ src/
 Clone the project
 
 ```bash
-  git clone https://github.com/Caot2204/PosDesktop.git
+git clone https://github.com/Caot2204/PosDesktop.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd PosDesktop
+cd PosDesktop
 ```
 
 Install dependencies
 
 ```bash
-  npm install
+npm install
 ```
 
 Start development environment
 
 ```bash
-  npm start
+npm start
 ```
 
 ## Make the project
@@ -65,7 +65,7 @@ Start development environment
 Make a installer for your operative system
 
 ```bash
-  npm run make
+npm run make
 ```
 
 ## Important notes
