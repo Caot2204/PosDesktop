@@ -11,6 +11,28 @@ PosDesktop is open source, so, you can modify/extend and use with complety freed
 
 Thank you for use this project.
 
+## Project structure
+
+```
+src/
+|-- data/
+    |-- datasource/
+        |-- ds-interfaces/      # Interface that has dao implements
+        |-- ds-sequelize/       # Sequelize implementation
+        |-- ds-sqlite/          # sqlite implementation for demo DI
+        |-- utils               # util for transform data
+    |-- model/                  # Pos'models
+    |-- pos-config/             # Pos'config implementation
+    |-- repository/             # Intermediary for data and ui
+|-- electron/                   # Configure ipcMethods for ui uses
+    |-- decorators/             # Configure ipcMethods for each model
+|-- icons/                      # App' icons
+|-- ui/          # Each feature follow the next structure
+    |-- feature/
+        |-- components/
+        |-- stylesheets/
+```
+
 
 ## Run Locally
 
