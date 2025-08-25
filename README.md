@@ -31,6 +31,12 @@ src/
     |-- feature/
         |-- components/
         |-- stylesheets/
+    |-- PosDesktopApp.tsx       # Include de global.window interface for communicates electron and ui
+|-- index.ts                    # Contain the structure for initialize electron
+|-- preload.ts                  # Secure expose the data layer' methods for ui
+.
+..
+...
 ```
 
 
