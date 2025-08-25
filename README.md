@@ -7,7 +7,7 @@ PosDesktop allows you to record your bussiness' sales so search and view them. T
 
 For more details, please review the documentation section, sorry but the documentation it's only in spanish for the moment. The UML models are in English.
 
-PosDesktop is open source, so, you can modify/extend and use with complety freedom.
+PosDesktop is open source, so, you can modify/extend and use with complety freedom. The project is development in [Electron](https://www.electronjs.org/) for it can make for macOs, Linux and Windows. The release only contain a .exe(Windows) file, if you want make a distributable of macOs and linux, you should run the comand in the "Make the project" section.
 
 Thank you for use this project.
 
