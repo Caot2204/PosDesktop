@@ -1,32 +1,33 @@
 .sales-product-container {
-  flex: 1;
-  border: 1px solid rgb(140 140 140);
-  min-width: 0;
+  max-height: 50vh;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
 }
 
 .sales-product-list {
   width: 100%;
   border-collapse: collapse;
+  border: 2px solid rgb(140 140 140);
+  font-family: sans-serif;
+  font-size: 0.8rem;
   letter-spacing: 1px;
+  flex: 1 1 auto;
+  height: 100%;
 }
 
-.sales-product-list th {
+.sales-product-list thead th {
   position: sticky;
   top: 0;
   background-color: rgb(192, 255, 137); /* same as your header */
   z-index: 2;
+  padding: 8px 10px;
 }
 
 .sales-product-list td {
   padding: 0;
   font-size: 0.95em;
   line-height: 1.2;
-}
-
-.sales-product-list > thead > th {
-  background-color: rgb(192, 255, 137);
-  padding: 8px 10px;
 }
 
 .sales-product-list th:nth-child(1),
@@ -71,6 +72,10 @@
 
 .product-list > tbody > tr:nth-of-type(even) {
   background-color: rgb(232, 255, 230);
+}
+
+.product-list tbody tr {
+  height: fit-content;
 }
 
 .units-input-container {

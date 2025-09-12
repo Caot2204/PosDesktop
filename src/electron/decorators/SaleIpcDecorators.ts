@@ -17,6 +17,18 @@ class SaleIpcDecorator {
     }
 
     private async configureSaleIpcMethods() {
+        this.ipcMain.handle('saleApi:clearCurrentSaleBackup', async (event) => {
+            await this.saleRepository.clearCurrentSaleBackup();
+        });
+        
+        this.ipcMain.handle('saleApi:createCurrentSaleBackup', async (event, productsSold: SaleProductModel[]) => {
+            await this.saleRepository.createCurrentSaleBackup(productsSold);
+        });
+
+        this.ipcMain.handle('saleAPI:getCurrentSaleBackup', async (event) => {
+            return await this.saleRepository.getCurrentSaleBackup();
+        })
+
         this.ipcMain.handle('saleApi:getSaleById', async (event, saleId: number) => {
             return await this.saleRepository.getSaleById(saleId);
         });

@@ -1,5 +1,5 @@
 import '../stylesheets/SalesProductList.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MdOutlineAdd } from "react-icons/md";
 import { FaMinus } from "react-icons/fa";
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -9,6 +9,7 @@ import { showErrorNotify } from '../../utils/NotifyUtils';
 
 interface SalesProductItemProps {
   product: SaleProductModel;
+  ref: any | undefined;
   onModifyProductUnits: (code: string, units: number) => void;
   onDeleteProductOfSale: (code: string) => void;
 }
@@ -27,7 +28,7 @@ function SalesProductItem(props: SalesProductItemProps) {
   }, [props.product.unitsToSale]);
 
   return (
-    <tr className="product-sale-item">
+    <tr className="product-sale-item" ref={props.ref}>
       <td>{props.product.code}</td>
       <td>{props.product.name}</td>
       <td>{formatNumberToCurrentPrice(props.product.unitPrice)}</td>
@@ -84,6 +85,14 @@ function SalesProductItem(props: SalesProductItemProps) {
 }
 
 function SalesProductList(props: SalesProductListProps) {
+  const lastProductRef = useRef<HTMLTableRowElement>(null);
+
+  useEffect(() => {
+    if (lastProductRef.current) {
+      lastProductRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [props.products.length]);
+
   return (
     <div className="sales-product-container">
       <table className="sales-product-list">
@@ -98,12 +107,13 @@ function SalesProductList(props: SalesProductListProps) {
         </thead>
         <tbody>
           {
-            props.products.map(product => (
+            props.products.map((product, index) => (
               <SalesProductItem
                 key={product.code}
                 product={product}
                 onModifyProductUnits={props.onModifyProductUnits}
-                onDeleteProductOfSale={props.onDeleteProductOfSale} />
+                onDeleteProductOfSale={props.onDeleteProductOfSale}
+                ref={index === props.products.length - 1 ? lastProductRef : undefined} />
             ))
           }
         </tbody>

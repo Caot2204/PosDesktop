@@ -39,6 +39,9 @@ function NewSaleScreen(props: NewSaleScreenProps) {
       codeInputRef.current.value = "";
     }
     setProductsOfSale([]);
+    window.saleAPI?.clearCurrentSaleBackup()
+      .then(() => {})
+      .catch((e) => console.log(e));
     setOpenDialog(null);
   };
 
@@ -113,6 +116,11 @@ function NewSaleScreen(props: NewSaleScreenProps) {
     if (codeInputRef.current) {
       codeInputRef.current.focus();
     }
+    if (productsOfSale.length > 0) {
+      window.saleAPI?.createCurrentSaleBackup(productsOfSale)
+        .then(() => { })
+        .catch((error) => console.log(error));
+    }
   }, [productsOfSale]);
 
   useEffect(() => {
@@ -155,6 +163,13 @@ function NewSaleScreen(props: NewSaleScreenProps) {
       .then(posConfig => {
         setBussinessName(posConfig?.bussinessName);
         setBussinessLogoUrl(posConfig?.bussinessLogoUrl);
+      });
+    window.saleAPI?.getCurrentSaleBackup()
+      .then(productsSold => {
+        setProductsOfSale(productsSold);
+      })
+      .catch((error) => {
+        console.log("Error al recuperar el backup de la venta actual: ", error);
       });
   }, []);
 
