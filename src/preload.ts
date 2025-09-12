@@ -36,6 +36,9 @@ contextBridge.exposeInMainWorld('productAPI',
 
 contextBridge.exposeInMainWorld('saleAPI',
   {
+    clearCurrentSaleBackup: () => ipcRenderer.invoke('saleApi:clearCurrentSaleBackup'),
+    createCurrentSaleBackup: (productsSold: SaleProductModel[]) => ipcRenderer.invoke('saleApi:createCurrentSaleBackup', productsSold),
+    getCurrentSaleBackup: () => ipcRenderer.invoke('saleAPI:getCurrentSaleBackup'),
     getSaleById: (saleId: number) => ipcRenderer.invoke('saleApi:getSaleById', saleId),
     getSalesByDate: (dateOfSale: Date) => ipcRenderer.invoke('saleApi:getSalesByDate', dateOfSale),
     saveSale: (

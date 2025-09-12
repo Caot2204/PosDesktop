@@ -1,8 +1,12 @@
-import type SaleProductModel from "../../ui/sales/model/SalesProductModel";
+import { isDev } from "../../electron/util";
+import SaleProductModel from "../../ui/sales/model/SalesProductModel";
 import type ISaleDataSource from "../datasource/ds-interfaces/ISaleDataSource";
 import type Sale from "../model/Sale";
 import SalesProduct from "../model/SalesProduct";
 import type ProductRepository from "./ProductRepository";
+import fs from 'fs';
+import path from 'path';
+import { app } from "electron";
 
 class SaleRepository {
 
@@ -12,6 +16,30 @@ class SaleRepository {
     constructor(saleDataSource: ISaleDataSource, productRepository: ProductRepository) {
         this.saleDataSource = saleDataSource;
         this.productRepository = productRepository;
+    }
+
+    async clearCurrentSaleBackup() {
+        const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
+        if(fs.existsSync(backupCurrentSalePath)) {
+            fs.writeFileSync(backupCurrentSalePath, JSON.stringify([], null, 2), 'utf-8');
+        }
+    }
+
+    async createCurrentSaleBackup(productsSold: SaleProductModel[]) {
+        const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
+        if(fs.existsSync(backupCurrentSalePath)) {
+            fs.writeFileSync(backupCurrentSalePath, JSON.stringify(productsSold, null, 2), 'utf-8');
+        }
+    }
+
+    async getCurrentSaleBackup(): Promise<SaleProductModel[]> {
+        let products: SaleProductModel[] = [];
+        const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
+        if(fs.existsSync(backupCurrentSalePath)) {
+            const data = fs.readFileSync(backupCurrentSalePath, 'utf-8');
+            products = JSON.parse(data);
+        }
+        return products;
     }
 
     async getSaleById(saleId: number): Promise<Sale | undefined> {

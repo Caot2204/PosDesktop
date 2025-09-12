@@ -94,3 +94,4 @@ out/
 # dev files
 pos_dev_config.json
 pos_dev_database.sqlite
+pos_dev_current_sale.json
