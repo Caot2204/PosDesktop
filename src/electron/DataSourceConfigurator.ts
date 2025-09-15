@@ -26,6 +26,7 @@ class DataSourceConfigurator {
 
     async configure() {
         const posConfigPath = await this.checkPosFileConfigAndGetPath();
+        await this.checkCurrentSaleBackupExist();
         await this.configureDatabase(posConfigPath);
     }
 
@@ -50,6 +51,17 @@ class DataSourceConfigurator {
 
         } catch (error) {
             throw new Error(`Error to set configFile: ${error}`);
+        }
+    }
+
+    private async checkCurrentSaleBackupExist() {
+        try {
+            const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
+            if (!fs.existsSync(backupCurrentSalePath)) {
+                fs.writeFileSync(backupCurrentSalePath, JSON.stringify([], null, 2), 'utf-8');
+            }
+        } catch(error) {
+            throw new Error(`Error to create current sale backup: ${error}`)
         }
     }
 

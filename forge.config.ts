@@ -69,7 +69,9 @@ const config: ForgeConfig = {
         repository: {
           owner: 'Caot2204',
           name: 'PosDesktop'
-        }
+        },
+        prerelease: false,
+        draft: true
       }
     }
   ]

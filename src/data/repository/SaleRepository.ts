@@ -19,27 +19,33 @@ class SaleRepository {
     }
 
     async clearCurrentSaleBackup() {
-        const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
-        if(fs.existsSync(backupCurrentSalePath)) {
+        try {
+            const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
             fs.writeFileSync(backupCurrentSalePath, JSON.stringify([], null, 2), 'utf-8');
+        } catch (error) {
+            console.log("Error to clear current sale backup: ", error);
         }
     }
 
     async createCurrentSaleBackup(productsSold: SaleProductModel[]) {
-        const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
-        if(fs.existsSync(backupCurrentSalePath)) {
+        try {
+            const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
             fs.writeFileSync(backupCurrentSalePath, JSON.stringify(productsSold, null, 2), 'utf-8');
+        } catch (error) {
+            console.log("Error to create current sale backup: ", error);
         }
     }
 
     async getCurrentSaleBackup(): Promise<SaleProductModel[]> {
-        let products: SaleProductModel[] = [];
-        const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
-        if(fs.existsSync(backupCurrentSalePath)) {
+        try {
+            let products: SaleProductModel[] = [];
+            const backupCurrentSalePath = isDev() ? 'pos_dev_current_sale.json' : path.join(app.getPath('userData'), 'pos_current_sale.json');
             const data = fs.readFileSync(backupCurrentSalePath, 'utf-8');
             products = JSON.parse(data);
+            return products;
+        } catch (error) {
+            console.log("Error to get current sale backup: ", error);
         }
-        return products;
     }
 
     async getSaleById(saleId: number): Promise<Sale | undefined> {
