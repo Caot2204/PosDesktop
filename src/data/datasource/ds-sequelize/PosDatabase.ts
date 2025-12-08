@@ -74,7 +74,7 @@ class PosDatabase {
                 timestamps: false
             }
         );
-        
+
         this.CashClosingSequelize = this.sequelize.define('cash_closings',
             {
                 id: {
@@ -121,6 +121,31 @@ class PosDatabase {
                 timestamps: false
             }
         );
+
+        /*this.EgressSequelize = this.sequelize.define('egresses',
+            {
+                id: {
+                    type: DataTypes.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true
+                },
+                dateOfEgress: {
+                    type: DataTypes.DATE,
+                    allowNull: false
+                },
+                amount: {
+                    type: DataTypes.DOUBLE,
+                    allowNull: false
+                },
+                description: {
+                    type: DataTypes.STRING,
+                    allowNull: false
+                }
+            },
+            {
+                timestamps: false
+            }
+        );*/
 
         this.ProductSequelize = this.sequelize.define('products',
             {
