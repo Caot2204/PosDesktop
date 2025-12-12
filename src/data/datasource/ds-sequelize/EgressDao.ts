@@ -18,6 +18,7 @@ class EgressDao implements IEgressDataSource {
                 egressDb.dateOfEgress,
                 egressDb.amount,
                 egressDb.description,
+                egressDb.userToRegister,
                 egressDb.id
             ));
         } catch(error) {
@@ -33,6 +34,7 @@ class EgressDao implements IEgressDataSource {
                 egressDb.dateOfEgress,
                 egressDb.amount,
                 egressDb.description,
+                egressDb.userToRegister,
                 egressDb.id
             )
         } catch (error) {
@@ -45,7 +47,8 @@ class EgressDao implements IEgressDataSource {
             await this.EgressSequelize.create({
                 dateOfEgress: egress.dateOfEgress,
                 amount: egress.amount,
-                description: egress.description
+                description: egress.description,
+                userToRegister: egress.userToRegister
             });
             return;
         } catch(error) {
@@ -60,6 +63,7 @@ class EgressDao implements IEgressDataSource {
             egressDb.dateOfEgress = egress.dateOfEgress;
             egressDb.amount = egress.amount;
             egressDb.description = egress.description;
+            egressDb.userToRegister = egress.userToRegister;
             await egressDb.save();
             return;
         } catch(error) {

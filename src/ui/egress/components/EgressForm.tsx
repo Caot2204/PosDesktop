@@ -11,6 +11,7 @@ interface EgressFormProps {
   dateOfEgress?: Date;
   amount?: number;
   description?: string;
+  userName: string;
   forEdit?: boolean;
   onSaveSuccess: () => void;
   onCancel: () => void;
@@ -38,7 +39,8 @@ function EgressForm(props: EgressFormProps) {
           id,
           dateOfEgress,
           amount ? Number(amount) : 0,
-          description
+          description,
+          props.userName
         );
         showSuccessNotify("Egreso actualizado");
         clearForm();
@@ -51,7 +53,8 @@ function EgressForm(props: EgressFormProps) {
         await window.egressAPI?.saveEgress(
           dateOfEgress,
           amount ? Number(amount) : 0,
-          description
+          description,
+          props.userName
         );
         showSuccessNotify("Egreso guardado");
         clearForm()

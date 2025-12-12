@@ -142,6 +142,10 @@ class PosDatabase {
                 description: {
                     type: DataTypes.STRING,
                     allowNull: false
+                },
+                userToRegister: {
+                    type: DataTypes.TEXT,
+                    allowNull: false
                 }
             },
             {

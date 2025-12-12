@@ -8,6 +8,8 @@ interface EgressDataProps {
   dateOfEgress: Date;
   amount: number;
   description: string;
+  userToRegister: string;
+  currentUserName: string;
   onUpdate: () => void;
   onDelete: () => void;
 }
@@ -17,12 +19,19 @@ function EgressItem(props: EgressDataProps) {
     <tr className='egress-data-container'>
       <td>{formatOnlyDate(props.dateOfEgress)}</td>
       <td>{formatNumberToCurrentPrice(props.amount)}</td>
+      <td>{props.userToRegister}</td>
       <td>{props.description}</td>
       <td className="egress-actions-cell">
-        <div className="egress-button-actions">
-          <AiOutlineEdit className="egress-edit-button" onClick={props.onUpdate} />
-          <RiDeleteBin6Line className="egress-delete-button" onClick={props.onDelete} />
-        </div>
+        {
+          props.currentUserName === props.userToRegister
+            ?
+            <div className="egress-button-actions">
+              <AiOutlineEdit className="egress-edit-button" onClick={props.onUpdate} />
+              <RiDeleteBin6Line className="egress-delete-button" onClick={props.onDelete} />
+            </div>
+            :
+            <></>
+        }
       </td>
     </tr>
   );

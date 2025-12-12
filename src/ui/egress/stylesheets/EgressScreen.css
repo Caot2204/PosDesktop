@@ -33,6 +33,34 @@
   margin-top: 16px;
 }
 
+.egresses-items th:nth-child(1),
+.egresses-items td:nth-child(1) {
+  width: 15%; /* Adjust as needed for "Fecha" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
+.egresses-items th:nth-child(2),
+.egresses-items td:nth-child(2) {
+  width: 15%; /* Adjust as needed for "Monto" */
+  min-width: 200px;
+  max-width: 600px;
+}
+
+.egresses-items th:nth-child(3),
+.egresses-items td:nth-child(3) {
+  width: 15%; /* Adjust as needed for "Usuario que registro" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
+.egresses-items th:nth-child(4),
+.egresses-items td:nth-child(4) {
+  width: 55%; /* Adjust as needed for "Descripcion" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
 .pos-dialog {
   width: calc(50%);
   height: fit-content;

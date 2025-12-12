@@ -68,8 +68,8 @@ declare global {
     egressAPI?: {
       getAllEgresses: () => Promise<Egress[]>;
       getEgressById: (egressId: number) => Promise<Egress>;
-      saveEgress: (dateOfEgress: Date, amount: number, description: string) => Promise<void>;
-      updateEgress: (id:number, dateOfEgress: Date, amount: number, description: string) => Promise<void>;
+      saveEgress: (dateOfEgress: Date, amount: number, description: string, userToRegister: string) => Promise<void>;
+      updateEgress: (id:number, dateOfEgress: Date, amount: number, description: string, userToRegister: string) => Promise<void>;
       deleteEgress: (egressId: number) => Promise<void>;
     }
   }
@@ -106,7 +106,7 @@ function PosDesktopApp() {
               }>
               <Route index element={<NewSaleScreen currentUser={userSession} />} />
               <Route path="sales" element={<NewSaleScreen currentUser={userSession} />} />
-              <Route path="egress" element={<EgressScreen />} />
+              <Route path="egress" element={<EgressScreen userName={userSession.userName}/>} />
               <Route path="inventory" element={<InventoryScreen />} />
               <Route path="users" element={<UsersScreen />} />
               <Route path="administration" element={<AdministrationScreen />} />

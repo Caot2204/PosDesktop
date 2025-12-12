@@ -27,14 +27,15 @@ class EgressRepository {
         }
     }
 
-    async saveEgress(dateOfEgress: Date, amount: number, descripcion: string) {
+    async saveEgress(dateOfEgress: Date, amount: number, descripcion: string, userToRegister: string) {
         try {
             if (this.validateEgressData(dateOfEgress, amount, descripcion)) {
                 await this.egressDataSource.saveEgress(
                     new Egress(
                         dateOfEgress,
                         amount,
-                        descripcion
+                        descripcion,
+                        userToRegister
                     )
                 );
             }
@@ -44,7 +45,7 @@ class EgressRepository {
         }
     }
 
-    async updateEgress(id: number, dateOfEgress: Date, amount: number, description: string) {
+    async updateEgress(id: number, dateOfEgress: Date, amount: number, description: string, userToRegister: string) {
         try {
             if (this.validateEgressData(dateOfEgress, amount, description)) {
                 await this.egressDataSource.updateEgress(
@@ -52,6 +53,7 @@ class EgressRepository {
                         dateOfEgress,
                         amount,
                         description,
+                        userToRegister,
                         id
                     )
                 );

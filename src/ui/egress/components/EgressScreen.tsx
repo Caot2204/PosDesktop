@@ -11,7 +11,11 @@ import PosConfirmDialog from '../../../ui/common/components/PosConfirmDialog';
 import { ToastContainer } from 'react-toastify';
 import { MdOutlineCancel } from 'react-icons/md';
 
-function EgressScreen() {
+interface EgressScreenProps {
+  userName: string;
+}
+
+function EgressScreen(props: EgressScreenProps) {
   const egressFormDialogRef = useRef<HTMLDialogElement>(null);
   const [openDialog, setOpenDialog] = useState<null | 'egressForm'>(null);
 
@@ -119,6 +123,7 @@ function EgressScreen() {
               <tr>
                 <th scope='col'>Fecha</th>
                 <th scope='col'>Monto</th>
+                <th scope='col'>Usuario que registró:</th>
                 <th scope='col'>Descripción</th>
               </tr>
             </thead>
@@ -130,6 +135,8 @@ function EgressScreen() {
                     dateOfEgress={egress.dateOfEgress}
                     amount={egress.amount}
                     description={egress.description}
+                    userToRegister={egress.userToRegister}
+                    currentUserName={props.userName}
                     onDelete={() => {
                       setEgressIdToDelete(egress.id);
                       setShowConfirmDialog(true);
@@ -147,6 +154,7 @@ function EgressScreen() {
           dateOfEgress={egressToEdit ? egressToEdit.dateOfEgress : new Date()}
           amount={egressToEdit ? egressToEdit.amount : 0}
           description={egressToEdit ? egressToEdit.description : ""}
+          userName={egressToEdit ? egressToEdit.userToRegister : props.userName}
           forEdit={egressToEdit ? true : false}
           onSaveSuccess={() => {
             setLoadingData(true);

@@ -34,6 +34,10 @@ describe('EgressesDao integration', () => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      userToRegister: {
+        type: DataTypes.TEXT,
+        allowNull: false
+      }
     }, { timestamps: false });
 
     await sequelize.sync({ force: true });
@@ -45,7 +49,7 @@ describe('EgressesDao integration', () => {
   });
 
   test('saveEgress and getAllEgresses', async () => {
-    const e = new Egress(new Date('2020-01-01'), 123.45, 'Test egress');
+    const e = new Egress(new Date('2020-01-01'), 123.45, 'Test egress', 'admin');
     await dao.saveEgress(e);
 
     const all = await dao.getAllEgresses();
@@ -55,7 +59,7 @@ describe('EgressesDao integration', () => {
   });
 
   test('getEgressById returns saved egress', async () => {
-    const e = new Egress(new Date('2021-02-03'), 50, 'Find me');
+    const e = new Egress(new Date('2021-02-03'), 50, 'Find me', 'admin');
     await dao.saveEgress(e);
 
     const all = await dao.getAllEgresses();
@@ -68,7 +72,7 @@ describe('EgressesDao integration', () => {
   });
 
   test('updateEgress updates existing record', async () => {
-    const e = new Egress(new Date('2022-03-04'), 10, 'To update');
+    const e = new Egress(new Date('2022-03-04'), 10, 'To update', 'admin');
     await dao.saveEgress(e);
     const all = await dao.getAllEgresses();
     const target = all.find(x => x.description === 'To update')!;
@@ -84,7 +88,7 @@ describe('EgressesDao integration', () => {
   });
 
   test('deleteEgress removes record', async () => {
-    const e = new Egress(new Date('2023-05-06'), 5, 'To delete');
+    const e = new Egress(new Date('2023-05-06'), 5, 'To delete', 'admin');
     await dao.saveEgress(e);
     const all = await dao.getAllEgresses();
     const target = all.find(x => x.description === 'To delete')!;

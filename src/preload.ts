@@ -74,8 +74,8 @@ contextBridge.exposeInMainWorld('egressAPI',
   {
     getAllEgresses: () => ipcRenderer.invoke('egressApi:getAllEgresses'),
     getEgressById: (egressId: number) => ipcRenderer.invoke('egressApi:getEgressById', egressId),
-    saveEgress: (dateOfEgress: Date, amount: number, description: string) => ipcRenderer.invoke('egressApi:saveEgress', dateOfEgress, amount, description),
-    updateEgress: (id: number, dateOfEgress: Date, amount: number, description: string) => ipcRenderer.invoke('egressApi:updateEgress', id, dateOfEgress, amount, description),
+    saveEgress: (dateOfEgress: Date, amount: number, description: string, userToRegister: string) => ipcRenderer.invoke('egressApi:saveEgress', dateOfEgress, amount, description, userToRegister),
+    updateEgress: (id: number, dateOfEgress: Date, amount: number, description: string, userToRegister: string) => ipcRenderer.invoke('egressApi:updateEgress', id, dateOfEgress, amount, description, userToRegister),
     deleteEgress: (egressId: number) => ipcRenderer.invoke('egressApi:deleteEgress', egressId)
   }
 );
