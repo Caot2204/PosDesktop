@@ -1,0 +1,33 @@
+.egress-data-container {
+  height: 40px;
+  background-color: #FFFFFF;
+}
+
+.egress-button-actions {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.egress-button-actions > * {
+  margin: 0 8px;
+}
+
+.egress-edit-button {
+  cursor: pointer;
+  color: black;
+  font-size: 18px;
+}
+
+.egress-delete-button {
+  cursor: pointer;
+  color: red;
+  font-size: 18px;
+}
+
+.egress-actions-cell {
+  width: 1%;
+  white-space: nowrap;
+  padding: 0 8px;
+}

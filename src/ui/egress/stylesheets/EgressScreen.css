@@ -1,0 +1,60 @@
+.egressescreen-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.egress-actions-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date-filter-input {
+  width: 300px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.date-filter-input > * {
+  margin: 0 8px 0 0;
+}
+
+.add-egress-buton {
+  width: 300px;
+}
+
+.egresses-list {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.pos-dialog {
+  width: calc(50%);
+  height: fit-content;
+  border: none;
+  box-shadow: 0px 1px 3px 0px #838282;
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.close-dialog-button {
+  cursor: pointer;
+  color: red;
+  width: 25px;
+  height: 25px;
+}
+
+.filter-blur {
+  filter: blur(8px);
+  pointer-events: none; /* Optional: prevent interaction with blurred content */
+  user-select: none;    /* Optional: prevent text selection */
+}

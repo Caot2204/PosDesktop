@@ -5,6 +5,7 @@ import CategoryDao from "./CategoryDao";
 import ProductDao from "./ProductDao";
 import SaleDao from "./SaleDao";
 import CashClosingDao from "./CashClosingDao";
+import EgressDao from "./EgressDao";
 
 class PosDatabase {
 
@@ -22,6 +23,7 @@ class PosDatabase {
     private productDao: ProductDao | null = null;
     private saleDao: SaleDao | null = null;
     private cashClosingDao: CashClosingDao | null = null;
+    private egressDao: EgressDao | null = null;
 
     constructor(dbPath: string | 'test') {
         this.sequelize = new Sequelize({
@@ -122,7 +124,7 @@ class PosDatabase {
             }
         );
 
-        /*this.EgressSequelize = this.sequelize.define('egresses',
+        this.EgressSequelize = this.sequelize.define('egresses',
             {
                 id: {
                     type: DataTypes.INTEGER,
@@ -145,7 +147,7 @@ class PosDatabase {
             {
                 timestamps: false
             }
-        );*/
+        );
 
         this.ProductSequelize = this.sequelize.define('products',
             {
@@ -272,6 +274,13 @@ class PosDatabase {
             this.saleDao = new SaleDao(this.SaleSequelize, this.SaleProductsSequelize, this.sequelize);
         }
         return this.saleDao;
+    }
+
+    getEgressDao() {
+        if (!this.egressDao) {
+            this.egressDao = new EgressDao(this.EgressSequelize);
+        }
+        return this.egressDao;
     }
 
     getUserDao(): UserDao {

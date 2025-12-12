@@ -20,6 +20,7 @@ import type UserSession from '../data/model/UserSession';
 import FirstUseScreen from './firstuse/components/FirstUseScreen';
 import type CashClosing from '../data/model/CashClosing';
 import type PosConfig from '../data/pos-config/PosConfig';
+import type Egress from '../data/model/Egress';
 
 declare global {
   interface Window {
@@ -63,6 +64,13 @@ declare global {
       getPosConfig: () => Promise<PosConfig>;
       selectNewBussinessLogo: () => Promise<string | undefined>;
       getBussinessLogoDataUrl: (logoPath: string) => Promise<string | undefined>;
+    };
+    egressAPI?: {
+      getAllEgresses: () => Promise<Egress[]>;
+      getEgressById: (egressId: number) => Promise<Egress>;
+      saveEgress: (dateOfEgress: Date, amount: number, description: string) => Promise<void>;
+      updateEgress: (id:number, dateOfEgress: Date, amount: number, description: string) => Promise<void>;
+      deleteEgress: (egressId: number) => Promise<void>;
     }
   }
 }

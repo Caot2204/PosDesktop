@@ -14,6 +14,8 @@ import CashClosingRepository from '../data/repository/CashClosingRepository';
 import CashClosingIpcDecorator from './decorators/CashClosingIpcDecoratos';
 import PosConfigRepository from '../data/pos-config/PosConfigRepository';
 import PosConfigIpcDecorator from './decorators/PosConfigIpcDecorator';
+import EgressRepository from '../data/repository/EgressRepository';
+import EgressIpcDecorator from './decorators/EgressIpcDecorator';
 
 class DataSourceConfigurator {
 
@@ -92,6 +94,10 @@ class DataSourceConfigurator {
             const cashClosingRepository = new CashClosingRepository(this.posDatabase.getCashClosingDao());
             const cashClosingDecorator = new CashClosingIpcDecorator(this.ipcMain, cashClosingRepository);
             await cashClosingDecorator.configure();
+
+            const egressRepository = new EgressRepository(this.posDatabase.getEgressDao());
+            const egressDecorator = new EgressIpcDecorator(egressRepository, this.ipcMain);
+            await egressDecorator.configure();
         }
     }
 }

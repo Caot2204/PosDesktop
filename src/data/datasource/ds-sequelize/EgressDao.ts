@@ -1,7 +1,7 @@
 import Egress from "../../model/Egress";
-import { IEgressesDao } from "../ds-interfaces/IEgressesDao";
+import { IEgressDataSource } from "../ds-interfaces/IEgressDataSource";
 
-class EgressesDao implements IEgressesDao {
+class EgressDao implements IEgressDataSource {
 
     private EgressSequelize: any;
 
@@ -12,7 +12,7 @@ class EgressesDao implements IEgressesDao {
     async getAllEgresses(): Promise<Egress[]> {
         try {
             const egressesDb: any[] = await this.EgressSequelize.findAll({
-                order: [['dateOfEgress', 'ASC']]
+                order: [['dateOfEgress', 'DESC']]
             });
             return egressesDb.map((egressDb: any) => new Egress(
                 egressDb.dateOfEgress,
@@ -80,4 +80,4 @@ class EgressesDao implements IEgressesDao {
 
 }
 
-export default EgressesDao;
+export default EgressDao;

@@ -1,6 +1,6 @@
 import type Egress from "../../model/Egress";
 
-export interface IEgressesDao {
+export interface IEgressDataSource {
 
     getAllEgresses(): Promise<Egress[]>;
 

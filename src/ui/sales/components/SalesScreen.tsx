@@ -2,7 +2,7 @@ import '../stylesheets/SalesScreen.css';
 import { useEffect, useState } from 'react';
 import type Sale from '../../../data/model/Sale';
 import SaleItem from './SaleItem';
-import { formatDate, formatDateForSearch, formatNumberToCurrentPrice } from '../../utils/FormatUtils';
+import { formatDate, formatDateForSearch, formatNumberToCurrentPrice, parseLocalDate, toInputDateValue } from '../../utils/FormatUtils';
 
 interface SalesScreenProps {
   isShowed: boolean;
@@ -10,7 +10,7 @@ interface SalesScreenProps {
 
 function SalesScreen(props: SalesScreenProps) {
   const [sales, setSales] = useState<Sale[]>([]);
-  const [dateToSearch, setDateToSearch] = useState(formatDateForSearch(new Date()));
+  const [dateToSearch, setDateToSearch] = useState<string>(toInputDateValue(new Date()));
   const [saleToShow, setSaleToShow] = useState<Sale | null>(null);
 
   const handleGetSaleById = (saleId: number) => {
@@ -27,7 +27,9 @@ function SalesScreen(props: SalesScreenProps) {
   };
 
   useEffect(() => {
-    handleGetSalesByDate(new Date(dateToSearch));
+    const parsed = parseLocalDate(dateToSearch);
+    if (parsed) handleGetSalesByDate(parsed);
+    else handleGetSalesByDate(new Date());
   }, [dateToSearch]);
 
   useEffect(() => {

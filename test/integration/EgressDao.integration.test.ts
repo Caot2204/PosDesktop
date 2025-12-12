@@ -1,12 +1,12 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import sqlite3 from 'sqlite3';
-import EgressesDao from '../../src/data/datasource/ds-sequelize/EgressesDao';
+import EgressDao from '../../src/data/datasource/ds-sequelize/EgressDao';
 import Egress from '../../src/data/model/Egress';
 
 describe('EgressesDao integration', () => {
   let sequelize: Sequelize;
   let EgressModel: any;
-  let dao: EgressesDao;
+  let dao: EgressDao;
 
   beforeAll(async () => {
     sequelize = new Sequelize({
@@ -37,7 +37,7 @@ describe('EgressesDao integration', () => {
     }, { timestamps: false });
 
     await sequelize.sync({ force: true });
-    dao = new EgressesDao(EgressModel);
+    dao = new EgressDao(EgressModel);
   });
 
   afterAll(async () => {

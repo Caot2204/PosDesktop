@@ -1,6 +1,6 @@
 import '../stylesheets/CashClosingsListScreen.css';
 import { useEffect, useState } from 'react';
-import { formatDateForSearch } from '../../utils/FormatUtils';
+import { formatDateForSearch, parseLocalDate, toInputDateValue } from '../../utils/FormatUtils';
 import type CashClosing from '../../../data/model/CashClosing';
 import CashClosingItem from './CashClosingItem';
 import type User from '../../../data/model/User';
@@ -11,13 +11,15 @@ interface CashClosingsListScreenProps {
 }
 
 function CashClosingsListScreen(props: CashClosingsListScreenProps) {
-  const [dateToSearch, setDateToSearch] = useState(formatDateForSearch(new Date()));
+  const [dateToSearch, setDateToSearch] = useState<string>(toInputDateValue(new Date()));
   const [userToSearch, setUserToSearch] = useState<string | null | undefined>(null);
   const [cashClosings, setCashClosings] = useState<CashClosing[]>([]);
   const [posUsers, setPosUsers] = useState<User[]>([]);
 
   const fetchCashClosingsOfDate = () => {
-    window.cashClosingAPI?.getCashClosingOfDate(new Date(dateToSearch))
+    const parsed = parseLocalDate(dateToSearch);
+    if (!parsed) return setCashClosings([]);
+    window.cashClosingAPI?.getCashClosingOfDate(parsed)
       .then(cashClosings => {
         setCashClosings(cashClosings);
       });
