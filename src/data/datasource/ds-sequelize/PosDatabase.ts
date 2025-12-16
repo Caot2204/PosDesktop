@@ -17,6 +17,8 @@ class PosDatabase {
     private SaleProductsSequelize: any;
     private CashClosingSequelize: any;
     private EgressSequelize: any;
+    private CotizationSequelize: any;
+    private CotizationProductsSequelize: any;
 
     private userDao: UserDao | null = null;
     private categoryDao: CategoryDao | null = null;
@@ -124,6 +126,31 @@ class PosDatabase {
             }
         );
 
+        this.CotizationSequelize = this.sequelize.define('cotizations',
+            {
+                id: {
+                    type: DataTypes.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true
+                },
+                dateOfCotization: {
+                    type: DataTypes.DATE,
+                    allowNull: false
+                },
+                client: {
+                    type: DataTypes.STRING,
+                    allowNull: true,
+                },
+                userToRegister: {
+                    type: DataTypes.STRING,
+                    allowNull: false
+                }
+            },
+            {
+                timestamps: false
+            }
+        );
+
         this.EgressSequelize = this.sequelize.define('egresses',
             {
                 id: {
@@ -176,6 +203,28 @@ class PosDatabase {
                     type: DataTypes.BOOLEAN,
                     allowNull: false,
                     defaultValue: false
+                }
+            },
+            {
+                timestamps: false
+            }
+        );
+
+        this.CotizationProductsSequelize = this.sequelize.define('cotizations_products',
+            {
+                cotizationId: {
+                    type: DataTypes.INTEGER,
+                    references: {
+                        model: this.CotizationSequelize,
+                        key: 'id'
+                    }
+                },
+                productCode: {
+                    type: DataTypes.TEXT,
+                    references: {
+                        model: this.ProductSequelize,
+                        key: 'code'
+                    }
                 }
             },
             {
@@ -250,6 +299,17 @@ class PosDatabase {
 
         this.CategorySequelize.hasMany(this.ProductSequelize);
         this.ProductSequelize.belongsTo(this.CategorySequelize);
+
+        this.CotizationSequelize.belongsToMany(this.ProductSequelize, { 
+            through: this.CotizationProductsSequelize,
+            foreignKey: 'cotizationId',
+            otherKey: 'productCode'
+        });
+        this.ProductSequelize.belongsToMany(this.CotizationSequelize, { 
+            through: this.CotizationProductsSequelize,
+            foreignKey: 'productCode',
+            otherKey: 'cotizationId'
+        });
     }
 
     getCashClosingDao() {
