@@ -25,8 +25,11 @@ function CotizationsScreen(props: CotizationsScreenProps) {
 
   const fetchCotizations = async () => {
     try {
-      const cotizations = await window.cotizationAPI?.getAllCotizations();
+      let cotizations = await window.cotizationAPI?.getAllCotizations();
       if (cotizations) {
+        if (cotizationIdForSearch) {
+          cotizations = cotizations.filter((c: Cotization) => c.id === cotizationIdForSearch);
+        }
         setCotizations(cotizations);
         setLoadingData(false);
       }
@@ -54,7 +57,7 @@ function CotizationsScreen(props: CotizationsScreenProps) {
 
   useEffect(() => {
     fetchCotizations();
-  }, [loadingData]);
+  }, [loadingData, cotizationIdForSearch]);
 
   return (
     <>
