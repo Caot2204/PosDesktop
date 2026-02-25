@@ -13,7 +13,7 @@ class InventoryIpcDecorator {
         this.productRepository = productRepository;        
     }
 
-    configure() {
+    async configure() {
         this.configureCategoryIpcMethods();
         this.configureProductIpcMethods();
     }

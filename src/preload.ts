@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 import SaleProductModel from "./ui/sales/model/SalesProductModel";
+import CotizationProduct from "./data/model/CotizationProduct";
 
 contextBridge.exposeInMainWorld('userAPI',
   {
@@ -77,5 +78,15 @@ contextBridge.exposeInMainWorld('egressAPI',
     saveEgress: (dateOfEgress: Date, amount: number, description: string, userToRegister: string) => ipcRenderer.invoke('egressApi:saveEgress', dateOfEgress, amount, description, userToRegister),
     updateEgress: (id: number, dateOfEgress: Date, amount: number, description: string, userToRegister: string) => ipcRenderer.invoke('egressApi:updateEgress', id, dateOfEgress, amount, description, userToRegister),
     deleteEgress: (egressId: number) => ipcRenderer.invoke('egressApi:deleteEgress', egressId)
+  }
+);
+
+contextBridge.exposeInMainWorld('cotizationAPI',
+  {
+    saveCotization: (dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) => ipcRenderer.invoke('cotizationApi:saveCotization', dateOfCotization, client, userToRegister, products),
+    updateCotization: (id: number, dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) => ipcRenderer.invoke('cotizationApi:updateCotization', id, dateOfCotization, client, userToRegister, products),
+    deleteCotization: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:deleteCotization', cotizationId),
+    getAllCotizations: () => ipcRenderer.invoke('cotizationApi:getAllCotizations'),
+    getCotizationById: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:getCotizationById')
   }
 );

@@ -16,6 +16,8 @@ import PosConfigRepository from '../data/pos-config/PosConfigRepository';
 import PosConfigIpcDecorator from './decorators/PosConfigIpcDecorator';
 import EgressRepository from '../data/repository/EgressRepository';
 import EgressIpcDecorator from './decorators/EgressIpcDecorator';
+import CotizationRepository from '../data/repository/CotizationRepository';
+import CotizationIpcDecorator from './decorators/CotizationIpcDecorator';
 
 class DataSourceConfigurator {
 
@@ -81,11 +83,11 @@ class DataSourceConfigurator {
             const categoryRepository = new CategoryRepository(this.posDatabase.getCategoryDao());
             const productRepository = new ProductRepository(this.posDatabase.getProductDao());
             const inventoryDecorator = new InventoryIpcDecorator(this.ipcMain, categoryRepository, productRepository);
-            inventoryDecorator.configure();
+            await inventoryDecorator.configure();
 
             const saleRepository = new SaleRepository(this.posDatabase.getSaleDao(), productRepository);
             const saleDecorator = new SaleIpcDecorator(this.ipcMain, saleRepository);
-            saleDecorator.configure();
+            await saleDecorator.configure();
 
             const userRepository = new UserRepository(this.posDatabase.getUserDao());
             const userDecorator = new UserIpcDecorator(userRepository, this.ipcMain);
@@ -98,6 +100,10 @@ class DataSourceConfigurator {
             const egressRepository = new EgressRepository(this.posDatabase.getEgressDao());
             const egressDecorator = new EgressIpcDecorator(egressRepository, this.ipcMain);
             await egressDecorator.configure();
+
+            const cotizationRepository = new CotizationRepository(this.posDatabase.getCotizationDao());
+            const cotizationDecorator = new CotizationIpcDecorator(cotizationRepository, this.ipcMain);
+            await cotizationDecorator.configure();
         }
     }
 }

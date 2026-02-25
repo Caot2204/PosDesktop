@@ -123,7 +123,7 @@ function EgressScreen(props: EgressScreenProps) {
               <tr>
                 <th scope='col'>Fecha</th>
                 <th scope='col'>Monto</th>
-                <th scope='col'>Usuario que registró:</th>
+                <th scope='col'>Usuario que registró</th>
                 <th scope='col'>Descripción</th>
               </tr>
             </thead>

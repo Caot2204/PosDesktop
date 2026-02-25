@@ -1,6 +1,6 @@
 import { ICotizationDataSource } from '../datasource/ds-interfaces/ICotizationDataSource';
 import Cotization from '../model/Cotization';
-import Product from '../model/Product';
+import CotizationProduct from '../model/CotizationProduct';
 
 class CotizationRepository {
 
@@ -10,7 +10,7 @@ class CotizationRepository {
         this.cotizationDataSource = cotizationDataSource;
     }
 
-    async saveCotization(dateOfCotization: Date, client: string, userToRegister: string, products: Product[]) {
+    async saveCotization(dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) {
         try {
             if (this.validateCotizationData(dateOfCotization, client, userToRegister, products)) {
                 await this.cotizationDataSource.saveCotization(
@@ -28,7 +28,7 @@ class CotizationRepository {
         }
     }
 
-    async updateCotization(id: number, dateOfCotization: Date, client: string, userToRegister: string, products: Product[]) {
+    async updateCotization(id: number, dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) {
         try {
             if (this.validateCotizationData(dateOfCotization, client, userToRegister, products)) {
                 await this.cotizationDataSource.updateCotization(
@@ -58,7 +58,7 @@ class CotizationRepository {
 
     async getAllCotizations() {
         try {
-            await this.cotizationDataSource.getAllCotizations();
+            return await this.cotizationDataSource.getAllCotizations();
         } catch (error) {
             console.log(error);
             throw error;
@@ -67,14 +67,14 @@ class CotizationRepository {
 
     async getCotizationById(cotizationId: number) {
         try {
-            await this.cotizationDataSource.getCotizationById(cotizationId);
+            return await this.cotizationDataSource.getCotizationById(cotizationId);
         } catch (error) {
             console.log(error);
             throw error;
         }
     }
 
-    private validateCotizationData(dateOfCotization: Date, client: string, userToRegister: string, products: Product[]): Boolean {
+    private validateCotizationData(dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]): Boolean {
         if (!dateOfCotization) throw new Error("Se debe especificar una fecha.");
         if (!userToRegister) throw new Error("Se debe especificar un usuario");
         if (!products) throw new Error("Debe haber productos que agregar a la cotizacion");

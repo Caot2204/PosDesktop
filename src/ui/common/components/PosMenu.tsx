@@ -4,6 +4,7 @@ import { BiArchiveOut } from "react-icons/bi";
 import { FaUserTie, FaShop } from "react-icons/fa6";
 import { NavLink } from 'react-router';
 import type UserSession from '../../../data/model/UserSession';
+import { AiFillFileText } from 'react-icons/ai';
 
 interface PosMenuProps {
   className?: string;
@@ -33,6 +34,16 @@ function PosMenu(props: PosMenuProps) {
           <PosMenuItem
             icon={<BiArchiveOut />}
             label="Egresos" />
+        </NavLink>
+        <NavLink
+          to="/cotizations"
+          className={({ isActive }) =>
+            isActive ? "menu-item selected" : "menu-item"
+          }
+        >
+          <PosMenuItem
+            icon={<AiFillFileText />}
+            label="Cotizaciones" />
         </NavLink>
         <NavLink
           to="/inventory"

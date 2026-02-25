@@ -1,0 +1,62 @@
+.cotizations-screen-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.cotizations-screen-container>* {
+  margin: 8px;
+}
+
+.cotizations-items th:nth-child(1),
+.cotizations-items td:nth-child(1) {
+  width: 15%;
+  /* Adjust as needed for "id" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
+.cotizations-items th:nth-child(2),
+.cotizations-items td:nth-child(2) {
+  width: 45%;
+  /* Adjust as needed for "client" */
+  min-width: 200px;
+  max-width: 600px;
+}
+
+.cotizations-items th:nth-child(3),
+.cotizations-items td:nth-child(3) {
+  width: 30%;
+  /* Adjust as needed for "date" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
+.cotizations-items th:nth-child(4),
+.cotizations-items td:nth-child(4) {
+  width: 10%;
+  /* Adjust as needed for "actions" */
+  min-width: 100px;
+  max-width: 180px;
+}
+
+.cotization-pos-dialog {
+  width: 90vw;
+  /* fallback for contexts where specificity isn't applied */
+  max-width: 1200px;
+  border: none;
+  box-shadow: 0px 1px 3px 0px #838282;
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.filter-blur {
+  filter: blur(8px);
+  pointer-events: none;
+  /* Optional: prevent interaction with blurred content */
+  user-select: none;
+  /* Optional: prevent text selection */
+}

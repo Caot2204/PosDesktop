@@ -1,0 +1,66 @@
+.cotizationscreen-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 80px); /* Full viewport height */
+}
+
+.cotizationscreen-container > * {
+  margin-bottom: 8px;
+}
+
+.back-container {
+  width: 25px;
+  color: red;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cotization-data-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cotization-data-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.cotization-inputs {
+  width: 65%;
+}
+
+.total-cotization-container {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-cotization-label {
+  width: 100%;
+  text-align: center;
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.pos-dialog {
+  width: calc(50vw);
+  height: fit-content;
+  border: none;
+  box-shadow: 0px 1px 3px 0px #838282;
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.filter-blur {
+  filter: blur(8px);
+  pointer-events: none; /* Optional: prevent interaction with blurred content */
+  user-select: none;    /* Optional: prevent text selection */
+}

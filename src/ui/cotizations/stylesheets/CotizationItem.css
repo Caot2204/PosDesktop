@@ -1,0 +1,38 @@
+.cotization-data-row {
+  height: 40px;
+  background-color: #FFFFFF;
+}
+
+.cotization-button-actions {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cotization-button-actions > * {
+  margin: 0 8px;
+  cursor: pointer;
+}
+
+.cotization-email-button {
+  color: blue;
+}
+
+.cotization-pdf-button {
+  color: teal;
+}
+
+.cotization-edit-button {
+  color: black;
+}
+
+.cotization-delete-button {
+  color: red;
+}
+
+.cotization-actions-cell {
+  width: 1%;
+  white-space: nowrap;
+  padding: 0 8px;
+}

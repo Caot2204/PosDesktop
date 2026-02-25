@@ -6,6 +6,7 @@ import ProductDao from "./ProductDao";
 import SaleDao from "./SaleDao";
 import CashClosingDao from "./CashClosingDao";
 import EgressDao from "./EgressDao";
+import CotizationDao from "./CotizationDao";
 
 class PosDatabase {
 
@@ -26,6 +27,7 @@ class PosDatabase {
     private saleDao: SaleDao | null = null;
     private cashClosingDao: CashClosingDao | null = null;
     private egressDao: EgressDao | null = null;
+    private cotizationDao: CotizationDao | null = null;
 
     constructor(dbPath: string | 'test') {
         this.sequelize = new Sequelize({
@@ -225,6 +227,10 @@ class PosDatabase {
                         model: this.ProductSequelize,
                         key: 'code'
                     }
+                },
+                unitsSold: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false
                 }
             },
             {
@@ -299,17 +305,6 @@ class PosDatabase {
 
         this.CategorySequelize.hasMany(this.ProductSequelize);
         this.ProductSequelize.belongsTo(this.CategorySequelize);
-
-        this.CotizationSequelize.belongsToMany(this.ProductSequelize, { 
-            through: this.CotizationProductsSequelize,
-            foreignKey: 'cotizationId',
-            otherKey: 'productCode'
-        });
-        this.ProductSequelize.belongsToMany(this.CotizationSequelize, { 
-            through: this.CotizationProductsSequelize,
-            foreignKey: 'productCode',
-            otherKey: 'cotizationId'
-        });
     }
 
     getCashClosingDao() {
@@ -345,6 +340,13 @@ class PosDatabase {
             this.egressDao = new EgressDao(this.EgressSequelize);
         }
         return this.egressDao;
+    }
+
+    getCotizationDao() {
+        if (!this.cotizationDao) {
+            this.cotizationDao = new CotizationDao(this.CotizationSequelize, this.CotizationProductsSequelize);
+        }
+        return this.cotizationDao;
     }
 
     getUserDao(): UserDao {

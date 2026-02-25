@@ -9,18 +9,21 @@ import InventoryScreen from './inventory/principal/components/InventoryScreen';
 import NewSaleScreen from './sales/components/NewSaleScreen';
 import EgressScreen from './egress/components/EgressScreen';
 import AdministrationScreen from './administration/components/AdministrationScreen';
+import CotizationsScreen from './cotizations/components/CotizationsScreen';
+import FirstUseScreen from './firstuse/components/FirstUseScreen';
+import LoginScreen from './login/components/LoginScreen';
 
-import User from '../data/model/User';
+import type User from '../data/model/User';
 import type Category from '../data/model/Category';
 import type Product from '../data/model/Product';
 import type Sale from '../data/model/Sale';
 import type SaleProductModel from './sales/model/SalesProductModel';
-import LoginScreen from './login/components/LoginScreen';
 import type UserSession from '../data/model/UserSession';
-import FirstUseScreen from './firstuse/components/FirstUseScreen';
 import type CashClosing from '../data/model/CashClosing';
 import type PosConfig from '../data/pos-config/PosConfig';
 import type Egress from '../data/model/Egress';
+import type Cotization from '../data/model/Cotization';
+import CotizationProduct from '../data/model/CotizationProduct';
 
 declare global {
   interface Window {
@@ -71,6 +74,13 @@ declare global {
       saveEgress: (dateOfEgress: Date, amount: number, description: string, userToRegister: string) => Promise<void>;
       updateEgress: (id:number, dateOfEgress: Date, amount: number, description: string, userToRegister: string) => Promise<void>;
       deleteEgress: (egressId: number) => Promise<void>;
+    };
+    cotizationAPI?: {
+      saveCotization: (dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) => Promise<void>;
+      updateCotization: (id: number, dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) => Promise<void>;
+      deleteCotization: (cotizationId: number) => Promise<void>;
+      getAllCotizations: () => Promise<Cotization[]>;
+      getCotizationById: (cotizationId: number) => Promise<Cotization>;
     }
   }
 }
@@ -106,6 +116,7 @@ function PosDesktopApp() {
               }>
               <Route index element={<NewSaleScreen currentUser={userSession} />} />
               <Route path="sales" element={<NewSaleScreen currentUser={userSession} />} />
+              <Route path="cotizations" element={<CotizationsScreen currentUserName={userSession.userName}/>} />
               <Route path="egress" element={<EgressScreen userName={userSession.userName}/>} />
               <Route path="inventory" element={<InventoryScreen />} />
               <Route path="users" element={<UsersScreen />} />

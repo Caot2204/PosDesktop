@@ -1,13 +1,13 @@
-import Product from '../model/Product';
+import CotizationProduct from "./CotizationProduct";
 
 class Cotization {
     id?: number;
     dateOfCotization: Date;
     client: string;
     userToRegister: string;
-    products: Product[] = [];
+    products: CotizationProduct[] = [];
 
-    constructor(dateOfCotization: Date, client: string, userToRegister: string, products: Product[], id?: number) {
+    constructor(dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[], id?: number) {
         this.dateOfCotization = dateOfCotization;
         this.client = client;
         this.userToRegister = userToRegister;

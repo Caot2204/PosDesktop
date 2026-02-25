@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import '../stylesheets/EgressForm.css';
 import { MdErrorOutline } from 'react-icons/md';
-import { formatOnlyDate, parseLocalDate, toInputDateValue } from '../../../ui/utils/FormatUtils';
+import { parseLocalDate, toInputDateValue } from '../../../ui/utils/FormatUtils';
 import OkCancelButtons from '../../../ui/common/components/OkCancelButtons';
 import { showSuccessNotify } from '../../../ui/utils/NotifyUtils';
 import { handleErrorMessage } from '../../../ui/utils/ErrorUtils';
