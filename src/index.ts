@@ -1,5 +1,6 @@
-import { app, BrowserWindow, ipcMain, Menu } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, protocol, net } from 'electron';
 import path from 'path';
+import { pathToFileURL } from 'url';
 import { updateElectronApp } from 'update-electron-app';
 import DataSourceConfigurator from './electron/DataSourceConfigurator';
 import { isDev } from './electron/util';
@@ -8,6 +9,10 @@ import { isDev } from './electron/util';
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'pos-pdf', privileges: { bypassCSP: true, stream: true, secure: true, supportFetchAPI: true } }
+]);
 
 const dataSourceConfigurator = new DataSourceConfigurator(ipcMain);
 
@@ -52,6 +57,19 @@ function createMainWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+  protocol.handle('pos-pdf', (request) => {
+    try {
+      const url = new URL(request.url);
+      const filename = url.pathname.startsWith('/') ? url.pathname.slice(1) : url.pathname;
+      const folderPath = isDev() ? path.join(process.cwd(), 'cotizations') : path.join(app.getPath('userData'), 'cotizations');
+      const filePath = path.join(folderPath, filename);
+      console.log(`Protocol handling pos-pdf request for: ${filePath}`);
+      return net.fetch(pathToFileURL(filePath).toString());
+    } catch (error) {
+      console.error('Error in pos-pdf protocol handler:', error);
+      return new Response('Not Found', { status: 404 });
+    }
+  });
   createMainWindow();
 });
 

@@ -16,12 +16,24 @@ interface ProductSearchedRowProps {
   name: string;
   category: string;
   unitPrice: number;
+  isSelected: boolean;
   onProductClicked: () => void;
 }
 
 function ProductSearchedRow(props: ProductSearchedRowProps) {
+  const rowRef = useRef<HTMLTableRowElement>(null);
+
+  useEffect(() => {
+    if (props.isSelected) {
+      rowRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }, [props.isSelected]);
+
   return (
-    <tr onClick={props.onProductClicked}>
+    <tr
+      ref={rowRef}
+      className={props.isSelected ? "selected-row" : ""}
+      onClick={props.onProductClicked}>
       <th scope="row">{props.code}</th>
       <td>{props.name}</td>
       <td>{props.category}</td>
@@ -34,12 +46,31 @@ function SearchProductScreen(props: SearchProductProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchFilter, setSearchFilter] = useState("");
   const [productsToShow, setProductsToShow] = useState<Product[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleClearSearch = () => {
     if (searchInputRef.current) {
       searchInputRef.current.value = "";
     }
     setSearchFilter("");
+    setSelectedIndex(0);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (productsToShow.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev + 1) % productsToShow.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev - 1 + productsToShow.length) % productsToShow.length);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedIndex >= 0 && selectedIndex < productsToShow.length) {
+        props.onProductClicked(productsToShow[selectedIndex]);
+      }
+    }
   };
 
   useEffect(() => {
@@ -53,6 +84,7 @@ function SearchProductScreen(props: SearchProductProps) {
       setProductsToShow(products);
     };
     getProducts();
+    setSelectedIndex(0);
   }, [props.products, searchFilter]);
 
   useEffect(() => {
@@ -74,6 +106,7 @@ function SearchProductScreen(props: SearchProductProps) {
           type="text"
           maxLength={100}
           placeholder="Ingrese el nombre o código del producto..."
+          onKeyDown={handleKeyDown}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
         <MdOutlineCancel onClick={handleClearSearch} />
       </div>
@@ -91,13 +124,14 @@ function SearchProductScreen(props: SearchProductProps) {
           <tbody>
             {
               searchFilter.trim() !== "" ?
-                productsToShow.map(product => (
+                productsToShow.map((product, index) => (
                   <ProductSearchedRow
                     key={product.code}
                     code={product.code}
                     name={product.name}
                     category={product.category}
                     unitPrice={product.unitPrice}
+                    isSelected={index === selectedIndex}
                     onProductClicked={() => props.onProductClicked(product)} />
                 ))
                 :

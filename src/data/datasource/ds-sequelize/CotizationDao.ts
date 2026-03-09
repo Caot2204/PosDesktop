@@ -12,7 +12,7 @@ class CotizationDao implements ICotizationDataSource {
         this.CotizationProductsSequelize = cotizationProductsSequelize;
     }
 
-    async saveCotization(cotization: Cotization): Promise<void> {
+    async saveCotization(cotization: Cotization): Promise<number> {
         // run the whole save flow inside a transaction so failures rollback everything
         const sequelize = this.CotizationSequelize.sequelize;
         const t = await sequelize.transaction();
@@ -33,7 +33,7 @@ class CotizationDao implements ICotizationDataSource {
             ));
 
             await t.commit();
-            return;
+            return cotizationCreated.id;
         } catch (error) {
             await t.rollback();
             throw error;

@@ -37,6 +37,7 @@
     "@electron/fuses": "1.8.0",
     "@electron/rebuild": "4.0.1",
     "@types/jest": "^30.0.0",
+    "@types/pdfkit": "^0.17.5",
     "@types/react": "19.1.1",
     "@types/react-dom": "19.1.7",
     "@types/sqlite3": "3.1.11",
@@ -63,6 +64,7 @@
   "dependencies": {
     "bcryptjs": "3.0.2",
     "electron-squirrel-startup": "1.0.1",
+    "pdfkit": "^0.17.2",
     "pg-hstore": "2.3.4",
     "react": "19.1.1",
     "react-dom": "19.1.1",

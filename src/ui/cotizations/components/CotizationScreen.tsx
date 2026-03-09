@@ -20,7 +20,7 @@ interface CotizationScreenProps {
   userToRegister?: string;
   products?: CotizationProduct[];
   isForEdit: boolean;
-  onSuccess: (message: string) => void;
+  onSuccess: (cotizationId: number) => void;
   onCancel: () => void;
 }
 
@@ -96,17 +96,16 @@ function CotizationScreen(props: CotizationScreenProps) {
   const handleSaveCotization = async () => {
     try {
       if (!props.isForEdit) {
-        await window.cotizationAPI?.saveCotization(
+        const cotizationId = await window.cotizationAPI?.saveCotization(
           currentDate,
           client,
           props.userToRegister,
           products.map((p: SaleProductModel) => new CotizationProduct(
             p.code,
             p.unitsToSale
-          ))
-        );
+          )));
         handleClearScreen();
-        props.onSuccess("Cotización guardada");
+        props.onSuccess(cotizationId);
       } else {
         await window.cotizationAPI?.updateCotization(
           props.id,
@@ -119,7 +118,7 @@ function CotizationScreen(props: CotizationScreenProps) {
           ))
         );
         handleClearScreen();
-        props.onSuccess("Cotización actualizada");
+        props.onSuccess(props.id);
       }
     } catch (error) {
       showErrorNotify("Error al guardar la cotización, inténtelo de nuevo");

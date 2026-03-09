@@ -72,11 +72,11 @@ declare global {
       getAllEgresses: () => Promise<Egress[]>;
       getEgressById: (egressId: number) => Promise<Egress>;
       saveEgress: (dateOfEgress: Date, amount: number, description: string, userToRegister: string) => Promise<void>;
-      updateEgress: (id:number, dateOfEgress: Date, amount: number, description: string, userToRegister: string) => Promise<void>;
+      updateEgress: (id: number, dateOfEgress: Date, amount: number, description: string, userToRegister: string) => Promise<void>;
       deleteEgress: (egressId: number) => Promise<void>;
     };
     cotizationAPI?: {
-      saveCotization: (dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) => Promise<void>;
+      saveCotization: (dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) => Promise<number>;
       updateCotization: (id: number, dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) => Promise<void>;
       deleteCotization: (cotizationId: number) => Promise<void>;
       getAllCotizations: () => Promise<Cotization[]>;
@@ -112,12 +112,12 @@ function PosDesktopApp() {
                   userSession={userSession}
                   onLogout={() => {
                     setUserSession(null);
-                  }}/>
+                  }} />
               }>
               <Route index element={<NewSaleScreen currentUser={userSession} />} />
               <Route path="sales" element={<NewSaleScreen currentUser={userSession} />} />
-              <Route path="cotizations" element={<CotizationsScreen currentUserName={userSession.userName}/>} />
-              <Route path="egress" element={<EgressScreen userName={userSession.userName}/>} />
+              <Route path="cotizations" element={<CotizationsScreen currentUserName={userSession.userName} />} />
+              <Route path="egress" element={<EgressScreen userName={userSession.userName} />} />
               <Route path="inventory" element={<InventoryScreen />} />
               <Route path="users" element={<UsersScreen />} />
               <Route path="administration" element={<AdministrationScreen />} />

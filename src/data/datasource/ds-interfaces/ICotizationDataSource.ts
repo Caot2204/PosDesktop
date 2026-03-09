@@ -3,7 +3,7 @@ import type Cotization from "../../../data/model/Cotization";
 
 export interface ICotizationDataSource {
 
-    saveCotization(cotization: Cotization): Promise<void>;
+    saveCotization(cotization: Cotization): Promise<number>;
 
     updateCotization(cotization: Cotization): Promise<void>;
 
@@ -12,5 +12,5 @@ export interface ICotizationDataSource {
     getAllCotizations(): Promise<Cotization[]>;
 
     getCotizationById(cotizationId: number): Promise<Cotization>;
-    
+
 }

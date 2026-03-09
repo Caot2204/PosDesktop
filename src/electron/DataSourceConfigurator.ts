@@ -64,7 +64,7 @@ class DataSourceConfigurator {
             if (!fs.existsSync(backupCurrentSalePath)) {
                 fs.writeFileSync(backupCurrentSalePath, JSON.stringify([], null, 2), 'utf-8');
             }
-        } catch(error) {
+        } catch (error) {
             throw new Error(`Error to create current sale backup: ${error}`)
         }
     }
@@ -102,7 +102,7 @@ class DataSourceConfigurator {
             await egressDecorator.configure();
 
             const cotizationRepository = new CotizationRepository(this.posDatabase.getCotizationDao());
-            const cotizationDecorator = new CotizationIpcDecorator(cotizationRepository, this.ipcMain);
+            const cotizationDecorator = new CotizationIpcDecorator(cotizationRepository, this.ipcMain, this.posDatabase.getProductDao());
             await cotizationDecorator.configure();
         }
     }

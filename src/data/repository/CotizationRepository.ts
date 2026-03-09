@@ -13,7 +13,7 @@ class CotizationRepository {
     async saveCotization(dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) {
         try {
             if (this.validateCotizationData(dateOfCotization, client, userToRegister, products)) {
-                await this.cotizationDataSource.saveCotization(
+                return await this.cotizationDataSource.saveCotization(
                     new Cotization(
                         dateOfCotization,
                         client,

@@ -7,6 +7,8 @@ import { showErrorNotify, showSuccessNotify } from '../../../ui/utils/NotifyUtil
 import { ToastContainer } from 'react-toastify';
 import CotizationScreen from './CotizationScreen';
 import PosConfirmDialog from '../../../ui/common/components/PosConfirmDialog';
+import CotizationShareDialog from './CotizationShareDialog';
+import CotizationPdfDialog from './CotizationPdfDialog';
 
 interface CotizationsScreenProps {
   currentUserName: string;
@@ -14,14 +16,18 @@ interface CotizationsScreenProps {
 
 function CotizationsScreen(props: CotizationsScreenProps) {
   const newCotizationFormRef = useRef<HTMLDialogElement>(null);
+  const pdfDialogRef = useRef<HTMLDialogElement>(null);
+
 
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [openDialog, setOpenDialog] = useState<null | 'newCotization'>(null);
+  const [showShareDialog, setShowShareDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState<null | 'newCotization' | 'cotizationPdfViewer'>(null);
   const [loadingData, setLoadingData] = useState(true);
   const [cotizationIdForSearch, setCotizationIdForSearch] = useState<null | number>(null);
   const [cotizations, setCotizations] = useState<Cotization[]>([]);
   const [cotizationToEdit, setCotizationToEdit] = useState<null | Cotization>(null);
   const [cotizationIdToDelete, setCotizationIdToDelete] = useState<null | number>(null);
+  const [cotizationIdForShow, setCotizationIdForShow] = useState<null | number>(null);
 
   const fetchCotizations = async () => {
     try {
@@ -55,6 +61,14 @@ function CotizationsScreen(props: CotizationsScreenProps) {
     }
   };
 
+  const handleConfirmCotizationCreate = () => {
+    showSuccessNotify("Cotizacion almacenada en el sistema");
+    setCotizationToEdit(null);
+    setShowShareDialog(false);
+    setCotizationIdForShow(null);
+    setLoadingData(true);
+  };
+
   useEffect(() => {
     fetchCotizations();
   }, [loadingData, cotizationIdForSearch]);
@@ -63,6 +77,9 @@ function CotizationsScreen(props: CotizationsScreenProps) {
     <>
       <div className={openDialog ? 'cotizations-screen-container filter-blur' : 'cotizations-screen-container'}>
         <div className='cotizations-screeen-actions'>
+          <PosButton
+            label='Nueva cotización'
+            onClick={() => setOpenDialog('newCotization')} />
           <div className='cotizations-input-id-container'>
             <label>
               Folio:
@@ -72,9 +89,6 @@ function CotizationsScreen(props: CotizationsScreenProps) {
               value={cotizationIdForSearch}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setCotizationIdForSearch(e.target.value ? Number(e.target.value) : null)} />
           </div>
-          <PosButton
-            label='Nueva cotización'
-            onClick={() => setOpenDialog('newCotization')} />
         </div>
         <table className='cotizations-items'>
           <thead>
@@ -95,7 +109,10 @@ function CotizationsScreen(props: CotizationsScreenProps) {
                   userToRegister={c.userToRegister}
                   currentUserName={props.currentUserName}
                   onSendEmail={() => { }}
-                  onExportPdf={() => { }}
+                  onExportPdf={() => {
+                    setCotizationIdForShow(c.id);
+                    setOpenDialog('cotizationPdfViewer')
+                  }}
                   onUpdate={() => handleEdit(c)}
                   onDelete={() => {
                     setCotizationIdToDelete(c.id);
@@ -114,14 +131,21 @@ function CotizationsScreen(props: CotizationsScreenProps) {
           userToRegister={cotizationToEdit ? cotizationToEdit.userToRegister : props.currentUserName}
           products={cotizationToEdit ? cotizationToEdit.products : []}
           isForEdit={cotizationToEdit ? true : false}
-          onSuccess={(message: string) => {
-            showSuccessNotify(message);
-            setCotizationToEdit(null);
-            setOpenDialog(null);
-            setLoadingData(true);
+          onSuccess={(cotizationId: number) => {
+            setCotizationIdForShow(cotizationId);
+            setShowShareDialog(true);
           }}
           onCancel={() => {
             setCotizationToEdit(null);
+            setCotizationIdForShow(null);
+            setOpenDialog(null);
+          }} />
+      </dialog>
+      <dialog className='cotization-pdf-dialog' ref={pdfDialogRef} open={openDialog === 'cotizationPdfViewer'}>
+        <CotizationPdfDialog
+          cotizationId={cotizationIdForShow}
+          onClose={() => {
+            setCotizationIdForShow(null);
             setOpenDialog(null);
           }} />
       </dialog>
@@ -133,6 +157,16 @@ function CotizationsScreen(props: CotizationsScreenProps) {
           setCotizationIdToDelete(null);
         }}
         onOk={() => handleDelete()} />
+      <CotizationShareDialog
+        isShowed={showShareDialog}
+        onExportPdf={() => {
+          setShowShareDialog(false);
+          setOpenDialog('cotizationPdfViewer');
+          handleConfirmCotizationCreate();
+        }}
+        onEmailShare={() => {
+          handleConfirmCotizationCreate();
+        }} />
       <ToastContainer />
     </>
   );

@@ -54,3 +54,8 @@ tbody > tr:nth-of-type(even) {
 tr {
   cursor: pointer;
 }
+
+.selected-row {
+  background-color: #81c784 !important;
+  color: white;
+}
