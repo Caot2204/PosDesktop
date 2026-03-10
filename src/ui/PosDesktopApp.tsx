@@ -81,6 +81,9 @@ declare global {
       deleteCotization: (cotizationId: number) => Promise<void>;
       getAllCotizations: () => Promise<Cotization[]>;
       getCotizationById: (cotizationId: number) => Promise<Cotization>;
+      findCotizationPdf: (cotizationId: number) => Promise<string | null>;
+      createCotizationPdf: (cotizationId: number) => Promise<void>;
+      deleteCotizationPdf: (cotizationId: number) => Promise<void>;
     }
   }
 }

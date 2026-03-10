@@ -62,10 +62,10 @@ function CotizationsScreen(props: CotizationsScreenProps) {
   };
 
   const handleConfirmCotizationCreate = () => {
-    showSuccessNotify("Cotizacion almacenada en el sistema");
     setCotizationToEdit(null);
-    setShowShareDialog(false);
     setCotizationIdForShow(null);
+    setShowShareDialog(false);
+    setOpenDialog(null);
     setLoadingData(true);
   };
 
@@ -132,6 +132,7 @@ function CotizationsScreen(props: CotizationsScreenProps) {
           products={cotizationToEdit ? cotizationToEdit.products : []}
           isForEdit={cotizationToEdit ? true : false}
           onSuccess={(cotizationId: number) => {
+            showSuccessNotify("Cotizacion almacenada en el sistema");
             setCotizationIdForShow(cotizationId);
             setShowShareDialog(true);
           }}
@@ -143,10 +144,10 @@ function CotizationsScreen(props: CotizationsScreenProps) {
       </dialog>
       <dialog className='cotization-pdf-dialog' ref={pdfDialogRef} open={openDialog === 'cotizationPdfViewer'}>
         <CotizationPdfDialog
+          isShowed={openDialog === 'cotizationPdfViewer' && cotizationIdForShow != null}
           cotizationId={cotizationIdForShow}
           onClose={() => {
-            setCotizationIdForShow(null);
-            setOpenDialog(null);
+            handleConfirmCotizationCreate();
           }} />
       </dialog>
       <PosConfirmDialog
@@ -162,10 +163,9 @@ function CotizationsScreen(props: CotizationsScreenProps) {
         onExportPdf={() => {
           setShowShareDialog(false);
           setOpenDialog('cotizationPdfViewer');
-          handleConfirmCotizationCreate();
         }}
         onEmailShare={() => {
-          handleConfirmCotizationCreate();
+
         }} />
       <ToastContainer />
     </>

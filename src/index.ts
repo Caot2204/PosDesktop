@@ -61,7 +61,7 @@ app.on('ready', () => {
     try {
       const url = new URL(request.url);
       const filename = url.pathname.startsWith('/') ? url.pathname.slice(1) : url.pathname;
-      const folderPath = isDev() ? path.join(process.cwd(), 'cotizations') : path.join(app.getPath('userData'), 'cotizations');
+      const folderPath = isDev() ? path.join(process.cwd(), 'cotizations-pdfs') : path.join(app.getPath('userData'), 'cotizations-pdfs');
       const filePath = path.join(folderPath, filename);
       console.log(`Protocol handling pos-pdf request for: ${filePath}`);
       return net.fetch(pathToFileURL(filePath).toString());

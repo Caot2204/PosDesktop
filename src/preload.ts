@@ -87,6 +87,9 @@ contextBridge.exposeInMainWorld('cotizationAPI',
     updateCotization: (id: number, dateOfCotization: Date, client: string, userToRegister: string, products: CotizationProduct[]) => ipcRenderer.invoke('cotizationApi:updateCotization', id, dateOfCotization, client, userToRegister, products),
     deleteCotization: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:deleteCotization', cotizationId),
     getAllCotizations: () => ipcRenderer.invoke('cotizationApi:getAllCotizations'),
-    getCotizationById: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:getCotizationById')
+    getCotizationById: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:getCotizationById', cotizationId),
+    findCotizationPdf: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:findCotizationPdf', cotizationId),
+    createCotizationPdf: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:createCotizationPdf', cotizationId),
+    deleteCotizationPdf: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:deleteCotizationPdf', cotizationId)
   }
 );

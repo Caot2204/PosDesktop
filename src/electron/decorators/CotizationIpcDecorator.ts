@@ -25,8 +25,6 @@ class CotizationIpcDecorator {
             const cotizationId = await this.cotizationRepository.saveCotization(
                 dateOfCotization, client, userToRegister, products
             );
-            const cotization = await this.cotizationRepository.getCotizationById(cotizationId);
-            await CotizationPdfMaker.getInstance(this.productDataSource).createPdf(cotization);
             return cotizationId;
         });
 
@@ -34,8 +32,6 @@ class CotizationIpcDecorator {
             await this.cotizationRepository.updateCotization(
                 id, dateOfCotization, client, userToRegister, products
             );
-            const cotization = await this.cotizationRepository.getCotizationById(id);
-            await CotizationPdfMaker.getInstance(this.productDataSource).createPdf(cotization);
         });
 
         this.ipcMain.handle('cotizationApi:deleteCotization', async (event, cotizationId: number) => {
@@ -48,6 +44,20 @@ class CotizationIpcDecorator {
 
         this.ipcMain.handle('cotizationApi:getCotizationById', async (event, cotizationId) => {
             return await this.cotizationRepository.getCotizationById(cotizationId);
+        });
+
+        this.ipcMain.handle('cotizationApi:findCotizationPdf', async (event, cotizationId) => {
+            return await CotizationPdfMaker.getInstance(this.productDataSource).findCotizationPdf(cotizationId);
+        });
+
+        this.ipcMain.handle('cotizationApi:createCotizationPdf', async (event, cotizationId: number) => {
+            await CotizationPdfMaker.getInstance(this.productDataSource).createPdf(
+                await this.cotizationRepository.getCotizationById(cotizationId)
+            );
+        });
+
+        this.ipcMain.handle('cotizationApi:deleteCotizationPdf', async (event, cotizationId: number) => {
+            await CotizationPdfMaker.getInstance(this.productDataSource).deletePdf(cotizationId);
         });
     }
 

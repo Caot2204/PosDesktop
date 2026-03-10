@@ -33,7 +33,7 @@ class CotizationPdfMaker {
 
     public async createPdf(cotization: Cotization): Promise<void> {
         const products = await this.getProducts(cotization.products);
-        const folderPath = isDev() ? path.join(process.cwd(), 'cotizations') : path.join(app.getPath('userData'), 'cotizations');
+        const folderPath = isDev() ? path.join(process.cwd(), 'cotizations-pdfs') : path.join(app.getPath('userData'), 'cotizations-pdfs');
 
         if (!fs.existsSync(folderPath)) {
             fs.mkdirSync(folderPath, { recursive: true });
@@ -42,7 +42,9 @@ class CotizationPdfMaker {
         const filePath = path.join(folderPath, `${cotization.id}_cotization.pdf`);
 
         return new Promise((resolve, reject) => {
-            var pdf = new PDFDocument();
+            var pdf = new PDFDocument({
+                size: 'LETTER'
+            });
             var stream = fs.createWriteStream(filePath);
             pdf.pipe(stream);
 
@@ -55,15 +57,18 @@ class CotizationPdfMaker {
                 ]
             });
 
+            pdf.moveDown();
+
             pdf.table({
                 data: [
                     ["Producto", "Precio unitario", "Cantidad", "Subtotal"],
                     ...products.map((p: Product) => {
+                        const unitsSoldOfProduct = cotization.products.find((cp: CotizationProduct) => cp.productCode === p.code)?.unitsSold;
                         return [
                             p.name,
                             formatNumberToCurrentPrice(p.unitPrice),
-                            p.stock.toString(),
-                            formatNumberToCurrentPrice(p.unitPrice * p.stock)
+                            unitsSoldOfProduct.toString(),
+                            formatNumberToCurrentPrice(p.unitPrice * unitsSoldOfProduct)
                         ];
                     })
                 ]
@@ -80,6 +85,25 @@ class CotizationPdfMaker {
 
             pdf.end();
         });
+    }
+
+    public async findCotizationPdf(cotizationId: number): Promise<string | null> {
+        return new Promise((resolve, reject) => {
+            const folderPath = isDev() ? path.join(process.cwd(), 'cotizations-pdfs') : path.join(app.getPath('userData'), 'cotizations-pdfs');
+            const filePath = path.join(folderPath, `${cotizationId}_cotization.pdf`);
+            if (!fs.existsSync(filePath)) {
+                resolve(null);
+            }
+            resolve(filePath);
+        });
+    }
+
+    public async deletePdf(cotizationId: number): Promise<void> {
+        const folderPath = isDev() ? path.join(process.cwd(), 'cotizations-pdfs') : path.join(app.getPath('userData'), 'cotizations-pdfs');
+        const filePath = path.join(folderPath, `${cotizationId}_cotization.pdf`);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
     }
 
 }
