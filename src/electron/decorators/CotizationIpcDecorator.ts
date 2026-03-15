@@ -3,17 +3,22 @@ import CotizationRepository from "../../data/repository/CotizationRepository";
 import CotizationProduct from "../../data/model/CotizationProduct";
 import { IProductDataSource } from "../../data/datasource/ds-interfaces/IProductDataSource";
 import CotizationPdfMaker from "../CotizationPdfMaker";
+import PosConfig from "../../data/pos-config/PosConfig";
 
 class CotizationIpcDecorator {
 
     private cotizationRepository: CotizationRepository;
     private ipcMain: IpcMain;
     private productDataSource: IProductDataSource;
+    private configPos: PosConfig;
+    private pdfMaker: CotizationPdfMaker;
 
-    constructor(cotizationRepository: CotizationRepository, ipcMain: IpcMain, productDataSource: IProductDataSource) {
+    constructor(cotizationRepository: CotizationRepository, ipcMain: IpcMain, productDataSource: IProductDataSource, configPos: PosConfig) {
         this.cotizationRepository = cotizationRepository;
         this.ipcMain = ipcMain;
         this.productDataSource = productDataSource;
+        this.configPos = configPos;
+        this.pdfMaker = CotizationPdfMaker.getInstance(productDataSource, configPos);
     }
 
     async configure() {
@@ -47,17 +52,17 @@ class CotizationIpcDecorator {
         });
 
         this.ipcMain.handle('cotizationApi:findCotizationPdf', async (event, cotizationId) => {
-            return await CotizationPdfMaker.getInstance(this.productDataSource).findCotizationPdf(cotizationId);
+            return await this.pdfMaker.findCotizationPdf(cotizationId);
         });
 
         this.ipcMain.handle('cotizationApi:createCotizationPdf', async (event, cotizationId: number) => {
-            await CotizationPdfMaker.getInstance(this.productDataSource).createPdf(
+            await this.pdfMaker.createPdf(
                 await this.cotizationRepository.getCotizationById(cotizationId)
             );
         });
 
         this.ipcMain.handle('cotizationApi:deleteCotizationPdf', async (event, cotizationId: number) => {
-            await CotizationPdfMaker.getInstance(this.productDataSource).deletePdf(cotizationId);
+            await this.pdfMaker.deletePdf(cotizationId);
         });
     }
 

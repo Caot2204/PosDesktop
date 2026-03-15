@@ -101,8 +101,9 @@ class DataSourceConfigurator {
             const egressDecorator = new EgressIpcDecorator(egressRepository, this.ipcMain);
             await egressDecorator.configure();
 
+            const posConfig = await posConfigRepository.getPosConfig();
             const cotizationRepository = new CotizationRepository(this.posDatabase.getCotizationDao());
-            const cotizationDecorator = new CotizationIpcDecorator(cotizationRepository, this.ipcMain, this.posDatabase.getProductDao());
+            const cotizationDecorator = new CotizationIpcDecorator(cotizationRepository, this.ipcMain, this.posDatabase.getProductDao(), posConfig);
             await cotizationDecorator.configure();
         }
     }

@@ -8,19 +8,22 @@ import path from "path";
 import { isDev } from "./util";
 import { app } from "electron";
 import { formatDate, formatNumberToCurrentPrice } from "../ui/utils/FormatUtils";
+import PosConfig from "../data/pos-config/PosConfig";
 
 class CotizationPdfMaker {
 
     private static instance: CotizationPdfMaker = null;
     private productDataSource: IProductDataSource;
+    private configPos: PosConfig
 
-    private constructor(productDataSource: IProductDataSource) {
-        this.productDataSource = productDataSource
+    private constructor(productDataSource: IProductDataSource, configPos: PosConfig) {
+        this.productDataSource = productDataSource;
+        this.configPos = configPos;
     }
 
-    public static getInstance(productDataSource: IProductDataSource): CotizationPdfMaker {
+    public static getInstance(productDataSource: IProductDataSource, configPos: PosConfig): CotizationPdfMaker {
         if (!this.instance) {
-            this.instance = new CotizationPdfMaker(productDataSource);
+            this.instance = new CotizationPdfMaker(productDataSource, configPos);
         }
         return this.instance;
     }
@@ -47,6 +50,39 @@ class CotizationPdfMaker {
             });
             var stream = fs.createWriteStream(filePath);
             pdf.pipe(stream);
+
+            let logoToDraw = this.configPos.bussinessLogoUrl;
+            let logoExists = false;
+
+            if (logoToDraw) {
+                if (logoToDraw.startsWith('data:image/')) {
+                    logoExists = true;
+                } else if (fs.existsSync(logoToDraw)) {
+                    logoExists = true;
+                } else if (logoToDraw === '../icons/icon.png' || logoToDraw === '../../assets/react.svg') {
+                    const fallbackPath = path.join(process.cwd(), 'src/icons/icon.png');
+                    if (fs.existsSync(fallbackPath)) {
+                        logoToDraw = fallbackPath;
+                        logoExists = true;
+                    }
+                }
+            }
+
+            if (logoExists) {
+                try {
+                    pdf.image(logoToDraw, {
+                        fit: [50, 50],
+                        align: 'center',
+                        valign: 'center'
+                    });
+                } catch (e) {
+                    console.error("Error drawing logo to PDF:", e);
+                }
+            }
+
+            pdf.text(" " + this.configPos.bussinessName);
+
+            pdf.moveDown();
 
             pdf.table({
                 data: [
