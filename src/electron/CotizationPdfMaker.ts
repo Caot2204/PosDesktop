@@ -45,8 +45,10 @@ class CotizationPdfMaker {
         const filePath = path.join(folderPath, `${cotization.id}_cotization.pdf`);
 
         return new Promise((resolve, reject) => {
+            let total: number = 0.0;
             var pdf = new PDFDocument({
-                size: 'LETTER'
+                size: 'LETTER',
+                margin: 20
             });
             var stream = fs.createWriteStream(filePath);
             pdf.pipe(stream);
@@ -80,11 +82,24 @@ class CotizationPdfMaker {
                 }
             }
 
-            pdf.text(" " + this.configPos.bussinessName);
+            pdf.text(this.configPos.bussinessName);
 
             pdf.moveDown();
 
             pdf.table({
+                // Set the style for all cells
+                defaultStyle: { border: 1, borderColor: "gray" },
+                // Set the style for cells based on their column
+                columnStyles: (i) => {
+                    if (i === 0) return { width: 100, border: { left: 2 }, borderColor: { left: "black" } };
+                    if (i === 2) return { width: "*", border: { right: 2 }, borderColor: { right: "black" } };
+                },
+                rowStyles: (i) => {
+                    if (i === 0) return { border: { top: 2, right: 2 }, borderColor: { top: "black", right: "black" } };
+                    if (i === 1) return { border: { right: 2 }, borderColor: { right: "black"} };
+                    if (i === 2) return { border: { right: 2 }, borderColor: { right: "black"} };
+                    if (i === 3) return { border: { bottom: 2, right: 2 }, borderColor: { bottom: "black", right: "black"} };
+                },
                 data: [
                     ["Folio: ", cotization.id.toString()],
                     ["Fecha: ", formatDate(cotization.dateOfCotization)],
@@ -94,21 +109,46 @@ class CotizationPdfMaker {
             });
 
             pdf.moveDown();
+            pdf.moveDown();
 
             pdf.table({
+                columnStyles: [220, "*", "*", "*"],
+                rowStyles: (i) => {
+                    return i < 1
+                        ? { border: [0, 0, 2, 0], borderColor: "black" }
+                        : { border: [0, 0, 1, 0], borderColor: "#aaa" };
+                },
                 data: [
-                    ["Producto", "Precio unitario", "Cantidad", "Subtotal"],
+                    [
+                        { text: "Producto", textStroke: 0.5 },
+                        { text: "Precio unitario", textStroke: 0.5 },
+                        { text: "Cantidad", textStroke: 0.5 },
+                        { text: "Subtotal", textStroke: 0.5 }
+                    ],
                     ...products.map((p: Product) => {
                         const unitsSoldOfProduct = cotization.products.find((cp: CotizationProduct) => cp.productCode === p.code)?.unitsSold;
+                        const subtotal = p.unitPrice * unitsSoldOfProduct;
+                        total += subtotal;
                         return [
                             p.name,
                             formatNumberToCurrentPrice(p.unitPrice),
                             unitsSoldOfProduct.toString(),
-                            formatNumberToCurrentPrice(p.unitPrice * unitsSoldOfProduct)
+                            formatNumberToCurrentPrice(subtotal)
                         ];
                     })
                 ]
             });
+
+            pdf.moveDown();
+            pdf.moveDown();
+
+            pdf.text(
+                `Total de la cotization:    ${formatNumberToCurrentPrice(total)}`,
+                {
+                    align: "right",
+                    stroke: true
+                }
+            );
 
             stream.on('finish', () => {
                 console.log('PDF created');
