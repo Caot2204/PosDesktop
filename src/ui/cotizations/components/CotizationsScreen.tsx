@@ -18,9 +18,7 @@ function CotizationsScreen(props: CotizationsScreenProps) {
   const newCotizationFormRef = useRef<HTMLDialogElement>(null);
   const pdfDialogRef = useRef<HTMLDialogElement>(null);
 
-
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [showShareDialog, setShowShareDialog] = useState(false);
   const [openDialog, setOpenDialog] = useState<null | 'newCotization' | 'cotizationPdfViewer'>(null);
   const [loadingData, setLoadingData] = useState(true);
   const [cotizationIdForSearch, setCotizationIdForSearch] = useState<null | number>(null);
@@ -64,7 +62,6 @@ function CotizationsScreen(props: CotizationsScreenProps) {
   const handleConfirmCotizationCreate = () => {
     setCotizationToEdit(null);
     setCotizationIdForShow(null);
-    setShowShareDialog(false);
     setOpenDialog(null);
     setLoadingData(true);
   };
@@ -108,7 +105,6 @@ function CotizationsScreen(props: CotizationsScreenProps) {
                   client={c.client}
                   userToRegister={c.userToRegister}
                   currentUserName={props.currentUserName}
-                  onSendEmail={() => { }}
                   onExportPdf={() => {
                     setCotizationIdForShow(c.id);
                     setOpenDialog('cotizationPdfViewer')
@@ -134,7 +130,7 @@ function CotizationsScreen(props: CotizationsScreenProps) {
           onSuccess={(cotizationId: number) => {
             showSuccessNotify("Cotizacion almacenada en el sistema");
             setCotizationIdForShow(cotizationId);
-            setShowShareDialog(true);
+            setOpenDialog('cotizationPdfViewer');
           }}
           onCancel={() => {
             setCotizationToEdit(null);
@@ -158,15 +154,6 @@ function CotizationsScreen(props: CotizationsScreenProps) {
           setCotizationIdToDelete(null);
         }}
         onOk={() => handleDelete()} />
-      <CotizationShareDialog
-        isShowed={showShareDialog}
-        onExportPdf={() => {
-          setShowShareDialog(false);
-          setOpenDialog('cotizationPdfViewer');
-        }}
-        onEmailShare={() => {
-
-        }} />
       <ToastContainer />
     </>
   );
