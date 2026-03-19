@@ -16,9 +16,12 @@ import PayScreen from './PayScreen';
 import SalesScreen from './SalesScreen';
 import CashClosingScreen from './CashClosingScreen';
 import type UserSession from '../../../data/model/UserSession';
+import CotizationProduct from '../../../data/model/CotizationProduct';
 
 interface NewSaleScreenProps {
   currentUser: UserSession;
+  products: SaleProductModel[] | CotizationProduct[];
+  clearProductsCotizationData: () => void;
 }
 
 function NewSaleScreen(props: NewSaleScreenProps) {
@@ -40,7 +43,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
     }
     setProductsOfSale([]);
     window.saleAPI?.clearCurrentSaleBackup()
-      .then(() => {})
+      .then(() => { })
       .catch((e) => console.log(e));
     setOpenDialog(null);
   };
@@ -158,19 +161,59 @@ function NewSaleScreen(props: NewSaleScreenProps) {
     }
   }, [openDialog]);
 
+  function isSaleProductArray(arr: any[]): arr is SaleProductModel[] {
+    return arr.length > 0 && arr[0] instanceof SaleProductModel;
+  };
+
   useEffect(() => {
     window.posConfigAPI?.getPosConfig()
       .then(posConfig => {
         setBussinessName(posConfig?.bussinessName);
         setBussinessLogoUrl(posConfig?.bussinessLogoUrl);
       });
-    window.saleAPI?.getCurrentSaleBackup()
-      .then(productsSold => {
-        setProductsOfSale(productsSold);
-      })
-      .catch((error) => {
-        console.log("Error al recuperar el backup de la venta actual: ", error);
-      });
+    if (props.products) {
+      if (isSaleProductArray(props.products)) {
+        setProductsOfSale(props.products);
+      } else {
+        const products = props.products;
+        if (products && products.length > 0) {
+          const loadProducts = async () => {
+            try {
+              const productsSaleModel = await Promise.all(
+                products!.map(async (p: CotizationProduct) => {
+                  const productDb = await window.productAPI?.getProductByCode(p.productCode);
+                  if (productDb) {
+                    return new SaleProductModel(
+                      productDb.code,
+                      productDb.name,
+                      productDb.unitPrice,
+                      p.unitsSold,
+                      productDb.isInfinityStock ? 'infinity' : productDb.stock
+                    );
+                  }
+                  return null;
+                })
+              );
+              setProductsOfSale(productsSaleModel.filter((p): p is SaleProductModel => p !== null));
+            } catch (error) {
+              showErrorNotify("Error al cargar los productos de la cotización");
+            }
+          };
+          loadProducts();
+        } else {
+          setProductsOfSale([]);
+        }
+      }
+      props.clearProductsCotizationData();
+    } else {
+      window.saleAPI?.getCurrentSaleBackup()
+        .then(productsSold => {
+          setProductsOfSale(productsSold);
+        })
+        .catch((error) => {
+          console.log("Error al recuperar el backup de la venta actual: ", error);
+        });
+    }
   }, []);
 
   return (

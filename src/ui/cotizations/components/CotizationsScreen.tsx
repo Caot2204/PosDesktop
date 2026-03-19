@@ -7,11 +7,13 @@ import { showErrorNotify, showSuccessNotify } from '../../../ui/utils/NotifyUtil
 import { ToastContainer } from 'react-toastify';
 import CotizationScreen from './CotizationScreen';
 import PosConfirmDialog from '../../../ui/common/components/PosConfirmDialog';
-import CotizationShareDialog from './CotizationShareDialog';
 import CotizationPdfDialog from './CotizationPdfDialog';
+import SaleProductModel from '../../../ui/sales/model/SalesProductModel';
+import CotizationProduct from '../../../data/model/CotizationProduct';
 
 interface CotizationsScreenProps {
   currentUserName: string;
+  navigateToSaleScreen: (products: SaleProductModel[] | CotizationProduct[]) => void;
 }
 
 function CotizationsScreen(props: CotizationsScreenProps) {
@@ -105,6 +107,9 @@ function CotizationsScreen(props: CotizationsScreenProps) {
                   client={c.client}
                   userToRegister={c.userToRegister}
                   currentUserName={props.currentUserName}
+                  onBuyCotization={() => {
+                    props.navigateToSaleScreen(c.products);
+                  }}
                   onExportPdf={() => {
                     setCotizationIdForShow(c.id);
                     setOpenDialog('cotizationPdfViewer')
@@ -127,6 +132,10 @@ function CotizationsScreen(props: CotizationsScreenProps) {
           userToRegister={cotizationToEdit ? cotizationToEdit.userToRegister : props.currentUserName}
           products={cotizationToEdit ? cotizationToEdit.products : []}
           isForEdit={cotizationToEdit ? true : false}
+          navigateToBuyCotization={(products) => {
+            setOpenDialog(null);
+            props.navigateToSaleScreen(products);
+          }}
           onSuccess={(cotizationId: number) => {
             showSuccessNotify("Cotizacion almacenada en el sistema");
             setCotizationIdForShow(cotizationId);

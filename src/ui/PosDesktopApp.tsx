@@ -91,6 +91,11 @@ declare global {
 function PosDesktopApp() {
   const [isFirstUse, setIsFirstUSe] = useState(false);
   const [userSession, setUserSession] = useState<UserSession | null>(null);
+  const [productsData, setProductsData] = useState<SaleProductModel[] | CotizationProduct[] | null>(null);
+
+  const handleClearProductsCotizationData = () => {
+    setProductsData(null);
+  };
 
   useEffect(() => {
     window.userAPI?.getAllUsers().then((users) => {
@@ -117,9 +122,25 @@ function PosDesktopApp() {
                     setUserSession(null);
                   }} />
               }>
-              <Route index element={<NewSaleScreen currentUser={userSession} />} />
-              <Route path="sales" element={<NewSaleScreen currentUser={userSession} />} />
-              <Route path="cotizations" element={<CotizationsScreen currentUserName={userSession.userName} />} />
+              <Route index element={
+                <NewSaleScreen 
+                  currentUser={userSession}
+                  products={productsData}
+                  clearProductsCotizationData={() => handleClearProductsCotizationData() } />
+              } />
+              <Route path="sales" element={
+                <NewSaleScreen 
+                  currentUser={userSession}
+                  products={productsData}
+                  clearProductsCotizationData={ () => handleClearProductsCotizationData() } />
+              } />
+              <Route path="cotizations" element={
+                <CotizationsScreen 
+                  currentUserName={userSession.userName}
+                  navigateToSaleScreen={(products) => {
+                    setProductsData(products);
+                  }} />
+              } />
               <Route path="egress" element={<EgressScreen userName={userSession.userName} />} />
               <Route path="inventory" element={<InventoryScreen />} />
               <Route path="users" element={<UsersScreen />} />

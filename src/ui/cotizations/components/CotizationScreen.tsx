@@ -12,6 +12,7 @@ import SalesProductList from '../../../ui/sales/components/SalesProductList';
 import PosButton from '../../../ui/common/components/PosButton';
 import { formatNumberToCurrentPrice, toInputDateValue } from '../../../ui/utils/FormatUtils';
 import CotizationProduct from '../../../data/model/CotizationProduct';
+import { NavLink } from 'react-router';
 
 interface CotizationScreenProps {
   id?: number;
@@ -20,6 +21,7 @@ interface CotizationScreenProps {
   userToRegister?: string;
   products?: CotizationProduct[];
   isForEdit: boolean;
+  navigateToBuyCotization: (products: SaleProductModel[]) => void;
   onSuccess: (cotizationId: number) => void;
   onCancel: () => void;
 }
@@ -125,6 +127,10 @@ function CotizationScreen(props: CotizationScreenProps) {
     }
   };
 
+  const handleBuyCotization = () => {
+    props.navigateToBuyCotization(products);
+  };
+
   useEffect(() => {
     setClient(props.client ? props.client : "");
     setCurrentDate(props.dateOfCotization ? props.dateOfCotization : new Date());
@@ -225,8 +231,15 @@ function CotizationScreen(props: CotizationScreenProps) {
                 Total: {formatNumberToCurrentPrice(totalOfCotization)}
               </label>
               <PosButton
-                label='Guardar cotizatión'
+                className='guardar cotization-button'
+                label='Guardar cotización'
                 onClick={handleSaveCotization} />
+              <NavLink to="/sales" onClick={handleBuyCotization} >
+                <PosButton
+                 className='cotization-button'
+                  label='Vender cotización'
+                  onClick={() => {}} />
+              </NavLink>
             </div>
           </div>
           <div className={openDialog ? "code-input filter-blur" : "code-input"}>
