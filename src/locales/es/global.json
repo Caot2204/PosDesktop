@@ -1,0 +1,15 @@
+{
+  "screens": {
+    "administration": {
+      "configSaveSuccess": "Configuración guardada con éxito",
+      "showCashClosings": "Ver cortes de caja",
+      "titlePosConfigs": "Configuraciones del punto de venta:",
+      "subtitleMinimunStock": "Unidades mínimas para el stock:",
+      "titleBussinessData": "Datos del negocio:",
+      "altBussinessLogo": "Logo del negocio",
+      "changeBussinessLogo": "Cambiar logo",
+      "bussinessNameLabel": "Nombre del negocio:",
+      "posLanguageLabel": "Idioma:"
+    }
+  }
+}

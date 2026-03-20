@@ -5,10 +5,12 @@ import CashClosingsListScreen from './CashClosingsListScreen';
 import { MdOutlineCancel } from 'react-icons/md';
 import { showSuccessNotify } from '../../utils/NotifyUtils';
 import { ToastContainer } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const defaultLogo = '../../assets/react.svg';
 
 function AdministrationScreen() {
+  const { t, i18n } = useTranslation('global');
   const [openDialog, setOpenDialog] = useState<'cashClosingDialog' | null>(null);
 
   const [bussinessName, setBussinessName] = useState('');
@@ -29,7 +31,7 @@ function AdministrationScreen() {
   const handleSaveConfig = () => {
     window.posConfigAPI?.savePosConfig(bussinessName, bussinessLogoUrl || defaultLogo, minimunStock, posLanguage)
       .then(() => {
-        showSuccessNotify("Configuración guardada con éxito");
+        showSuccessNotify(t('screens.administration.configSaveSuccess'));
         fetchPosConfig();
       }).catch(error => {
         console.error(error);
@@ -40,19 +42,23 @@ function AdministrationScreen() {
     fetchPosConfig();
   }, []);
 
+  useEffect(() => {
+    i18n.changeLanguage(posLanguage)
+  }, [posLanguage]);
+
   return (
     <div className="administrationscreen-container">
       <div className={openDialog ? "sales-container filter-blur" : "sales-container"}>
         <h3>Ventas</h3>
         <PosButton
-          label="Ver cortes de caja"
+          label={t('screens.administration.showCashClosings')}
           onClick={() => setOpenDialog("cashClosingDialog")} />
       </div>
       <hr />
       <div className={openDialog ? "pos-configurations-container filter-blur" : "pos-configurations-container"}>
-        <h3>Configuraciones del punto de venta:</h3>
+        <h3>{t('screens.administration.titlePosConfigs')}</h3>
         <div className="input-container">
-          <label className="pos-label">Unidades mínimas para el stock:</label>
+          <label className="pos-label">{t('screens.administration.subtitleMinimunStock')}</label>
           <input
             className="pos-input"
             type="number"
@@ -62,15 +68,15 @@ function AdministrationScreen() {
       </div>
       <hr />
       <div className={openDialog ? "administration-bussiness-info-container filter-blur" : "administration-bussiness-info-container"}>
-        <h3>Datos del negocio:</h3>
+        <h3>{t('screens.administration.titleBussinessData')}</h3>
         <div className="input-container">
           <img
             className="bussiness-logo-administration"
             src={bussinessLogoUrl || defaultLogo}
-            alt="Logo del negocio" />
+            alt={t('screens.administration.altBussinessLogo')} />
           <PosButton
             className="bussiness-logo-button"
-            label="Cambiar logo"
+            label={t('screens.administration.changeBussinessLogo')}
             onClick={() => {
               window.posConfigAPI?.selectNewBussinessLogo()
                 .then(newLogoUrl => {
@@ -84,7 +90,7 @@ function AdministrationScreen() {
             }} />
         </div>
         <div className="input-container">
-          <label className="pos-label">Nombre del negocio:</label>
+          <label className="pos-label">{t('screens.administration.bussinessNameLabel')}</label>
           <input
             className="pos-input"
             type="text"
@@ -106,6 +112,11 @@ function AdministrationScreen() {
         <CashClosingsListScreen
           isShowed={openDialog === "cashClosingDialog"} />
       </dialog>
+      <label>{t('screens.administration.posLanguageLabel')}</label>
+      <select value={posLanguage} onChange={(e) => setPosLanguage(e.target.value)}>
+        <option value="es">Español</option>
+        <option value="en">English</option>
+      </select>
       <ToastContainer />
     </div>
   );
