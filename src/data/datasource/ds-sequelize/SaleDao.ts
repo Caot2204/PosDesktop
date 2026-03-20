@@ -1,4 +1,4 @@
-import { QueryTypes } from 'sequelize';
+import { Op } from 'sequelize';
 import Sale from '../../model/Sale';
 import SalesProduct from '../../model/SalesProduct';
 import type ISaleDataSource from '../ds-interfaces/ISaleDataSource';
@@ -63,11 +63,18 @@ class SaleDao implements ISaleDataSource {
     getSalesPerDay(dayOfSale: Date): Promise<Sale[]> {
         return new Promise<Sale[]>(async (resolve, reject) => {
             try {
-                const dateFormated = toMysqlDatetime(dayOfSale).split(" ")[0];
-                const salesDb = await this.sequelizeDb.query(
-                    'SELECT * FROM sales WHERE DATE(dateOfSale) = ?', {
-                    replacements: [dateFormated],
-                    type: QueryTypes.SELECT
+                const startOfDay = new Date(dayOfSale);
+                startOfDay.setHours(0, 0, 0, 0);
+                
+                const endOfDay = new Date(dayOfSale);
+                endOfDay.setHours(23, 59, 59, 999);
+
+                const salesDb = await this.SaleSequelize.findAll({
+                    where: {
+                        dateOfSale: {
+                            [Op.between]: [startOfDay, endOfDay]
+                        }
+                    }
                 });
                 const salesPlainObject = await Promise.all(
                     salesDb.map((saleDb: any) => this.mapSaleForPlainObject(saleDb))

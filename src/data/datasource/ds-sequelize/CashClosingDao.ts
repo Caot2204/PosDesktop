@@ -1,4 +1,4 @@
-import { QueryTypes } from 'sequelize';
+import { Op } from 'sequelize';
 import CashClosing from '../../model/CashClosing';
 import type { ICashClosingDataSource } from '../ds-interfaces/ICashClosingDataSource';
 import { fromMysqlDatetime, toMysqlDatetime } from '../utils/DateUtils';
@@ -15,11 +15,17 @@ class CashClosingDao implements ICashClosingDataSource {
 
     getCashClosingOfDate(date: Date): Promise<CashClosing[]> {
         return new Promise<CashClosing[]>(async (resolve, reject) => {
-            const dateFormated = toMysqlDatetime(date).split(" ")[0];
-            const cashClosingsDb = await this.sequelizeDb.query(
-                'SELECT * FROM cash_closings WHERE DATE(date) = ?', {
-                replacements: [dateFormated],
-                type: QueryTypes.SELECT
+            const startOfDay = new Date(date);
+            startOfDay.setHours(0, 0, 0, 0);
+            const endOfDay = new Date(date);
+            endOfDay.setHours(23, 59, 59, 999);
+
+            const cashClosingsDb = await this.CashClosingSequelize.findAll({
+                where: {
+                    date: {
+                        [Op.between]: [startOfDay, endOfDay]
+                    }
+                }
             });
             if (cashClosingsDb) {
                 const cashClosings = cashClosingsDb.map((cashClosingDb: any) => new CashClosing(
