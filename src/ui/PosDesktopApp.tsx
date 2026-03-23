@@ -86,7 +86,7 @@ declare global {
       findCotizationPdf: (cotizationId: number) => Promise<string | null>;
       createCotizationPdf: (cotizationId: number) => Promise<void>;
       deleteCotizationPdf: (cotizationId: number) => Promise<void>;
-    }
+    };
   }
 }
 
@@ -125,19 +125,19 @@ function PosDesktopApp() {
                   }} />
               }>
               <Route index element={
-                <NewSaleScreen 
+                <NewSaleScreen
                   currentUser={userSession}
                   products={productsData}
-                  clearProductsCotizationData={() => handleClearProductsCotizationData() } />
+                  clearProductsCotizationData={() => handleClearProductsCotizationData()} />
               } />
               <Route path="sales" element={
-                <NewSaleScreen 
+                <NewSaleScreen
                   currentUser={userSession}
                   products={productsData}
-                  clearProductsCotizationData={ () => handleClearProductsCotizationData() } />
+                  clearProductsCotizationData={() => handleClearProductsCotizationData()} />
               } />
               <Route path="cotizations" element={
-                <CotizationsScreen 
+                <CotizationsScreen
                   currentUserName={userSession.userName}
                   navigateToSaleScreen={(products) => {
                     setProductsData(products);

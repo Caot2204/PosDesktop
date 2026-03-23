@@ -9,6 +9,7 @@ import { isDev } from "./util";
 import { app } from "electron";
 import { formatDate, formatNumberToCurrentPrice } from "../ui/utils/FormatUtils";
 import PosConfig from "../data/pos-config/PosConfig";
+import i18next from "../i18n";
 
 class CotizationPdfMaker {
 
@@ -35,6 +36,7 @@ class CotizationPdfMaker {
     }
 
     public async createPdf(cotization: Cotization): Promise<void> {
+        await i18next.changeLanguage(this.configPos.posLanguage);
         const products = await this.getProducts(cotization.products);
         const folderPath = isDev() ? path.join(process.cwd(), 'cotizations-pdfs') : path.join(app.getPath('userData'), 'cotizations-pdfs');
 
@@ -96,15 +98,15 @@ class CotizationPdfMaker {
                 },
                 rowStyles: (i) => {
                     if (i === 0) return { border: { top: 2, right: 2 }, borderColor: { top: "black", right: "black" } };
-                    if (i === 1) return { border: { right: 2 }, borderColor: { right: "black"} };
-                    if (i === 2) return { border: { right: 2 }, borderColor: { right: "black"} };
-                    if (i === 3) return { border: { bottom: 2, right: 2 }, borderColor: { bottom: "black", right: "black"} };
+                    if (i === 1) return { border: { right: 2 }, borderColor: { right: "black" } };
+                    if (i === 2) return { border: { right: 2 }, borderColor: { right: "black" } };
+                    if (i === 3) return { border: { bottom: 2, right: 2 }, borderColor: { bottom: "black", right: "black" } };
                 },
                 data: [
-                    ["Folio: ", cotization.id.toString()],
-                    ["Fecha: ", formatDate(cotization.dateOfCotization)],
-                    ["Cliente: ", cotization.client],
-                    ["Registrado por: ", cotization.userToRegister]
+                    [i18next.t('pdfMaker.folioLabel'), cotization.id.toString()],
+                    [i18next.t('pdfMaker.dateLabel'), formatDate(cotization.dateOfCotization)],
+                    [i18next.t('pdfMaker.clientLabel'), cotization.client],
+                    [i18next.t('pdfMaker.userRegisteredLabel'), cotization.userToRegister]
                 ]
             });
 
@@ -120,10 +122,10 @@ class CotizationPdfMaker {
                 },
                 data: [
                     [
-                        { text: "Producto", textStroke: 0.5 },
-                        { text: "Precio unitario", textStroke: 0.5 },
-                        { text: "Cantidad", textStroke: 0.5 },
-                        { text: "Subtotal", textStroke: 0.5 }
+                        { text: i18next.t('pdfMaker.productLabel'), textStroke: 0.5 },
+                        { text: i18next.t('pdfMaker.unitPriceLabel'), textStroke: 0.5 },
+                        { text: i18next.t('pdfMaker.unitsSoldLabel'), textStroke: 0.5 },
+                        { text: i18next.t('pdfMaker.subtotalLabel'), textStroke: 0.5 }
                     ],
                     ...products.map((p: Product) => {
                         const unitsSoldOfProduct = cotization.products.find((cp: CotizationProduct) => cp.productCode === p.code)?.unitsSold;
@@ -143,7 +145,7 @@ class CotizationPdfMaker {
             pdf.moveDown();
 
             pdf.text(
-                `Total de la cotization:    ${formatNumberToCurrentPrice(total)}`,
+                i18next.t('pdfMaker.totalLabel', { totalAmount: formatNumberToCurrentPrice(total) }),
                 {
                     align: "right",
                     stroke: true

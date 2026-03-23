@@ -24,7 +24,9 @@
       "changeBussinessLogo": "Cambiar logo",
       "bussinessNameLabel": "Nombre del negocio:",
       "posLanguageLabel": "Idioma:",
-      "saveConfigLabel": "Guardar configuración"
+      "saveConfigLabel": "Guardar configuración",
+      "restartAppMessage": "Se requiere reiniciar la aplicación para aplicar los cambios de idioma en todo el punto de venta",
+      "selectLanguageLabel": "--Seleccione un idioma--"
     },
     "cashClosingList": {
       "title": "Cortes de caja",
@@ -103,6 +105,7 @@
       "addLabel": "Agregar"
     },
     "inventory": {
+      "allCategoryLabel": "Todos",
       "errorLoadProducts": "Error al recuperar los productos",
       "errorLoadCategories": "Error al recuperar las categorias",
       "categoryLabel": "Categoría: ",
@@ -208,7 +211,7 @@
       "title": "Datos del usuario:",
       "nameLabel": "Nombre:",
       "passwordLabel": "Contraseña:",
-      "confirmPasswordLabel":"Confirme la contraseña:",
+      "confirmPasswordLabel": "Confirme la contraseña:",
       "isAdminLabel": "¿Es administrador?"
     },
     "users": {
@@ -250,5 +253,16 @@
     "close": "Cerrar",
     "return": "Regresar",
     "searchProduct": "Buscar (F10)"
+  },
+  "pdfMaker": {
+    "folioLabel": "Folio: ",
+    "dateLabel": "Fecha: ",
+    "clientLabel": "Cliente: ",
+    "userRegisteredLabel": "Registrado por: ",
+    "productLabel": "Producto",
+    "unitPriceLabel": "Precio unitario",
+    "unitsSoldLabel": "Cantidad",
+    "subtotalLabel": "Subtotal",
+    "totalLabel": "Total de la cotización:     {{totalAmount}}"
   }
 }

@@ -9,19 +9,19 @@ interface UserSelectProps {
 }
 
 function UserSelect(props: UserSelectProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation('global');
 
   return (
     <select
-      value={ props.selected ? props.selected : "Seleccione un usuario" }
+      value={props.selected ? props.selected : t('screens.cashClosingList.selectUserLabel')}
       onChange={e => props.onUserSelected(e.target.value)}>
-        <option value={undefined}>
-              {t('screens.cashClosingList.selectUserLabel')}
-        </option>
+      <option value={undefined}>
+        {t('screens.cashClosingList.selectUserLabel')}
+      </option>
       {
         props.options.map(user => (
           <option key={user.id} value={user.name}>
-              {user.name}
+            {user.name}
           </option>
         ))
       }

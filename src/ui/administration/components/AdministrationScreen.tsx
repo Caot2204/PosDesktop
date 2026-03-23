@@ -6,17 +6,18 @@ import { MdOutlineCancel } from 'react-icons/md';
 import { showSuccessNotify } from '../../utils/NotifyUtils';
 import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import PosConfirmDialog from '../../../ui/common/components/PosConfirmDialog';
 
 const defaultLogo = '../../assets/react.svg';
 
 function AdministrationScreen() {
   const { t, i18n } = useTranslation('global');
-  const [openDialog, setOpenDialog] = useState<'cashClosingDialog' | null>(null);
+  const [openDialog, setOpenDialog] = useState<'cashClosingDialog' | 'restartAppDialog' | null>(null);
 
   const [bussinessName, setBussinessName] = useState('');
   const [bussinessLogoUrl, setBussinessLogoUrl] = useState<string | undefined>('../icons/icon.png');
   const [minimunStock, setMinimunStock] = useState(5);
-  const [posLanguage, setPosLanguage] = useState("");
+  const [posLanguage, setPosLanguage] = useState('');
 
   const fetchPosConfig = () => {
     window.posConfigAPI?.getPosConfig()
@@ -41,10 +42,6 @@ function AdministrationScreen() {
   useEffect(() => {
     fetchPosConfig();
   }, []);
-
-  useEffect(() => {
-    i18n.changeLanguage(posLanguage)
-  }, [posLanguage]);
 
   return (
     <div className="administrationscreen-container">
@@ -99,6 +96,18 @@ function AdministrationScreen() {
             onChange={(e) => setBussinessName(e.target.value)} />
         </div>
       </div>
+      <div className={openDialog ? "filter-blur" : ""}>
+        <h3>{t('screens.administration.posLanguageLabel')}</h3>
+        <select className='language-select' onChange={(e) => {
+          i18n.changeLanguage(e.target.value);
+          setPosLanguage(e.target.value);
+          setOpenDialog("restartAppDialog");
+        }}>
+          <option value="">{t('screens.administration.selectLanguageLabel')}</option>
+          <option value="es" selected={posLanguage === "es"}>Español</option>
+          <option value="en" selected={posLanguage === "en"}>English</option>
+        </select>
+      </div>
       <PosButton
         className={openDialog ? "filter-blur" : ""}
         label={t('screens.administration.saveConfigLabel')}
@@ -112,11 +121,15 @@ function AdministrationScreen() {
         <CashClosingsListScreen
           isShowed={openDialog === "cashClosingDialog"} />
       </dialog>
-      <label>{t('screens.administration.posLanguageLabel')}</label>
-      <select className='language-select' value={posLanguage} onChange={(e) => setPosLanguage(e.target.value)}>
-        <option value="es">Español</option>
-        <option value="en">English</option>
-      </select>
+      <PosConfirmDialog
+        message={t('screens.administration.restartAppMessage')}
+        isShowed={openDialog === "restartAppDialog"}
+        onCancel={() => setOpenDialog(null)}
+        notShowCancelButton={true}
+        onOk={() => {
+          handleSaveConfig();
+          setOpenDialog(null);
+        }} />
       <ToastContainer />
     </div>
   );

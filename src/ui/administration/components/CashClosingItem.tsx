@@ -4,7 +4,7 @@ import { formatDate, formatNumberToCurrentPrice } from '../../utils/FormatUtils'
 import { useTranslation } from 'react-i18next';
 
 function CashClosingItem(props: CashClosing) {
-  const { t } = useTranslation();
+  const { t } = useTranslation('global');
 
   return (
     <div className="cashclosingitem-container">

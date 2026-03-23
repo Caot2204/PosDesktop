@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 interface PosConfirmDialogProps {
   message: string;
   isShowed: boolean;
+  notShowCancelButton?: boolean;
   onCancel: () => void;
   onOk: () => void;
 }
@@ -33,11 +34,16 @@ function PosConfirmDialog(props: PosConfirmDialogProps) {
     <dialog className="message-container" ref={dialogRef}>
       <p className="message">{props.message}</p>
       <div className="buttons-container">
-        <PosButton
-          className="cancel-button"
-          icon={<MdOutlineCancel />}
-          label={t('buttons.cancel')}
-          onClick={handleCancel} />
+        {
+          props.notShowCancelButton ?
+            <></>
+            :
+            <PosButton
+              className="cancel-button"
+              icon={<MdOutlineCancel />}
+              label={t('buttons.cancel')}
+              onClick={handleCancel} />
+        }
         <PosButton
           label={t('buttons.accept')}
           icon={<MdOutlineCheck />}

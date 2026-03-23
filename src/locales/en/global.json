@@ -24,7 +24,9 @@
       "changeBussinessLogo": "Change logo",
       "bussinessNameLabel": "Business name:",
       "posLanguageLabel": "Language:",
-      "saveConfigLabel": "Save configuration"
+      "saveConfigLabel": "Save configuration",
+      "restartAppMessage": "The application must be restarted to apply the language changes in the entire point of sale",
+      "selectLanguageLabel": "--Select a language--"
     },
     "cashClosingList": {
       "title": "Cash closings",
@@ -103,6 +105,7 @@
       "addLabel": "Add"
     },
     "inventory": {
+      "allCategoryLabel": "All",
       "errorLoadProducts": "Error retrieving products",
       "errorLoadCategories": "Error retrieving categories",
       "categoryLabel": "Category: ",
@@ -208,7 +211,7 @@
       "title": "User data:",
       "nameLabel": "Name:",
       "passwordLabel": "Password:",
-      "confirmPasswordLabel":"Confirm password:",
+      "confirmPasswordLabel": "Confirm password:",
       "isAdminLabel": "Is administrator?"
     },
     "users": {
@@ -250,5 +253,16 @@
     "close": "Close",
     "return": "Return",
     "searchProduct": "Search (F10)"
+  },
+  "pdfMaker": {
+    "folioLabel": "Folio: ",
+    "dateLabel": "Date: ",
+    "clientLabel": "Client: ",
+    "userRegisteredLabel": "Registered by: ",
+    "productLabel": "Product",
+    "unitPriceLabel": "Unit price",
+    "unitsSoldLabel": "Quantity",
+    "subtotalLabel": "Subtotal",
+    "totalLabel": "Total of cotization:    {{totalAmount}}"
   }
 }

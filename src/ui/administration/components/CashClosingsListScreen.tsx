@@ -12,7 +12,7 @@ interface CashClosingsListScreenProps {
 }
 
 function CashClosingsListScreen(props: CashClosingsListScreenProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation('global');
   const [dateToSearch, setDateToSearch] = useState<string>(toInputDateValue(new Date()));
   const [userToSearch, setUserToSearch] = useState<string | null | undefined>(null);
   const [cashClosings, setCashClosings] = useState<CashClosing[]>([]);

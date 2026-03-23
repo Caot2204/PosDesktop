@@ -11,6 +11,8 @@ i18n
   .init({
     interpolation: { escapeValue: false },
     fallbackLng: 'en',
+    defaultNS: 'global',
+    ns: ['global'],
     resources: {
       es: { global: global_es },
       en: { global: global_en }

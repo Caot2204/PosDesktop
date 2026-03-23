@@ -27,7 +27,7 @@ function InventoryScreen() {
   const [minimumStock, setMinimumStock] = useState(5);
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [categoryFilter, setCategoryFilter] = useState("Todos");
+  const [categoryFilter, setCategoryFilter] = useState(t('screens.inventory.allCategoryLabel'));
   const [searchFilter, setSearchFilter] = useState("");
   const [productToEdit, setProductToEdit] = useState<Product | undefined>(undefined)
 
@@ -44,6 +44,7 @@ function InventoryScreen() {
   const fetchCategories = async () => {
     try {
       window.categoryAPI?.getAllCategories().then((fetchedCategories: Category[]) => {
+        fetchedCategories.find(category => category.name === "Todos").name = t('screens.inventory.allCategoryLabel');
         setCategories(fetchedCategories);
       });
     } catch (error) {
@@ -112,10 +113,10 @@ function InventoryScreen() {
       <div className={openDialog ? "products-container filter-blur" : "products-container"}>
         <div className="search-product-container">
           <FaSearch />
-          <input 
-            className="search-input" 
-            ref={searchInputRef} 
-            type="text" 
+          <input
+            className="search-input"
+            ref={searchInputRef}
+            type="text"
             maxLength={100}
             placeholder={t('screens.inventory.enterProductPlaceHolder')}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
@@ -128,16 +129,16 @@ function InventoryScreen() {
                 color="#4C662B" />
             </div>
             :
-          <ProductList
-            products={fetchedProducts}
-            categoryFilter={categoryFilter}
-            searchFilter={searchFilter}
-            minimumStock={minimumStock}
-            onEditProduct={handleEditProduct}
-            onDeleteProductSuccess={() => {
-              showSuccessNotify(t('screens.inventory.productDeleted'));
-              fetchProducts();
-            }} />
+            <ProductList
+              products={fetchedProducts}
+              categoryFilter={categoryFilter}
+              searchFilter={searchFilter}
+              minimumStock={minimumStock}
+              onEditProduct={handleEditProduct}
+              onDeleteProductSuccess={() => {
+                showSuccessNotify(t('screens.inventory.productDeleted'));
+                fetchProducts();
+              }} />
         }
       </div>
       <dialog className="pos-dialog" ref={categoriesDialogRef} open={openDialog === "categories"}>

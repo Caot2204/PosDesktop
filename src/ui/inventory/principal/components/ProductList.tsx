@@ -16,6 +16,7 @@ interface ProductListProps {
 function ProductList(props: ProductListProps) {
   const { t } = useTranslation('global');
   const [productsToShow, setProductsToShow] = useState<Product[]>([]);
+  const allCategoryLabel = t('screens.inventory.allCategoryLabel');
 
   const handleDeleteProduct = async (code: string) => {
     await window.productAPI?.deleteProduct(code);
@@ -24,13 +25,17 @@ function ProductList(props: ProductListProps) {
 
   useEffect(() => {
     let products = props.products;
-    if (props.categoryFilter !== "Todos") {
+    if (props.categoryFilter !== allCategoryLabel) {
       products = products.filter(product => product.category === props.categoryFilter);
     }
     if (props.searchFilter.trim() !== "") {
       products = products.filter(product => product.name.toLowerCase().includes(props.searchFilter.toLowerCase()) || product.code.toLowerCase().includes(props.searchFilter.toLowerCase()));
     }
-    setProductsToShow(products);
+    if (props.categoryFilter === allCategoryLabel) {
+      setProductsToShow(props.products);
+    } else {
+      setProductsToShow(products);
+    }
   }, [props.products, props.categoryFilter, props.searchFilter]);
 
   return (
@@ -43,7 +48,7 @@ function ProductList(props: ProductListProps) {
             name={product.name}
             unitPrice={product.unitPrice}
             stock={product.isInfinityStock ? t('screens.inventory.infinityLabel') : String(product.stock)}
-            category={product.category}
+            category={product.category != allCategoryLabel ? product.category : allCategoryLabel}
             minimunStock={props.minimumStock}
             onUpdate={() => props.onEditProduct(product)}
             onDelete={() => handleDeleteProduct(product.code)} />
