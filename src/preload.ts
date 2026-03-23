@@ -93,7 +93,3 @@ contextBridge.exposeInMainWorld('cotizationAPI',
     deleteCotizationPdf: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:deleteCotizationPdf', cotizationId)
   }
 );
-
-contextBridge.exposeInMainWorld('systemAPI', {
-  restartApp: () => ipcRenderer.invoke('systemApi:restartApp')
-});
