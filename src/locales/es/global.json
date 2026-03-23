@@ -1,6 +1,20 @@
 {
+  "aboutSoftware": {
+    "name": "PosDesktop - Punto de venta"
+  },
+  "mainMenu": {
+    "sales": "Ventas",
+    "egresses": "Egresos",
+    "cotizations": "Cotizaciones",
+    "inventory": "Inventario",
+    "users": "Usuarios",
+    "administration": "Administración",
+    "attend": "Atiende: ",
+    "userNameLabel": "Usuario"
+  },
   "screens": {
     "administration": {
+      "titleSales": "Ventas:",
       "configSaveSuccess": "Configuración guardada con éxito",
       "showCashClosings": "Ver cortes de caja",
       "titlePosConfigs": "Configuraciones del punto de venta:",
@@ -9,7 +23,232 @@
       "altBussinessLogo": "Logo del negocio",
       "changeBussinessLogo": "Cambiar logo",
       "bussinessNameLabel": "Nombre del negocio:",
-      "posLanguageLabel": "Idioma:"
+      "posLanguageLabel": "Idioma:",
+      "saveConfigLabel": "Guardar configuración"
+    },
+    "cashClosingList": {
+      "title": "Cortes de caja",
+      "datePlaceHolder:": "Fecha del corte de caja...",
+      "selectUserLabel": "Seleccione un usuario..."
+    },
+    "cotizationPdfDialog": {
+      "generatinPreview": "Generando vista previa..."
+    },
+    "cotizationForm": {
+      "saveError": "Error al guardar la cotización, inténtelo de nuevo",
+      "loadProductsError": "Error al cargar los productos de la cotización",
+      "clientLabel": "Cliente:",
+      "dateLabel": "Fecha de la cotización:",
+      "total": "Total: {{totalString}}",
+      "saveCotizationLabel": "Guardar cotización",
+      "buyCotizationLabel": "Vender cotización",
+      "enterProductCode": "Ingrese el código del producto...",
+      "productNotFound": "Producto no encontrado"
+    },
+    "cotizations": {
+      "errorLoadCotizations": "Error al recuperar las cotizaciones",
+      "cotizationDeleted": "Cotización eliminada",
+      "errorCotizationDelete": "Error al eliminar la cotización, inténtelo de nuevo",
+      "newCotization": "Nueva cotización",
+      "folioLabel": "Folio",
+      "clientLabel": "Cliente",
+      "dateLabel": "Fecha",
+      "cotizationSaved": "Cotizacion almacenada en el sistema",
+      "deleteMessage": "¿Desea eliminar esta cotización?"
+    },
+    "egressForm": {
+      "egressUpdated": "Egreso actualizado",
+      "egressSaved": "Egreso guardado",
+      "egressData": "Datos del egreso:",
+      "dateLabel": "Fecha del egreso:",
+      "amountLabel": "Monto:",
+      "descriptionLabel": "Descripción:"
+    },
+    "egresses": {
+      "errorLoadEgresses": "Error al recuperar los egresos",
+      "egressDeleted": "Egreso eliminado",
+      "errorDeleteEgress": "Error al eliminar el egreso",
+      "newEgress": "Nuevo egreso",
+      "dateLabel": "Fecha",
+      "amountLabel": "Monto",
+      "userRegisteredLabel": "Usuario que registró",
+      "descriptionLabel": "Descripción",
+      "deleteMessage": "¿Desea eliminar este egreso?"
+    },
+    "firstUse": {
+      "errorPasswords": "Las contraseñas no coinciden",
+      "title": "Cree su primer cuenta de administrador",
+      "userNameLabel": "Nombre de usuario:",
+      "passwordLabel": "Contraseña:",
+      "confirmPasswordLabel": "Confirme la contraseña:"
+    },
+    "categoryForm": {
+      "categoryUpdated": "Categoría actualizada",
+      "categorySaved": "Categoría guardada",
+      "title": "Datos de la categoría:",
+      "nameLabel": "Nombre"
+    },
+    "categories": {
+      "errorLoadCategories": "Error al recuperar las categorías",
+      "categoryDeleted": "Categoría eliminada",
+      "errorDeleteCategory": "Error al eliminar la categoría",
+      "title": "Categorías",
+      "newCategoryLabel": "Nueva categoría"
+    },
+    "increaseStock": {
+      "stockUpdated": "Stock actualizado",
+      "title": "Incrementar stock:",
+      "codeLabel": "Código:",
+      "unitsToAddLabel": "Unidades a agregar:",
+      "addLabel": "Agregar"
+    },
+    "inventory": {
+      "errorLoadProducts": "Error al recuperar los productos",
+      "errorLoadCategories": "Error al recuperar las categorias",
+      "categoryLabel": "Categoría: ",
+      "productsInventoryLabel": "Productos en inventario: {{productsCount}}",
+      "actionsLabel": "Acciones: ",
+      "newProductLabel": "Nuevo producto",
+      "adminCategoriesLabel": "Admin. categorías",
+      "increaseStockLabel": "Incrementar stock",
+      "enterProductPlaceHolder": "Ingrese el nombre o código del producto...",
+      "productDeleted": "Producto eliminado",
+      "infinityLabel": "Infinito"
+    },
+    "productForm": {
+      "productUpdated": "Producto actualizado",
+      "productSaved": "Producto guardado",
+      "title": "Datos del producto:",
+      "productCodeLabel": "Código del producto:",
+      "nameLabel": "Nombre:",
+      "unitPriceLabel": "Precio unitario:",
+      "stockLabel": "Stock:",
+      "infinityStockLabel": "¿Stock infinito?"
+    },
+    "searchProduct": {
+      "enterProductPlaceHolder": "Ingrese el nombre o código del producto...",
+      "codeLabel": "Código",
+      "nameLabel": "Nombre",
+      "categoryLabel": "Categoría",
+      "priceLabel": "Precio"
+    },
+    "login": {
+      "invalidData": "Usuario o contraseña inválidos",
+      "altLogo": "Logo del negocio",
+      "userNameLabel": "Nombre de usuario",
+      "passwordLabel": "Contraseña",
+      "loginLabel": "Iniciar sesión"
+    },
+    "cashClosings": {
+      "cashClosingOk": "Corte de caja realizado",
+      "errorCashClosing": "Error al realizar el corte de caja, inténtelo de nuevo",
+      "title": "Corte de caja",
+      "saleOfDayLabel": "Venta del día:",
+      "moneyOnCashLabel": "Dinero en caja: ",
+      "diffMoney": "El dinero físico no coincide con el total de la ventas, ¿Desea continuar?"
+    },
+    "newSale": {
+      "saleSuccess": "Venta realizada",
+      "errorSale": "Error al realizar la venta",
+      "errorLoadProductsCotization": "Error al cargar los productos de la cotización",
+      "enterCodePlaceHolder": "Ingrese el código del producto...",
+      "productNotFound": "Producto no encontrado",
+      "cancelSaleLabel": "Cancelar (F4)",
+      "paySaleLabel": "Pagar (F1)",
+      "salesOfDayLabel": "Ventas del día",
+      "cashClosingLabel": "Corte de caja",
+      "quitProductsMessage": "¿Quitar los producto de la venta actual?"
+    },
+    "paySale": {
+      "errorAmountMin": "El monto pagado debe ser mayor al total de la venta",
+      "errorFolioTransaction": "Debe ingresar el folio de la transaccion",
+      "title": "Cobrar venta",
+      "cashLabel": "Efectivo",
+      "cardLabel": "Tarjeta",
+      "folioTransactionLabel": "Folio de la transacción",
+      "amountPayLabel": "Ingrese el monto pagado",
+      "totalLabel": "Total: ",
+      "cambioLabel": "Cambio: ",
+      "cancelPayLabel": "Cancelar (F4)",
+      "registerPayLabel": "Registrar pago",
+      "payLabel": "Pagar"
+    },
+    "salesProductList": {
+      "errorUnitsLower0": "Las unidades vendidadas no pueden ser 0",
+      "errorUnitsHigher9999": "Las unidades vendidas no pueden ser mas de 9999",
+      "errorUnits": "Las unidades vendidas no pueden ser 0 o mayor al stock",
+      "codeLabel": "Código",
+      "nameLabel": "Nombre",
+      "priceLabel": "Precio",
+      "unitsSoldLabel": "Unidades a vender",
+      "subtotalLabel": "Subtotal"
+    },
+    "sales": {
+      "saleFolio": "Folio de la venta...",
+      "dateSale": "Fecha de la venta...",
+      "title": "Ventas:",
+      "ticketTitle": "Detalles de la venta ",
+      "ticketFolio": "Folio:",
+      "ticketDate": "Fecha/Hora:",
+      "ticketAttend": "Le atendío:",
+      "ticketPayType": "Forma de pago:",
+      "ticketFolioTransaction": "Folio de la transacción",
+      "ticketSubtotal": "Subtotal: {{subtotalAmount}}",
+      "ticketTotal": "Total: ",
+      "ticketAmountPayed": "Monto pagado: ",
+      "ticketCambio": "Cambio: "
+    },
+    "totalLabel": {
+      "total": "Total: {{totalString}}"
+    },
+    "userForm": {
+      "userUpdated": "Usuario actualizado",
+      "passwordUnmatch": "Las contraseñas no coinciden",
+      "userSaved": "Usuario guardado",
+      "title": "Datos del usuario:",
+      "nameLabel": "Nombre:",
+      "passwordLabel": "Contraseña:",
+      "confirmPasswordLabel":"Confirme la contraseña:",
+      "isAdminLabel": "¿Es administrador?"
+    },
+    "users": {
+      "errorLoadUsers": "Error al recuperar los usuarios",
+      "userDeleted": "Usuario eliminado",
+      "newUserLabel": "Nuevo usuario",
+      "adminsLabel": "Administradores",
+      "cashiersLabel": "Cajeros"
     }
+  },
+  "items": {
+    "cashClosingItem": {
+      "cashier": "Vendedor:",
+      "date": "Fecha:",
+      "salesRegistered": "Ventas registradas:",
+      "phisicMoney": "Dinero físico:"
+    },
+    "categoryItem": {
+      "deleteMessage": "¿Desea eliminar esta categoría?"
+    },
+    "productItem": {
+      "codeLabel": "Código:",
+      "priceLabel": "Precio:",
+      "stockLabel": "Stock:",
+      "categoryLabel": "Categoría:",
+      "deleteMessage": "¿Desea eliminar este producto?"
+    },
+    "saleItem": {
+      "folioLabel": "Folio: {{saleId}}"
+    },
+    "userItem": {
+      "deleteMessage": "¿Desea eliminar este usuario?"
+    }
+  },
+  "buttons": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "accept": "Aceptar",
+    "close": "Cerrar",
+    "return": "Regresar",
+    "searchProduct": "Buscar (F10)"
   }
 }

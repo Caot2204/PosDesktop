@@ -1,0 +1,254 @@
+{
+  "aboutSoftware": {
+    "name": "PosDesktop - Point of Sale"
+  },
+  "mainMenu": {
+    "sales": "Sales",
+    "egresses": "Expenses",
+    "cotizations": "Quotations",
+    "inventory": "Inventory",
+    "users": "Users",
+    "administration": "Administration",
+    "attend": "Attended by: ",
+    "userNameLabel": "User"
+  },
+  "screens": {
+    "administration": {
+      "titleSales": "Sales:",
+      "configSaveSuccess": "Configuration saved successfully",
+      "showCashClosings": "View cash closings",
+      "titlePosConfigs": "Point of sale configurations:",
+      "subtitleMinimunStock": "Minimum units for stock:",
+      "titleBussinessData": "Business data:",
+      "altBussinessLogo": "Business logo",
+      "changeBussinessLogo": "Change logo",
+      "bussinessNameLabel": "Business name:",
+      "posLanguageLabel": "Language:",
+      "saveConfigLabel": "Save configuration"
+    },
+    "cashClosingList": {
+      "title": "Cash closings",
+      "datePlaceHolder:": "Cash closing date...",
+      "selectUserLabel": "Select a user..."
+    },
+    "cotizationPdfDialog": {
+      "generatinPreview": "Generating preview..."
+    },
+    "cotizationForm": {
+      "saveError": "Error saving quotation, try again",
+      "loadProductsError": "Error loading quotation products",
+      "clientLabel": "Client:",
+      "dateLabel": "Quotation date:",
+      "total": "Total: {{totalString}}",
+      "saveCotizationLabel": "Save quotation",
+      "buyCotizationLabel": "Sell quotation",
+      "enterProductCode": "Enter product code...",
+      "productNotFound": "Product not found"
+    },
+    "cotizations": {
+      "errorLoadCotizations": "Error retrieving quotations",
+      "cotizationDeleted": "Quotation deleted",
+      "errorCotizationDelete": "Error deleting quotation, try again",
+      "newCotization": "New quotation",
+      "folioLabel": "Folio",
+      "clientLabel": "Client",
+      "dateLabel": "Date",
+      "cotizationSaved": "Quotation stored in the system",
+      "deleteMessage": "Do you want to delete this quotation?"
+    },
+    "egressForm": {
+      "egressUpdated": "Expense updated",
+      "egressSaved": "Expense saved",
+      "egressData": "Expense data:",
+      "dateLabel": "Expense date:",
+      "amountLabel": "Amount:",
+      "descriptionLabel": "Description:"
+    },
+    "egresses": {
+      "errorLoadEgresses": "Error retrieving expenses",
+      "egressDeleted": "Expense deleted",
+      "errorDeleteEgress": "Error deleting expense",
+      "newEgress": "New expense",
+      "dateLabel": "Date",
+      "amountLabel": "Amount",
+      "userRegisteredLabel": "User who recorded",
+      "descriptionLabel": "Description",
+      "deleteMessage": "Do you want to delete this expense?"
+    },
+    "firstUse": {
+      "errorPasswords": "Passwords do not match",
+      "title": "Create your first administrator account",
+      "userNameLabel": "Username:",
+      "passwordLabel": "Password:",
+      "confirmPasswordLabel": "Confirm password:"
+    },
+    "categoryForm": {
+      "categoryUpdated": "Category updated",
+      "categorySaved": "Category saved",
+      "title": "Category data:",
+      "nameLabel": "Name"
+    },
+    "categories": {
+      "errorLoadCategories": "Error retrieving categories",
+      "categoryDeleted": "Category deleted",
+      "errorDeleteCategory": "Error deleting category",
+      "title": "Categories",
+      "newCategoryLabel": "New category"
+    },
+    "increaseStock": {
+      "stockUpdated": "Stock updated",
+      "title": "Increase stock:",
+      "codeLabel": "Code:",
+      "unitsToAddLabel": "Units to add:",
+      "addLabel": "Add"
+    },
+    "inventory": {
+      "errorLoadProducts": "Error retrieving products",
+      "errorLoadCategories": "Error retrieving categories",
+      "categoryLabel": "Category: ",
+      "productsInventoryLabel": "Products in inventory: {{productsCount}}",
+      "actionsLabel": "Actions: ",
+      "newProductLabel": "New product",
+      "adminCategoriesLabel": "Admin. categories",
+      "increaseStockLabel": "Increase stock",
+      "enterProductPlaceHolder": "Enter product name or code...",
+      "productDeleted": "Product deleted",
+      "infinityLabel": "Infinite"
+    },
+    "productForm": {
+      "productUpdated": "Product updated",
+      "productSaved": "Product saved",
+      "title": "Product data:",
+      "productCodeLabel": "Product code:",
+      "nameLabel": "Name:",
+      "unitPriceLabel": "Unit price:",
+      "stockLabel": "Stock:",
+      "infinityStockLabel": "Infinite stock?"
+    },
+    "searchProduct": {
+      "enterProductPlaceHolder": "Enter product name or code...",
+      "codeLabel": "Code",
+      "nameLabel": "Name",
+      "categoryLabel": "Category",
+      "priceLabel": "Price"
+    },
+    "login": {
+      "invalidData": "Invalid username or password",
+      "altLogo": "Business logo",
+      "userNameLabel": "Username",
+      "passwordLabel": "Password",
+      "loginLabel": "Login"
+    },
+    "cashClosings": {
+      "cashClosingOk": "Cash closing completed",
+      "errorCashClosing": "Error performing cash closing, try again",
+      "title": "Cash closing",
+      "saleOfDayLabel": "Day's sales:",
+      "moneyOnCashLabel": "Money in cash: ",
+      "diffMoney": "Physical money does not match total sales, do you want to continue?"
+    },
+    "newSale": {
+      "saleSuccess": "Sale completed",
+      "errorSale": "Error performing sale",
+      "errorLoadProductsCotization": "Error loading quotation products",
+      "enterCodePlaceHolder": "Enter product code...",
+      "productNotFound": "Product not found",
+      "cancelSaleLabel": "Cancel (F4)",
+      "paySaleLabel": "Pay (F1)",
+      "salesOfDayLabel": "Day's sales",
+      "cashClosingLabel": "Cash closing",
+      "quitProductsMessage": "Remove products from current sale?"
+    },
+    "paySale": {
+      "errorAmountMin": "Amount paid must be greater than sale total",
+      "errorFolioTransaction": "You must enter the transaction folio",
+      "title": "Collect sale",
+      "cashLabel": "Cash",
+      "cardLabel": "Card",
+      "folioTransactionLabel": "Transaction folio",
+      "amountPayLabel": "Enter amount paid",
+      "totalLabel": "Total: ",
+      "cambioLabel": "Change: ",
+      "cancelPayLabel": "Cancel (F4)",
+      "registerPayLabel": "Register payment",
+      "payLabel": "Pay"
+    },
+    "salesProductList": {
+      "errorUnitsLower0": "Sold units cannot be 0",
+      "errorUnitsHigher9999": "Sold units cannot be more than 9999",
+      "errorUnits": "Sold units cannot be 0 or greater than stock",
+      "codeLabel": "Code",
+      "nameLabel": "Name",
+      "priceLabel": "Price",
+      "unitsSoldLabel": "Units to sell",
+      "subtotalLabel": "Subtotal"
+    },
+    "sales": {
+      "saleFolio": "Sale folio...",
+      "dateSale": "Sale date...",
+      "title": "Sales:",
+      "ticketTitle": "Sale details ",
+      "ticketFolio": "Folio:",
+      "ticketDate": "Date/Time:",
+      "ticketAttend": "Attended by:",
+      "ticketPayType": "Payment type:",
+      "ticketFolioTransaction": "Transaction folio",
+      "ticketSubtotal": "Subtotal: {{subtotalAmount}}",
+      "ticketTotal": "Total: ",
+      "ticketAmountPayed": "Amount paid: ",
+      "ticketCambio": "Change: "
+    },
+    "totalLabel": {
+      "total": "Total: {{totalString}}"
+    },
+    "userForm": {
+      "userUpdated": "User updated",
+      "passwordUnmatch": "Passwords do not match",
+      "userSaved": "User saved",
+      "title": "User data:",
+      "nameLabel": "Name:",
+      "passwordLabel": "Password:",
+      "confirmPasswordLabel":"Confirm password:",
+      "isAdminLabel": "Is administrator?"
+    },
+    "users": {
+      "errorLoadUsers": "Error retrieving users",
+      "userDeleted": "User deleted",
+      "newUserLabel": "New user",
+      "adminsLabel": "Administrators",
+      "cashiersLabel": "Cashiers"
+    }
+  },
+  "items": {
+    "cashClosingItem": {
+      "cashier": "Cashier:",
+      "date": "Date:",
+      "salesRegistered": "Registered sales:",
+      "phisicMoney": "Physical money:"
+    },
+    "categoryItem": {
+      "deleteMessage": "Do you want to delete this category?"
+    },
+    "productItem": {
+      "codeLabel": "Code:",
+      "priceLabel": "Price:",
+      "stockLabel": "Stock:",
+      "categoryLabel": "Category:",
+      "deleteMessage": "Do you want to delete this product?"
+    },
+    "saleItem": {
+      "folioLabel": "Folio: {{saleId}}"
+    },
+    "userItem": {
+      "deleteMessage": "Do you want to delete this user?"
+    }
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "accept": "Accept",
+    "close": "Close",
+    "return": "Return",
+    "searchProduct": "Search (F10)"
+  }
+}

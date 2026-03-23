@@ -1,5 +1,6 @@
 import '../stylesheets/UserSelect.css';
 import type User from "../../../data/model/User";
+import { useTranslation } from 'react-i18next';
 
 interface UserSelectProps {
   options: User[];
@@ -8,12 +9,14 @@ interface UserSelectProps {
 }
 
 function UserSelect(props: UserSelectProps) {
+  const { t } = useTranslation();
+
   return (
     <select
       value={ props.selected ? props.selected : "Seleccione un usuario" }
       onChange={e => props.onUserSelected(e.target.value)}>
         <option value={undefined}>
-              Seleccione un usuario...
+              {t('screens.cashClosingList.selectUserLabel')}
         </option>
       {
         props.options.map(user => (

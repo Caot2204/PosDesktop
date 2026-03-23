@@ -8,8 +8,10 @@ import { UserForm } from './UserForm';
 import User from '../../../data/model/User';
 import { showErrorNotify, showSuccessNotify } from '../../utils/NotifyUtils';
 import { handleErrorMessage } from '../../utils/ErrorUtils';
+import { useTranslation } from 'react-i18next';
 
 function UsersScreen() {
+  const { t } = useTranslation('global');
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const [admins, setAdmins] = useState<User[]>([]);
@@ -29,7 +31,7 @@ function UsersScreen() {
         setLoadingData(false);
       }
     } catch (error) {
-      showErrorNotify("Error al recuperar los usuarios");
+      showErrorNotify(t('screens.users.errorLoadUsers'));
     }
   };
 
@@ -44,7 +46,7 @@ function UsersScreen() {
   const handleDeleteUser = async (userId: string, isAdmin: boolean) => {
     try {
       await window.userAPI?.deleteUser(userId, isAdmin);
-      showSuccessNotify("Usuario eliminado");
+      showSuccessNotify(t('screens.users.userDeleted'));
       setLoadingData(true);
     } catch (error) {
       handleErrorMessage(error, showErrorNotify);
@@ -66,16 +68,16 @@ function UsersScreen() {
       <PosButton 
           className="add-user-button"
           icon={<IoAddOutline />}
-          label="Nuevo usuario" 
+          label={t('screens.users.newUserLabel')} 
           onClick={handleOpenDialog} />
       <div className="user-sections-container">
         <UserSection 
-          role="Administradores" 
+          role={t('screens.users.adminsLabel')} 
           users={admins}
           onUpdateUser={handleEditUser}
           onDeleteUser={handleDeleteUser} />
         <UserSection 
-          role="Cajeros" 
+          role={t('screens.users.cashiersLabel')} 
           users={cashiers}
           onUpdateUser={handleEditUser}
           onDeleteUser={handleDeleteUser} />

@@ -5,6 +5,7 @@ import { FaUserTie, FaShop } from "react-icons/fa6";
 import { NavLink } from 'react-router';
 import type UserSession from '../../../data/model/UserSession';
 import { AiFillFileText } from 'react-icons/ai';
+import { useTranslation } from 'react-i18next';
 
 interface PosMenuProps {
   className?: string;
@@ -12,6 +13,8 @@ interface PosMenuProps {
 }
 
 function PosMenu(props: PosMenuProps) {
+  const { t } = useTranslation('global');
+
   return (
     <div className={props.className}>
       <div className="menu-container">
@@ -23,7 +26,7 @@ function PosMenu(props: PosMenuProps) {
         >
           <PosMenuItem
             icon={<MdOutlinePointOfSale />}
-            label="Ventas" />
+            label={t('mainMenu.sales')} />
         </NavLink>
         <NavLink
           to="/egress"
@@ -33,7 +36,7 @@ function PosMenu(props: PosMenuProps) {
         >
           <PosMenuItem
             icon={<BiArchiveOut />}
-            label="Egresos" />
+            label={t('mainMenu.egresses')} />
         </NavLink>
         <NavLink
           to="/cotizations"
@@ -43,7 +46,7 @@ function PosMenu(props: PosMenuProps) {
         >
           <PosMenuItem
             icon={<AiFillFileText />}
-            label="Cotizaciones" />
+            label={t('mainMenu.cotizations')} />
         </NavLink>
         <NavLink
           to="/inventory"
@@ -53,7 +56,7 @@ function PosMenu(props: PosMenuProps) {
         >
           <PosMenuItem
             icon={<MdOutlineInventory />}
-            label="Inventario" />
+            label={t('mainMenu.inventory')} />
         </NavLink>
         {
           props.userSession.isAdmin ?
@@ -66,7 +69,7 @@ function PosMenu(props: PosMenuProps) {
               >
                 <PosMenuItem
                   icon={<FaUserTie />}
-                  label="Usuarios" />
+                  label={t('mainMenu.users')} />
               </NavLink>
               <NavLink
                 to="/administration"
@@ -76,7 +79,7 @@ function PosMenu(props: PosMenuProps) {
               >
                 <PosMenuItem
                   icon={<FaShop />}
-                  label="Administración" />
+                  label={t('mainMenu.administration')} />
               </NavLink>
             </>
             :

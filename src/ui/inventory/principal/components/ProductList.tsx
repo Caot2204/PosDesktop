@@ -2,6 +2,7 @@ import '../stylesheets/ProductList.css';
 import { useEffect, useState } from "react";
 import type Product from "../../../../data/model/Product";
 import ProductItem from "../../products/components/ProductItem";
+import { useTranslation } from 'react-i18next';
 
 interface ProductListProps {
   products: Product[];
@@ -13,7 +14,7 @@ interface ProductListProps {
 }
 
 function ProductList(props: ProductListProps) {
-
+  const { t } = useTranslation('global');
   const [productsToShow, setProductsToShow] = useState<Product[]>([]);
 
   const handleDeleteProduct = async (code: string) => {
@@ -41,7 +42,7 @@ function ProductList(props: ProductListProps) {
             code={product.code}
             name={product.name}
             unitPrice={product.unitPrice}
-            stock={product.isInfinityStock ? "Infinito" : String(product.stock)}
+            stock={product.isInfinityStock ? t('screens.inventory.infinityLabel') : String(product.stock)}
             category={product.category}
             minimunStock={props.minimumStock}
             onUpdate={() => props.onEditProduct(product)}

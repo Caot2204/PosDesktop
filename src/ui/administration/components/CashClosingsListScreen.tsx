@@ -5,12 +5,14 @@ import type CashClosing from '../../../data/model/CashClosing';
 import CashClosingItem from './CashClosingItem';
 import type User from '../../../data/model/User';
 import UserSelect from './UserSelect';
+import { useTranslation } from 'react-i18next';
 
 interface CashClosingsListScreenProps {
   isShowed: boolean;
 }
 
 function CashClosingsListScreen(props: CashClosingsListScreenProps) {
+  const { t } = useTranslation();
   const [dateToSearch, setDateToSearch] = useState<string>(toInputDateValue(new Date()));
   const [userToSearch, setUserToSearch] = useState<string | null | undefined>(null);
   const [cashClosings, setCashClosings] = useState<CashClosing[]>([]);
@@ -56,12 +58,12 @@ function CashClosingsListScreen(props: CashClosingsListScreenProps) {
 
   return (
     <div className="cashclosingslistscreen-container">
-      <h3>Cortes de caja</h3>
+      <h3>{t('screens.cashClosingList.title')}</h3>
       <div className="cashclosingslistscreen-inputs">
         <input
           className="cashclosing-date-input"
           type="date"
-          placeholder="Fecha del corte de caja..."
+          placeholder={t('screens.cashClosingList.datePlaceHolder')}
           value={dateToSearch}
           onChange={(e) => {
             setDateToSearch(e.target.value);

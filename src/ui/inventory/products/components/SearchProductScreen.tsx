@@ -4,6 +4,8 @@ import { FaSearch } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
 import type Product from '../../../../data/model/Product';
 import { formatNumberToCurrentPrice } from '../../../utils/FormatUtils';
+import { useTranslation } from 'react-i18next';
+import { T } from 'react-router/dist/development/index-react-server-client-CMphySRb';
 
 interface SearchProductProps {
   isShowed: boolean;
@@ -21,6 +23,7 @@ interface ProductSearchedRowProps {
 }
 
 function ProductSearchedRow(props: ProductSearchedRowProps) {
+  const { t } = useTranslation('global');
   const rowRef = useRef<HTMLTableRowElement>(null);
 
   useEffect(() => {
@@ -43,6 +46,7 @@ function ProductSearchedRow(props: ProductSearchedRowProps) {
 }
 
 function SearchProductScreen(props: SearchProductProps) {
+  const { t } = useTranslation('global');
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchFilter, setSearchFilter] = useState("");
   const [productsToShow, setProductsToShow] = useState<Product[]>([]);
@@ -105,7 +109,7 @@ function SearchProductScreen(props: SearchProductProps) {
           ref={searchInputRef}
           type="text"
           maxLength={100}
-          placeholder="Ingrese el nombre o código del producto..."
+          placeholder={t('screens.searchProduct.enterProductPlaceHolder')}
           onKeyDown={handleKeyDown}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
         <MdOutlineCancel onClick={handleClearSearch} />
@@ -115,10 +119,10 @@ function SearchProductScreen(props: SearchProductProps) {
         <table>
           <thead>
             <tr>
-              <th scope="col">Código</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Categoría</th>
-              <th scope="col">Precio</th>
+              <th scope="col">{t('screens.searchProduct.codeLabel')}</th>
+              <th scope="col">{t('screens.searchProduct.nameLabel')}</th>
+              <th scope="col">{t('screens.searchProduct.categoryLabel')}</th>
+              <th scope="col">{t('screens.searchProduct.priceLabel')}</th>
             </tr>
           </thead>
           <tbody>

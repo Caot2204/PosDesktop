@@ -1,20 +1,23 @@
 import '../stylesheets/CashClosingItem.css';
 import type CashClosing from '../../../data/model/CashClosing';
 import { formatDate, formatNumberToCurrentPrice } from '../../utils/FormatUtils';
+import { useTranslation } from 'react-i18next';
 
 function CashClosingItem(props: CashClosing) {
+  const { t } = useTranslation();
+
   return (
     <div className="cashclosingitem-container">
       <div className="cashclosingitem-header">
-        <p><strong>Vendedor:</strong> {props.userName}</p>
-        <p><strong>Fecha:</strong> {formatDate(props.currentDate)}</p>
+        <p><strong>{t('items.cashClosingItem.cashier')}</strong> {props.userName}</p>
+        <p><strong>{t('items.cashClosingItem.date')}</strong> {formatDate(props.currentDate)}</p>
       </div>
       <ul>
         <li>
-          <strong>Ventas registradas:</strong> {formatNumberToCurrentPrice(props.totalOfDay)}
+          <strong>{t('items.cashClosingItem.salesRegistered')}</strong> {formatNumberToCurrentPrice(props.totalOfDay)}
         </li>
         <li>
-          <strong>Dinero físico:</strong> {formatNumberToCurrentPrice(props.physicalMoney)}
+          <strong>{t('items.cashClosingItem.phisicMoney')}</strong> {formatNumberToCurrentPrice(props.physicalMoney)}
         </li>
       </ul>
     </div>

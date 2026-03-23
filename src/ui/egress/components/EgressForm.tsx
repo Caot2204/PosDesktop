@@ -5,6 +5,7 @@ import { parseLocalDate, toInputDateValue } from '../../../ui/utils/FormatUtils'
 import OkCancelButtons from '../../../ui/common/components/OkCancelButtons';
 import { showSuccessNotify } from '../../../ui/utils/NotifyUtils';
 import { handleErrorMessage } from '../../../ui/utils/ErrorUtils';
+import { useTranslation } from 'react-i18next';
 
 interface EgressFormProps {
   id?: number;
@@ -18,6 +19,7 @@ interface EgressFormProps {
 }
 
 function EgressForm(props: EgressFormProps) {
+  const { t } = useTranslation('global');
   const [id, setId] = useState<number | null>(props.id ? props.id : null);
   const [dateOfEgress, setDateOfEgress] = useState(props.dateOfEgress ? props.dateOfEgress : new Date());
   const [amount, setAmount] = useState(props.amount > 0 ? props.amount.toString() : "");
@@ -42,7 +44,7 @@ function EgressForm(props: EgressFormProps) {
           description,
           props.userName
         );
-        showSuccessNotify("Egreso actualizado");
+        showSuccessNotify(t('screens.egressForm.egressUpdated'));
         clearForm();
         props.onSaveSuccess();
       } catch (error) {
@@ -56,7 +58,7 @@ function EgressForm(props: EgressFormProps) {
           description,
           props.userName
         );
-        showSuccessNotify("Egreso guardado");
+        showSuccessNotify(t('screens.egressForm.egressSaved'));
         clearForm()
         props.onSaveSuccess();
       } catch (error) {
@@ -89,7 +91,7 @@ function EgressForm(props: EgressFormProps) {
 
   return (
     <div className='egress-form'>
-      <h2>Datos del egreso:</h2>
+      <h2>{t('screens.egressForm.egressData')}</h2>
       {
         errorMessage
           ?
@@ -100,7 +102,7 @@ function EgressForm(props: EgressFormProps) {
           :
           <></>
       }
-      <label>Fecha del egreso:</label>
+      <label>{t('screens.egressForm.dateLabel')}</label>
       <input
         type="date"
         value={toInputDateValue(dateOfEgress)}
@@ -109,12 +111,12 @@ function EgressForm(props: EgressFormProps) {
           const parsed = parseLocalDate(v);
           setDateOfEgress(parsed ? parsed : new Date());
         }} />
-      <label>Monto:</label>
+      <label>{t('screens.egressForm.amountLabel')}</label>
       <input
         type="number"
         value={amount}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setAmount(e.target.value)} />
-      <label>Descripción:</label>
+      <label>{t('screens.egressForm.descriptionLabel')}</label>
       <input
         type="text"
         value={description}

@@ -13,6 +13,7 @@ import PosButton from '../../../ui/common/components/PosButton';
 import { formatNumberToCurrentPrice, toInputDateValue } from '../../../ui/utils/FormatUtils';
 import CotizationProduct from '../../../data/model/CotizationProduct';
 import { NavLink } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 interface CotizationScreenProps {
   id?: number;
@@ -27,6 +28,7 @@ interface CotizationScreenProps {
 }
 
 function CotizationScreen(props: CotizationScreenProps) {
+  const { t } = useTranslation('global');
   const codeInputRef = useRef<HTMLInputElement>(null);
   const searchDialogRef = useRef<HTMLDialogElement>(null);
   const [openDialog, setOpenDialog] = useState<null | 'searchProduct'>(null);
@@ -123,7 +125,7 @@ function CotizationScreen(props: CotizationScreenProps) {
         props.onSuccess(props.id);
       }
     } catch (error) {
-      showErrorNotify("Error al guardar la cotización, inténtelo de nuevo");
+      showErrorNotify(t('screens.cotizationForm.saveError'));
     }
   };
 
@@ -157,7 +159,7 @@ function CotizationScreen(props: CotizationScreenProps) {
           );
           setProducts(productsSaleModel.filter((p): p is SaleProductModel => p !== null));
         } catch (error) {
-          showErrorNotify("Error al cargar los productos de la cotización");
+          showErrorNotify(t('screens.cotizationForm.loadProductsError'));
         }
       };
       loadProducts();
@@ -207,18 +209,18 @@ function CotizationScreen(props: CotizationScreenProps) {
       <div className={openDialog ? 'cotizationscreen-container filter-blur' : 'cotizationscreen-container'}>
         <div className='back-container' onClick={props.onCancel}>
           <IoMdArrowRoundBack />
-          <label>Regresar</label>
+          <label>{t('buttons.return')}</label>
         </div>
         <div className='cotization-data-container'>
           <div className='cotization-data-header'>
             <div className='cotization-inputs'>
-              <label>Cliente:</label>
+              <label>{t('screens.cotizationForm.clientLabel')}</label>
               <input
                 type='text'
                 maxLength={100}
                 value={client}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setClient(e.target.value)} />
-              <label>Fecha de la cotización:</label>
+              <label>{t('screens.cotizationForm.dateLabel')}</label>
               <input
                 type="date"
                 value={toInputDateValue(currentDate)}
@@ -228,16 +230,16 @@ function CotizationScreen(props: CotizationScreenProps) {
               <label
                 className='total-cotization-label'
               >
-                Total: {formatNumberToCurrentPrice(totalOfCotization)}
+                {t('screens.cotizationForm.total', { totalString: formatNumberToCurrentPrice(totalOfCotization) })}
               </label>
               <PosButton
                 className='guardar cotization-button'
-                label='Guardar cotización'
+                label={t('screens.cotizationForm.saveCotizationLabel')}
                 onClick={handleSaveCotization} />
               <NavLink to="/sales" onClick={handleBuyCotization} >
                 <PosButton
                  className='cotization-button'
-                  label='Vender cotización'
+                  label={t('screens.cotizationForm.buyCotizationLabel')}
                   onClick={() => {}} />
               </NavLink>
             </div>
@@ -250,7 +252,7 @@ function CotizationScreen(props: CotizationScreenProps) {
               type="text"
               maxLength={100}
               autoFocus
-              placeholder="Ingrese el código del producto..."
+              placeholder={t('screens.cotizationForm.enterProductCode')}
               onChange={(e) => setProductCodeInput(e.target.value)}
               onKeyDown={async e => {
                 if (e.key === 'Enter') {
@@ -260,7 +262,7 @@ function CotizationScreen(props: CotizationScreenProps) {
                       handleAddProduct(product);
                     }
                   } catch (e) {
-                    showErrorNotify("Producto no encontrado");
+                    showErrorNotify(t('screens.cotizationForm.productNotFound'));
                     if (codeInputRef.current) {
                       codeInputRef.current.value = "";
                     }
@@ -270,7 +272,7 @@ function CotizationScreen(props: CotizationScreenProps) {
             <PosButton
               className="search-button"
               icon={<FaSearch />}
-              label="Buscar (F10)"
+              label={t('buttons.searchProduct')}
               onClick={() => setOpenDialog("searchProduct")} />
           </div>
           <SalesProductList

@@ -4,6 +4,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { formatNumberToCurrentPrice } from '../../../utils/FormatUtils';
 import PosConfirmDialog from '../../../common/components/PosConfirmDialog';
+import { useTranslation } from 'react-i18next';
 
 interface ProductDataProps {
   code: string;
@@ -17,6 +18,7 @@ interface ProductDataProps {
 }
 
 function ProductItem(props: ProductDataProps) {
+  const { t } = useTranslation('global');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const handleConfirmDelete = () => {
@@ -36,21 +38,21 @@ function ProductItem(props: ProductDataProps) {
         </div>
         <ul>
           <li>
-            <span className="label-span">Código:</span>&emsp;{props.code}
+            <span className="label-span">{t('items.productItem.codeLabel')}</span>&emsp;{props.code}
           </li>
           <li>
-            <span className="label-span">Precio:</span>&emsp;{formatNumberToCurrentPrice(props.unitPrice)}
+            <span className="label-span">{t('items.productItem.priceLabel')}</span>&emsp;{formatNumberToCurrentPrice(props.unitPrice)}
           </li>
           <li>
-            <span className="label-span">Stock:</span>&emsp;<span className={ Number(props.stock) <= props.minimunStock ? "low-stock" : "" }>{props.stock}</span>
+            <span className="label-span">{t('items.productItem.stockLabel')}</span>&emsp;<span className={ Number(props.stock) <= props.minimunStock ? "low-stock" : "" }>{props.stock}</span>
           </li>
           <li>
-            <span className="label-span">Categoría:</span>&emsp;{props.category}
+            <span className="label-span">{t('items.productItem.categoryLabel')}</span>&emsp;{props.category}
           </li>
         </ul>
       </div>
       <PosConfirmDialog
-        message="¿Desea eliminar este producto?"
+        message={t('items.productItem.deleteMessage')}
         isShowed={showConfirmDialog}
         onCancel={() => setShowConfirmDialog(false)}
         onOk={handleConfirmDelete} />

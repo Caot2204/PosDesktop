@@ -2,6 +2,7 @@ import '../stylesheets/PosConfirmDialog.css';
 import { useRef } from 'react';
 import { MdOutlineCancel, MdOutlineCheck } from "react-icons/md";
 import PosButton from './PosButton';
+import { useTranslation } from 'react-i18next';
 
 interface PosConfirmDialogProps {
   message: string;
@@ -11,6 +12,7 @@ interface PosConfirmDialogProps {
 }
 
 function PosConfirmDialog(props: PosConfirmDialogProps) {
+  const { t } = useTranslation('global');
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const handleCancel = () => {
@@ -34,10 +36,10 @@ function PosConfirmDialog(props: PosConfirmDialogProps) {
         <PosButton
           className="cancel-button"
           icon={<MdOutlineCancel />}
-          label="Cancelar"
+          label={t('buttons.cancel')}
           onClick={handleCancel} />
         <PosButton
-          label="Aceptar"
+          label={t('buttons.accept')}
           icon={<MdOutlineCheck />}
           onClick={handleOk} />
       </div>

@@ -4,6 +4,7 @@ import { formatNumberToCurrentPrice } from '../../utils/FormatUtils';
 import OkCancelButtons from '../../common/components/OkCancelButtons';
 import { showErrorNotify, showSuccessNotify } from '../../utils/NotifyUtils';
 import PosConfirmDialog from '../../common/components/PosConfirmDialog';
+import { useTranslation } from 'react-i18next';
 
 interface CashClosingScreenProps {
   isShowed: boolean;
@@ -12,6 +13,7 @@ interface CashClosingScreenProps {
 }
 
 function CashClosingScreen(props: CashClosingScreenProps) {
+  const { t } = useTranslation('global');
   const physicalMoneyInputRef = useRef<HTMLInputElement>(null);
 
   const [totalOfDay, setTotalOfDay] = useState(0.0);
@@ -29,11 +31,11 @@ function CashClosingScreen(props: CashClosingScreenProps) {
             totalOfDay,
             props.currentUser
           );
-          showSuccessNotify("Corte de caja realizado");
+          showSuccessNotify(t('screens.cashClosings.cashClosingOk'));
           props.onClose();
         } catch (error) {
           console.log(error);
-          showErrorNotify("Error al realizar el corte de caja, inténtelo de nuevo");
+          showErrorNotify(t('screens.cashClosings.errorCashClosing'));
         }
       }
     }
@@ -56,18 +58,18 @@ function CashClosingScreen(props: CashClosingScreenProps) {
 
   return (
     <div className="cash-closing-container">
-      <h2>Corte de caja</h2>
-      <p><strong>Venta del día:</strong>&emsp;&ensp;{formatNumberToCurrentPrice(totalOfDay)}</p>
+      <h2>{t('screens.cashClosings.title')}</h2>
+      <p><strong>{t('screens.cashClosings.saleOfDayLabel')}</strong>&emsp;&ensp;{formatNumberToCurrentPrice(totalOfDay)}</p>
       <div className="physicalmoney-input">
-        <p><strong>Dinero en caja: </strong></p>
+        <p><strong>{t('screens.cashClosings.moneyOnCashLabel')}</strong></p>
         <input type="number" ref={physicalMoneyInputRef} onChange={(e) => setPhysicalMoney(Number(e.target.value))} />
       </div>
       <OkCancelButtons
-        labelForOkButton="Aceptar"
+        labelForOkButton={t('buttons.accept')}
         onCancel={props.onClose}
         onSave={handleCashClosing} />
       <PosConfirmDialog
-        message="El dinero físico no coincide con el total de la ventas, ¿Desea continuar?"
+        message={t('screens.cashClosings.diffMoney')}
         isShowed={openDialog === "confirmDialog"}
         onCancel={() => {
           setOpenDialog(null);

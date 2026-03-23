@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { AiOutlineEdit } from 'react-icons/ai';
 import PosConfirmDialog from '../../../common/components/PosConfirmDialog';
+import { useTranslation } from 'react-i18next';
 
 interface CategoryItemProps {
   name: string;
@@ -12,6 +13,7 @@ interface CategoryItemProps {
 }
 
 function CategoryItem(prop: CategoryItemProps) {
+  const { t } = useTranslation('global');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const handleConfirmDelete = async () => {
@@ -35,7 +37,7 @@ function CategoryItem(prop: CategoryItemProps) {
         }
       </div>
       <PosConfirmDialog
-        message="¿Desea eliminar esta categoría?"
+        message={t('items.categoryItem.deleteMessage')}
         isShowed={showConfirmDialog}
         onCancel={() => setShowConfirmDialog(false)}
         onOk={handleConfirmDelete} />

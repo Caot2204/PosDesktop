@@ -13,8 +13,10 @@ import type Category from '../../../../data/model/Category';
 import ProductList from './ProductList';
 import IncreaseStockScreen from './IncreaseStockScreen';
 import { GridLoader } from 'react-spinners';
+import { useTranslation } from 'react-i18next';
 
 function InventoryScreen() {
+  const { t } = useTranslation('global');
   const categoriesDialogRef = useRef<HTMLDialogElement>(null);
   const productFormDialogRef = useRef<HTMLDialogElement>(null);
   const increaseStockDialogRef = useRef<HTMLDialogElement>(null);
@@ -35,7 +37,7 @@ function InventoryScreen() {
         setFetchedProducts(fetchedProducts);
       });
     } catch (error) {
-      showErrorNotify("Error al recuperar los productos");
+      showErrorNotify(t('screens.inventory.errorLoadProducts'));
     }
   };
 
@@ -45,7 +47,7 @@ function InventoryScreen() {
         setCategories(fetchedCategories);
       });
     } catch (error) {
-      showErrorNotify("Error al recuperar las categorias");
+      showErrorNotify(t('screens.inventory.errorLoadCategories'));
     }
   };
 
@@ -83,26 +85,26 @@ function InventoryScreen() {
   return (
     <div className="inventory-container">
       <div className={openDialog ? "actions-container filter-blur" : "actions-container"}>
-        <span className="label-section">Categoría: </span>
+        <span className="label-section">{t('screens.inventory.categoryLabel')}</span>
         <CategorySelect
           selected={categoryFilter}
           options={categories}
           onCategorySelected={setCategoryFilter} />
-        <span>Productos en inventario: {fetchedProducts.length}</span>
+        <span>{t('screens.inventory.productsInventoryLabel', { productsCount: fetchedProducts.length })}</span>
         <hr />
-        <span className="label-section">Acciones: </span>
+        <span className="label-section">{t('screens.inventory.actionsLabel')}</span>
         <PosButton
-          label="Nuevo producto"
+          label={t('screens.inventory.newProductLabel')}
           onClick={() => {
             setOpenDialog("productForm");
           }} />
         <PosButton
-          label="Admin. categorías"
+          label={t('screens.inventory.adminCategoriesLabel')}
           onClick={() => {
             setOpenDialog("categories");
           }} />
         <PosButton
-          label="Incrementar stock"
+          label={t('screens.inventory.increaseStockLabel')}
           onClick={() => {
             setOpenDialog("increaseStock");
           }} />
@@ -115,7 +117,7 @@ function InventoryScreen() {
             ref={searchInputRef} 
             type="text" 
             maxLength={100}
-            placeholder="Ingrese el nombre o código del producto..." 
+            placeholder={t('screens.inventory.enterProductPlaceHolder')}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchFilter(e.target.value)} />
           <MdOutlineCancel onClick={handleClearSearch} />
         </div>
@@ -133,7 +135,7 @@ function InventoryScreen() {
             minimumStock={minimumStock}
             onEditProduct={handleEditProduct}
             onDeleteProductSuccess={() => {
-              showSuccessNotify("Producto eliminado!");
+              showSuccessNotify(t('screens.inventory.productDeleted'));
               fetchProducts();
             }} />
         }

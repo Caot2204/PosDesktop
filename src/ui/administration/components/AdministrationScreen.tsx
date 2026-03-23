@@ -16,7 +16,7 @@ function AdministrationScreen() {
   const [bussinessName, setBussinessName] = useState('');
   const [bussinessLogoUrl, setBussinessLogoUrl] = useState<string | undefined>('../icons/icon.png');
   const [minimunStock, setMinimunStock] = useState(5);
-  const [posLanguage, setPosLanguage] = useState('es');
+  const [posLanguage, setPosLanguage] = useState("");
 
   const fetchPosConfig = () => {
     window.posConfigAPI?.getPosConfig()
@@ -49,7 +49,7 @@ function AdministrationScreen() {
   return (
     <div className="administrationscreen-container">
       <div className={openDialog ? "sales-container filter-blur" : "sales-container"}>
-        <h3>Ventas</h3>
+        <h3>{t('screens.administration.titleSales')}</h3>
         <PosButton
           label={t('screens.administration.showCashClosings')}
           onClick={() => setOpenDialog("cashClosingDialog")} />
@@ -101,7 +101,7 @@ function AdministrationScreen() {
       </div>
       <PosButton
         className={openDialog ? "filter-blur" : ""}
-        label="Guardar configuración"
+        label={t('screens.administration.saveConfigLabel')}
         onClick={handleSaveConfig} />
       <dialog className="pos-dialog" open={openDialog === "cashClosingDialog"}>
         <div className="header-dialog">
@@ -113,7 +113,7 @@ function AdministrationScreen() {
           isShowed={openDialog === "cashClosingDialog"} />
       </dialog>
       <label>{t('screens.administration.posLanguageLabel')}</label>
-      <select value={posLanguage} onChange={(e) => setPosLanguage(e.target.value)}>
+      <select className='language-select' value={posLanguage} onChange={(e) => setPosLanguage(e.target.value)}>
         <option value="es">Español</option>
         <option value="en">English</option>
       </select>

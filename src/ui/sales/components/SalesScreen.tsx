@@ -2,13 +2,15 @@ import '../stylesheets/SalesScreen.css';
 import { useEffect, useState } from 'react';
 import type Sale from '../../../data/model/Sale';
 import SaleItem from './SaleItem';
-import { formatDate, formatDateForSearch, formatNumberToCurrentPrice, parseLocalDate, toInputDateValue } from '../../utils/FormatUtils';
+import { formatDate, formatNumberToCurrentPrice, parseLocalDate, toInputDateValue } from '../../utils/FormatUtils';
+import { useTranslation } from 'react-i18next';
 
 interface SalesScreenProps {
   isShowed: boolean;
 }
 
 function SalesScreen(props: SalesScreenProps) {
+  const { t } = useTranslation('global');
   const [sales, setSales] = useState<Sale[]>([]);
   const [dateToSearch, setDateToSearch] = useState<string>(toInputDateValue(new Date()));
   const [saleToShow, setSaleToShow] = useState<Sale | null>(null);
@@ -43,7 +45,7 @@ function SalesScreen(props: SalesScreenProps) {
           className="sales-folio-input"
           type="number"
           min={1}
-          placeholder="Folio de la venta..."
+          placeholder={t('screens.sales.saleFolio')}
           onChange={(e) => {
             setSaleToShow(null);
             handleGetSaleById(Number(e.target.value));
@@ -51,13 +53,13 @@ function SalesScreen(props: SalesScreenProps) {
         <input
           className="sale-date-input"
           type="date"
-          placeholder="Fecha de la venta..."
+          placeholder={t('screens.sales.dateSale')}
           value={dateToSearch}
           onChange={(e) => {
             setSaleToShow(null);
             setDateToSearch(e.target.value);
           }} />
-        <h3 className="sales-label">Ventas:</h3>
+        <h3 className="sales-label">{t('screens.sales.title')}</h3>
         <div className="sales-list">
           {
             sales.map(sale => (
@@ -70,14 +72,14 @@ function SalesScreen(props: SalesScreenProps) {
         </div>
       </div>
       <div className="ticket-container">
-        <h2>Detalles de la venta </h2>
-        <p><strong>Folio:</strong> {saleToShow?.id}</p>
-        <p><strong>Fecha/Hora:</strong> {saleToShow ? formatDate(saleToShow.dateOfSale) : ''}</p>
-        <p><strong>Le atendío:</strong> {saleToShow?.userToGenerateSale}</p>
-        <p><strong>Forma de pago:</strong> {saleToShow?.paymentType}</p>
+        <h2>{t('screens.sales.ticketTitle')}</h2>
+        <p><strong>{t('screens.sales.ticketFolio')}</strong> {saleToShow?.id}</p>
+        <p><strong>{t('screens.sales.ticketDate')}</strong> {saleToShow ? formatDate(saleToShow.dateOfSale) : ''}</p>
+        <p><strong>{t('screens.sales.ticketAttend')}</strong> {saleToShow?.userToGenerateSale}</p>
+        <p><strong>{t('screens.sales.ticketPayType')}</strong> {saleToShow?.paymentType}</p>
         {
           saleToShow?.paymentFolio ?
-            <p><strong>Folio de la transaccion:</strong> {saleToShow?.paymentFolio}</p>
+            <p><strong>{t('screens.sales.ticketFolioTransaction')}</strong> {saleToShow?.paymentFolio}</p>
             :
             <></>
         }
@@ -94,9 +96,9 @@ function SalesScreen(props: SalesScreenProps) {
           ))
         }
         <hr />
-        <p className="ticket-total-label"><strong>Total: </strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.totalSale) : ''}</p>
-        <p className="ticket-total-label"><strong>Monto pagado: </strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayed) : ''}</p>
-        <p className="ticket-total-label"><strong>Cambio: </strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayed - saleToShow.totalSale) : ''}</p>
+        <p className="ticket-total-label"><strong>{t('screens.sales.ticketTotal')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.totalSale) : ''}</p>
+        <p className="ticket-total-label"><strong>{t('screens.sales.ticketAmountPayed')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayed) : ''}</p>
+        <p className="ticket-total-label"><strong>{t('screens.sales.ticketCambio')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayed - saleToShow.totalSale) : ''}</p>
       </div>
     </div>
   );

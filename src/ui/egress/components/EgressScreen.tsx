@@ -10,12 +10,14 @@ import EgressForm from './EgressForm';
 import PosConfirmDialog from '../../../ui/common/components/PosConfirmDialog';
 import { ToastContainer } from 'react-toastify';
 import { MdOutlineCancel } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 interface EgressScreenProps {
   userName: string;
 }
 
 function EgressScreen(props: EgressScreenProps) {
+  const { t } = useTranslation('global');
   const egressFormDialogRef = useRef<HTMLDialogElement>(null);
   const [openDialog, setOpenDialog] = useState<null | 'egressForm'>(null);
 
@@ -63,7 +65,7 @@ function EgressScreen(props: EgressScreenProps) {
       setEgresses(egressesFiltered);
       setLoadingData(false);
     } else {
-      showErrorNotify("Error al recuperar los egresos");
+      showErrorNotify(t('screens.egresses.errorLoadEgresses'));
     }
   };
 
@@ -76,12 +78,12 @@ function EgressScreen(props: EgressScreenProps) {
     try {
       if (egressIdToDelete) {
         await window.egressAPI?.deleteEgress(egressIdToDelete);
-        showSuccessNotify("Egreso eliminado");
+        showSuccessNotify(t('screens.egresses.egressDeleted'));
         setShowConfirmDialog(false);
         setLoadingData(true);
       }
     } catch (error) {
-      showErrorNotify("Error al eliminar el egreso");
+      showErrorNotify(t('screens.egresses.errorDeleteEgress'));
     }
   };
 
@@ -101,7 +103,7 @@ function EgressScreen(props: EgressScreenProps) {
           <PosButton
               className="add-egress-button"
               icon={<IoAddOutline />}
-              label="Nuevo egreso"
+              label={t('screens.egresses.newEgress')}
               onClick={() => {
                 setOpenDialog('egressForm');
               }} />
@@ -121,10 +123,10 @@ function EgressScreen(props: EgressScreenProps) {
           <table className='egresses-items'>
             <thead>
               <tr>
-                <th scope='col'>Fecha</th>
-                <th scope='col'>Monto</th>
-                <th scope='col'>Usuario que registró</th>
-                <th scope='col'>Descripción</th>
+                <th scope='col'>{t('screens.egresses.dateLabel')}</th>
+                <th scope='col'>{t('screens.egresses.amountLabel')}</th>
+                <th scope='col'>{t('screens.egresses.userRegisteredLabel')}</th>
+                <th scope='col'>{t('screens.egresses.descriptionLabel')}</th>
               </tr>
             </thead>
             <tbody>
@@ -165,7 +167,7 @@ function EgressScreen(props: EgressScreenProps) {
           }} />
       </dialog>
       <PosConfirmDialog
-        message="¿Desea eliminar este egreso?"
+        message={t('screens.egresses.deleteMessage')}
         isShowed={showConfirmDialog}
         onCancel={() => {
           setShowConfirmDialog(false);

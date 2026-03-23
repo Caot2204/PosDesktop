@@ -10,6 +10,7 @@ import PosConfirmDialog from '../../../ui/common/components/PosConfirmDialog';
 import CotizationPdfDialog from './CotizationPdfDialog';
 import SaleProductModel from '../../../ui/sales/model/SalesProductModel';
 import CotizationProduct from '../../../data/model/CotizationProduct';
+import { useTranslation } from 'react-i18next';
 
 interface CotizationsScreenProps {
   currentUserName: string;
@@ -17,6 +18,7 @@ interface CotizationsScreenProps {
 }
 
 function CotizationsScreen(props: CotizationsScreenProps) {
+  const { t } = useTranslation('global');
   const newCotizationFormRef = useRef<HTMLDialogElement>(null);
   const pdfDialogRef = useRef<HTMLDialogElement>(null);
 
@@ -40,7 +42,7 @@ function CotizationsScreen(props: CotizationsScreenProps) {
         setLoadingData(false);
       }
     } catch (error) {
-      showErrorNotify("Error al recuperar las cotizaciones");
+      showErrorNotify(t('screens.cotizations.errorLoadCotizations'));
     }
   };
 
@@ -52,12 +54,12 @@ function CotizationsScreen(props: CotizationsScreenProps) {
   const handleDelete = async () => {
     try {
       await window.cotizationAPI?.deleteCotization(cotizationIdToDelete);
-      showSuccessNotify("Cotización eliminada");
+      showSuccessNotify(t('screens.cotizations.cotizationDeleted'));
       setCotizationIdToDelete(null);
       setShowConfirmDialog(false);
       setLoadingData(true);
     } catch (error) {
-      showErrorNotify("Error al eliminar la cotización, inténtelo de nuevo");
+      showErrorNotify(t('screens.cotizations.errorCotizationDelete'));
     }
   };
 
@@ -77,11 +79,11 @@ function CotizationsScreen(props: CotizationsScreenProps) {
       <div className={openDialog ? 'cotizations-screen-container filter-blur' : 'cotizations-screen-container'}>
         <div className='cotizations-screeen-actions'>
           <PosButton
-            label='Nueva cotización'
+            label={t('screens.cotizations.newCotization')}
             onClick={() => setOpenDialog('newCotization')} />
           <div className='cotizations-input-id-container'>
             <label>
-              Folio:
+              {t('screens.cotizations.folioLabel')}
             </label>
             <input
               type='number'
@@ -92,9 +94,9 @@ function CotizationsScreen(props: CotizationsScreenProps) {
         <table className='cotizations-items'>
           <thead>
             <tr>
-              <th scope='col'>Folio</th>
-              <th scope='col'>Cliente</th>
-              <th scope='col'>Fecha</th>
+              <th scope='col'>{t('screens.cotizations.folioLabel')}</th>
+              <th scope='col'>{t('screens.cotizations.clientLabel')}</th>
+              <th scope='col'>{t('screens.cotizations.dateLabel')}</th>
             </tr>
           </thead>
           <tbody>
@@ -137,7 +139,7 @@ function CotizationsScreen(props: CotizationsScreenProps) {
             props.navigateToSaleScreen(products);
           }}
           onSuccess={(cotizationId: number) => {
-            showSuccessNotify("Cotizacion almacenada en el sistema");
+            showSuccessNotify(t('screens.cotizations.cotizationSaved'));
             setCotizationIdForShow(cotizationId);
             setOpenDialog('cotizationPdfViewer');
           }}
@@ -156,7 +158,7 @@ function CotizationsScreen(props: CotizationsScreenProps) {
           }} />
       </dialog>
       <PosConfirmDialog
-        message="¿Desea eliminar esta cotización?"
+        message={t('screens.cotizations.deleteMessage')}
         isShowed={showConfirmDialog}
         onCancel={() => {
           setShowConfirmDialog(false);

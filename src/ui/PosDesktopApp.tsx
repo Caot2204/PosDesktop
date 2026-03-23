@@ -25,6 +25,8 @@ import type Egress from '../data/model/Egress';
 import type Cotization from '../data/model/Cotization';
 import CotizationProduct from '../data/model/CotizationProduct';
 
+import '../i18n';
+
 declare global {
   interface Window {
     userAPI?: {

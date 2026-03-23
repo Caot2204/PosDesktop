@@ -6,12 +6,14 @@ import CategoryItem from './CategoryItem';
 import Category from '../../../../data/model/Category';
 import CategoryForm from './CategoryForm';
 import { showErrorNotify, showSuccessNotify } from '../../../utils/NotifyUtils';
+import { useTranslation } from 'react-i18next';
 
 interface CategoryScreenProps {
   onChangeCategories: () => void;
 }
 
 function CategoryScreen(props: CategoryScreenProps) {
+  const { t } = useTranslation('global');
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryForForm, setCategoryForForm] = useState<Category | null>(null);
@@ -24,7 +26,7 @@ function CategoryScreen(props: CategoryScreenProps) {
       setCategories(categoriesFetched);
       setLoadingData(false);
     } else {
-      showErrorNotify("Error al recuperar las categorías");
+      showErrorNotify(t('screens.categories.errorLoadCategories'));
     }
   };
 
@@ -37,11 +39,11 @@ function CategoryScreen(props: CategoryScreenProps) {
     if (window.categoryAPI && typeof window.categoryAPI.deleteCategory === 'function') {
       try {
         await window.categoryAPI.deleteCategory(id);
-        showSuccessNotify("Categoría eliminada!");
+        showSuccessNotify(t('screens.categories.categoryDeleted'));
         setLoadingData(true);
         props.onChangeCategories();
       } catch (error) {
-        showErrorNotify("Error al eliminar la categoría");
+        showErrorNotify(t('screens.categories.errorDeleteCategory'));
       }
     } else {
       console.log("deleteCategory is not available");
@@ -63,12 +65,12 @@ function CategoryScreen(props: CategoryScreenProps) {
 
   return (
     <div className="categories-container">
-      <h3>Categorías</h3>
+      <h3>{t('screens.categories.title')}</h3>
       <div className="categories-section">
         <PosButton
           className="add-category-button"
           icon={<IoAddOutline />}
-          label="Nueva categoría"
+          label={t('screens.categories.newCategoryLabel')}
           onClick={handleOpenDialog} />
         <div className="categories-list">
           {

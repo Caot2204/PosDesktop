@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../stylesheets/CotizationPdfDialog.css';
 import { GridLoader } from 'react-spinners';
+import { useTranslation } from 'react-i18next';
 
 
 interface CotizationPdfDialogProps {
@@ -10,6 +11,7 @@ interface CotizationPdfDialogProps {
 }
 
 function CotizationPdfDialog(props: CotizationPdfDialogProps) {
+  const { t } = useTranslation('global');
   const [isGenerating, setIsGenerating] = useState(true);
 
   const verifyPdfExists = async (cotizationId: number) => {
@@ -32,13 +34,13 @@ function CotizationPdfDialog(props: CotizationPdfDialogProps) {
 
   return (
     <div className='cotization-pdf-dialog-container'>
-      <button className='back-button' onClick={() => props.onClose()}>Cerrar</button>
+      <button className='back-button' onClick={() => props.onClose()}>{t('buttons.close')}</button>
       {isGenerating ? (
         <div className="pdf-loading-message">
           <GridLoader
             className='image-loader'
             color="#4C662B" />
-          Generando vista previa...
+          {t('screens.cotizationPdfDialog.generatinPreview')}
         </div>
       ) : (
         <embed

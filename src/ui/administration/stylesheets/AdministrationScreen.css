@@ -57,3 +57,7 @@
   height: 30px;
   font-size: 1em;
 }
+
+.language-select {
+  width: 200px;
+}

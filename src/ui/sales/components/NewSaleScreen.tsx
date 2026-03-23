@@ -17,6 +17,7 @@ import SalesScreen from './SalesScreen';
 import CashClosingScreen from './CashClosingScreen';
 import type UserSession from '../../../data/model/UserSession';
 import CotizationProduct from '../../../data/model/CotizationProduct';
+import { useTranslation } from 'react-i18next';
 
 interface NewSaleScreenProps {
   currentUser: UserSession;
@@ -25,6 +26,7 @@ interface NewSaleScreenProps {
 }
 
 function NewSaleScreen(props: NewSaleScreenProps) {
+  const { t } = useTranslation('global');
   const searchDialogRef = useRef<HTMLDialogElement>(null);
   const payDialogRef = useRef<HTMLDialogElement>(null);
   const codeInputRef = useRef<HTMLInputElement>(null);
@@ -100,13 +102,13 @@ function NewSaleScreen(props: NewSaleScreenProps) {
       totalSale
     )
       .then(() => {
-        showSuccessNotify("Venta realizada");
+        showSuccessNotify(t('screens.newSale.saleSuccess'));
         setOpenDialog(null);
         handleClearScreen();
       })
       .catch((error) => {
         console.log(error);
-        showErrorNotify("Error al realizar la venta");
+        showErrorNotify(t('screens.newSale.errorSale'));
       });
   };
 
@@ -196,7 +198,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
               );
               setProductsOfSale(productsSaleModel.filter((p): p is SaleProductModel => p !== null));
             } catch (error) {
-              showErrorNotify("Error al cargar los productos de la cotización");
+              showErrorNotify(t('screens.newSale.errorLoadProductsCotization'));
             }
           };
           loadProducts();
@@ -226,7 +228,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
           type="text"
           maxLength={100}
           autoFocus
-          placeholder="Ingrese el código del producto..."
+          placeholder={t('screens.newSale.enterCodePlaceHolder')}
           onChange={(e) => setProductCodeInput(e.target.value)}
           onKeyDown={async e => {
             if (e.key === 'Enter') {
@@ -236,7 +238,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
                   handleAddProduct(product);
                 }
               } catch (e) {
-                showErrorNotify("Producto no encontrado");
+                showErrorNotify(t('screens.newSale.productNotFound'));
                 if (codeInputRef.current) {
                   codeInputRef.current.value = "";
                 }
@@ -246,7 +248,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
         <PosButton
           className="search-button"
           icon={<FaSearch />}
-          label="Buscar (F10)"
+          label={t('buttons.searchProduct')}
           onClick={() => setOpenDialog("searchProduct")} />
       </div>
       <div className={openDialog ? "filter-blur" : ""}>
@@ -261,12 +263,12 @@ function NewSaleScreen(props: NewSaleScreenProps) {
         <div className="pay-buttons-container">
           <PosButton
             className="pay-button cancel-button"
-            label="Cancelar (F4)"
+            label={t('screens.newSale.cancelSaleLabel')}
             onClick={() => setOpenDialog("confirmDialog")} />
           <PosButton
             disabled={totalSale === 0}
             className="pay-button"
-            label="Pagar (F1)"
+            label={t('screens.newSale.paySaleLabel')}
             onClick={() => setOpenDialog("paydialog")} />
         </div>
       </div>
@@ -281,11 +283,11 @@ function NewSaleScreen(props: NewSaleScreenProps) {
         <div className="sale-buttons-extra">
           <PosButton
             className="extra-button"
-            label="Ventas del día"
+            label={t('screens.newSale.salesOfDayLabel')}
             onClick={() => setOpenDialog("salesDialog")} />
           <PosButton
             className="extra-button"
-            label="Corte de caja"
+            label={t('screens.newSale.cashClosingLabel')}
             onClick={() => setOpenDialog("cashClosingDialog")} />
         </div>
       </div>
@@ -327,7 +329,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
           onClose={() => setOpenDialog(null)} />
       </dialog>
       <PosConfirmDialog
-        message="¿Quitar los producto de la venta actual?"
+        message={t('screens.newSale.quitProductsMessage')}
         isShowed={openDialog === "confirmDialog"}
         onCancel={() => {
           setOpenDialog(null);

@@ -3,6 +3,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import '../stylesheets/UserItem.css';
 import PosConfirmDialog from '../../common/components/PosConfirmDialog';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface UserItemProps {
   name: string;
@@ -11,6 +12,7 @@ interface UserItemProps {
 }
 
 function UserItem(prop: UserItemProps) {
+  const { t } = useTranslation('global');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const handleConfirmDelete = async () => {
@@ -28,7 +30,7 @@ function UserItem(prop: UserItemProps) {
         </div>
       </div>
       <PosConfirmDialog
-        message="¿Desea eliminar este usuario?"
+        message={t('items.userItem.deleteMessage')}
         isShowed={showConfirmDialog}
         onCancel={() => setShowConfirmDialog(false)}
         onOk={handleConfirmDelete} />

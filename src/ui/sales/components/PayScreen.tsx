@@ -6,6 +6,7 @@ import { FaDollarSign } from "react-icons/fa";
 import PosButton from '../../common/components/PosButton';
 import { formatNumberToCurrentPrice } from '../../utils/FormatUtils';
 import { showErrorNotify } from '../../utils/NotifyUtils';
+import { useTranslation } from 'react-i18next';
 
 interface PayScreenProps {
   isShowed: boolean;
@@ -15,6 +16,7 @@ interface PayScreenProps {
 }
 
 function PayScreen(props: PayScreenProps) {
+  const { t } = useTranslation('global');
   const paymentTypeOptionRef = useRef<HTMLOptionElement>(null);
   const paymentInputRef = useRef<HTMLInputElement>(null);
 
@@ -27,13 +29,13 @@ function PayScreen(props: PayScreenProps) {
       if (payAmount >= props.totalSale) {
         props.onPaySale(paymentType, payAmount, paymentFolio);
       } else {
-        showErrorNotify("El monto pagado debe ser mayor al total de la venta");
+        showErrorNotify(t('screens.paySale.errorAmountMin'));
       }
     } else {
       if (paymentFolio && paymentFolio.length > 1) {
         props.onPaySale(paymentType, payAmount, paymentFolio);
       } else {
-        showErrorNotify("Debe ingresar el folio de la transaccion");
+        showErrorNotify(t('screens.paySale.errorFolioTransaction'));
       }
     }
   };
@@ -56,11 +58,11 @@ function PayScreen(props: PayScreenProps) {
 
   return (
     <div className="payscreen-container">
-      <h1>Cobrar venta</h1>
+      <h1>{t('screens.paySale.title')}</h1>
       <div className="payment-inputs">
         <select onChange={(e) => setPaymentType(e.target.value)}>
-          <option value="Efectivo" ref={paymentTypeOptionRef}>Efectivo</option>
-          <option value="Tarjeta">Tarjeta</option>
+          <option value="Efectivo" ref={paymentTypeOptionRef}>{t('screens.paySale.cashLabel')}</option>
+          <option value="Tarjeta">{t('screens.paySale.cardLabel')}</option>
         </select>
         {
           paymentType === "Tarjeta" ?
@@ -73,7 +75,7 @@ function PayScreen(props: PayScreenProps) {
                 className="payamount-input"
                 type="text"
                 onChange={(e) => setPaymentFolio(e.target.value)}
-                placeholder="Folio de la transacción" />
+                placeholder={t('screens.paySale.folioTransactionLabel')} />
             </div>
             :
             <div className="payamount-input-container">
@@ -85,13 +87,13 @@ function PayScreen(props: PayScreenProps) {
                 type="number"
                 min={0}
                 onChange={(e) => setPayAmount(Number(e.target.value))}
-                placeholder="Ingrese el monto pagado" />
+                placeholder={t('screens.paySale.amountPayLabel')} />
             </div>
         }
       </div>
       <div className="money-container">
         <div className="money-label">
-          <span className="payment-label">Total: </span>
+          <span className="payment-label">{t('screens.paySale.totalLabel')}</span>
           <span className="total-sale-label">{formatNumberToCurrentPrice(props.totalSale)}</span>
         </div>
         {
@@ -99,7 +101,7 @@ function PayScreen(props: PayScreenProps) {
             <></>
             :
             <div className="money-label">
-              <span className="payment-label">Cambio: </span>
+              <span className="payment-label">{t('screens.paySale.cambioLabel')}</span>
               <span className="cambio-label">{formatNumberToCurrentPrice((payAmount - props.totalSale) < 0 ? 0 : (payAmount - props.totalSale))}</span>
             </div>
         }
@@ -108,11 +110,11 @@ function PayScreen(props: PayScreenProps) {
         <PosButton
           className="cancel-button"
           icon={<MdOutlineCancel />}
-          label="Cancelar (F4)"
+          label={t('screens.paySale.cancelPayLabel')}
           onClick={props.onCancel} />
         <PosButton
           disabled={props.totalSale === 0}
-          label={paymentType === "Tarjeta" ? "Registrar pago" : "Pagar"}
+          label={paymentType === "Tarjeta" ? t('screens.paySale.registerPayLabel') : t('screens.paySale.payLabel')}
           icon={<MdOutlineCheck />}
           onClick={handlePayClicked} />
       </div>

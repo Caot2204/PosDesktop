@@ -4,6 +4,7 @@ import { MdErrorOutline } from "react-icons/md";
 import OkCancelButtons from '../../common/components/OkCancelButtons';
 import { showSuccessNotify } from '../../utils/NotifyUtils';
 import { handleErrorMessage } from '../../utils/ErrorUtils';
+import { useTranslation } from 'react-i18next';
 
 interface UserDataProps {
   id?: string,
@@ -15,6 +16,7 @@ interface UserDataProps {
 }
 
 export function UserForm(props: UserDataProps) {
+  const { t } = useTranslation('global');
   const [userId, setUserId] = useState(props.id);
   const [name, setName] = useState(props.name);
   const [password, setPassword] = useState(props.password);
@@ -47,7 +49,7 @@ export function UserForm(props: UserDataProps) {
       if (window.userAPI && typeof window.userAPI.updateUser === 'function') {
         try {
           await window.userAPI.updateUser(userId, name, isAdmin)
-          showSuccessNotify("Usuario actualizado!");
+          showSuccessNotify(t('screens.userForm.userUpdated'));
           clearForm();
           props.onSaveSuccess();
         } catch (error: any) {
@@ -60,12 +62,12 @@ export function UserForm(props: UserDataProps) {
     } else {
       if (window.userAPI && typeof window.userAPI.saveUser === 'function') {
         if (password !== passwordConfirm) {
-          setErrorMessage("Las contraseñas no coinciden");
+          setErrorMessage(t('screens.userForm.passwordUnmatch'));
           return;
         }
         try {
           await window.userAPI.saveUser(name, password, isAdmin);
-          showSuccessNotify("Usuario guardado!");
+          showSuccessNotify(t('screens.userForm.userSaved'));
           clearForm();
           props.onSaveSuccess();
         } catch (error: any) {
@@ -81,7 +83,7 @@ export function UserForm(props: UserDataProps) {
   return (
     <>
       <div className="user-form">
-        <h2>Datos del usuario:</h2>
+        <h2>{t('screens.userForm.title')}</h2>
         {
           errorMessage ?
             <div className="error-message-container">
@@ -91,7 +93,7 @@ export function UserForm(props: UserDataProps) {
             :
             <></>
         }
-        <label>Nombre:</label>
+        <label>{t('screens.userForm.nameLabel')}</label>
         <input 
           type="text" 
           value={name} 
@@ -102,15 +104,15 @@ export function UserForm(props: UserDataProps) {
             <></>
             :
             <>
-              <label>Contraseña:</label>
+              <label>{t('screens.userForm.passwordLabel')}</label>
               <input type="password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
-              <label>Confirme la contraseña:</label>
+              <label>{t('screens.userForm.confirmPasswordLabel')}</label>
               <input type="password" value={passwordConfirm} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPasswordConfirm(e.target.value)} />
             </>
         }
         <div className="checkbox-container">
           <input id="isAdminCheckBox" type="checkbox" checked={isAdmin} onChange={(e: any) => setIsAdmin(e.target.checked)} />
-          <label htmlFor="isAdminCheckBox">¿Es administrador?</label>
+          <label htmlFor="isAdminCheckBox">{t('screens.userForm.isAdminLabel')}</label>
         </div>
       </div>
       <OkCancelButtons

@@ -6,6 +6,7 @@ import { handleErrorMessage } from '../../../utils/ErrorUtils';
 import type Category from '../../../../data/model/Category';
 import CategorySelect from '../../categories/components/CategorySelect';
 import { showSuccessNotify } from '../../../utils/NotifyUtils';
+import { useTranslation } from 'react-i18next';
 
 interface ProductDataProps {
   code?: string;
@@ -21,6 +22,7 @@ interface ProductDataProps {
 }
 
 function ProductForm(props: ProductDataProps) {
+  const { t } = useTranslation('global');
   const [productCode, setProductCode] = useState(props.code ? props.code : "");
   const [productName, setProductName] = useState(props.name ? props.name : "");
   const [unitPrice, setUnitPrice] = useState(props.unitPrice ? String(props.unitPrice) : "0");
@@ -56,7 +58,7 @@ function ProductForm(props: ProductDataProps) {
           category,
           productCode !== props.code ? props.code : undefined
         );
-        showSuccessNotify("Producto actualizado!");
+        showSuccessNotify(t('screens.productForm.productUpdated'));
         clearForm();
         props.onSaveSuccess();
       } catch (error) {
@@ -66,7 +68,7 @@ function ProductForm(props: ProductDataProps) {
     } else {
       window.productAPI?.saveProduct(productCode, productName, Number(unitPrice), Number(stock), isInfinityStock, category)
         .then(() => {
-          showSuccessNotify("Producto guardado!");
+          showSuccessNotify(t('screens.productForm.productSaved'));
           clearForm();
           props.onSaveSuccess();
         })
@@ -88,7 +90,7 @@ function ProductForm(props: ProductDataProps) {
 
   return (
     <div className="product-form">
-      <h2>Datos del producto:</h2>
+      <h2>{t('screens.productForm.title')}</h2>
       {
         errorMessage
           ?
@@ -99,30 +101,30 @@ function ProductForm(props: ProductDataProps) {
           :
           <></>
       }
-      <label>Código del producto:</label>
+      <label>{t('screens.productForm.productCodeLabel')}</label>
       <input 
         disabled={props.forEdit} 
         type="text" 
         value={productCode}
         maxLength={50} 
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductCode(e.target.value)} />
-      <label>Nombre:</label>
+      <label>{t('screens.productForm.nameLabel')}</label>
       <input 
         type="text" 
         value={productName}
         maxLength={100} 
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductName(e.target.value)} />
-      <label>Precio unitario:</label>
+      <label>{t('screens.productForm.unitPriceLabel')}</label>
       <input 
         type="number" 
         value={unitPrice} 
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUnitPrice(e.target.value)} />
-      <label>Stock:</label>
+      <label>{t('screens.productForm.stockLabel')}</label>
       <input 
         type="number" 
         value={stock} 
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStock(e.target.value)} />
-      <label>¿Stock infinito?</label>
+      <label>{t('screens.productForm.infinityStockLabel')}</label>
       <input 
         type="checkbox" 
         checked={isInfinityStock} 

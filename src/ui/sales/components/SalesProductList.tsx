@@ -6,6 +6,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { formatNumberToCurrentPrice } from '../../utils/FormatUtils';
 import type SaleProductModel from '../model/SalesProductModel';
 import { showErrorNotify } from '../../utils/NotifyUtils';
+import { useTranslation } from 'react-i18next';
 
 interface SalesProductItemProps {
   product: SaleProductModel;
@@ -21,6 +22,7 @@ interface SalesProductListProps {
 }
 
 function SalesProductItem(props: SalesProductItemProps) {
+  const { t } = useTranslation('global');
   const [unitsToSale, setUnitsToSale] = useState(String(props.product.unitsToSale));
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function SalesProductItem(props: SalesProductItemProps) {
             if (props.product.unitsToSale > 1) {
               props.onModifyProductUnits(props.product.code, (props.product.unitsToSale - 1));
             } else {
-              showErrorNotify("Las unidades vendidadas no pueden ser 0");
+              showErrorNotify(t('screens.salesProductList.errorUnitsLower0'));
             }
           }} />
           <input
@@ -52,13 +54,13 @@ function SalesProductItem(props: SalesProductItemProps) {
               if (e.key === 'Enter') {
                 const units = Number(unitsToSale);
                 if (units > 9999) {
-                  showErrorNotify("Las unidades vendidas no pueden ser mas de 9999");
+                  showErrorNotify(t('screens.salesProductList.errorUnitsHigher9999'));
                   setUnitsToSale(String(props.product.unitsToSale));
                 } else {
                   if (units >= 1 && (props.product.stock === 'infinity' || typeof props.product.stock === 'number' && units <= props.product.stock)) {
                     props.onModifyProductUnits(props.product.code, units);
                   } else {
-                    showErrorNotify("Las unidades vendidas no pueden ser 0 o mayor al stock");
+                    showErrorNotify(t('screens.salesProductList.errorUnits'));
                     setUnitsToSale(String(props.product.unitsToSale));
                   }
                 }
@@ -66,7 +68,7 @@ function SalesProductItem(props: SalesProductItemProps) {
             }} />
           <MdOutlineAdd className="units-icon" onClick={() => {
             if (props.product.unitsToSale + 1 > 9999) {
-              showErrorNotify("Las unidades vendidas no pueden ser mas de 9999");
+              showErrorNotify(t('screens.salesProductList.errorUnitsHigher9999'));
               setUnitsToSale(String(props.product.unitsToSale));
             } else {
               if (props.product.stock === 'infinity' || (typeof props.product.stock === 'number' && ((props.product.unitsToSale + 1) <= props.product.stock))) {
@@ -85,6 +87,7 @@ function SalesProductItem(props: SalesProductItemProps) {
 }
 
 function SalesProductList(props: SalesProductListProps) {
+  const { t } = useTranslation('global');
   const lastProductRef = useRef<HTMLTableRowElement>(null);
 
   useEffect(() => {
@@ -98,11 +101,11 @@ function SalesProductList(props: SalesProductListProps) {
       <table className="sales-product-list">
         <thead>
           <tr>
-            <th scope="col">Código</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Precio</th>
-            <th scope="col">Unidades a vender</th>
-            <th scope="col">Subtotal</th>
+            <th scope="col">{t('screens.salesProductList.codeLabel')}</th>
+            <th scope="col">{t('screens.salesProductList.nameLabel')}</th>
+            <th scope="col">{t('screens.salesProductList.priceLabel')}</th>
+            <th scope="col">{t('screens.salesProductList.unitsSoldLabel')}</th>
+            <th scope="col">{t('screens.salesProductList.subtotalLabel')}</th>
           </tr>
         </thead>
         <tbody>

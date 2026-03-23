@@ -3,12 +3,14 @@ import { useState } from 'react';
 import PosButton from '../../common/components/PosButton';
 import { ToastContainer } from 'react-toastify';
 import { showErrorNotify } from '../../utils/NotifyUtils';
+import { useTranslation } from 'react-i18next';
 
 interface FirstUseScreenProps {
   onSuccessfullyCreateAccount: () => void;
 }
 
 function FirstUseScreen(props: FirstUseScreenProps) {
+  const { t } = useTranslation('global');
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -18,23 +20,23 @@ function FirstUseScreen(props: FirstUseScreenProps) {
       await window.userAPI?.saveUser(userName, password, true);
       props.onSuccessfullyCreateAccount();
     } else {
-      showErrorNotify("Las contraseñas no coinciden");
+      showErrorNotify(t('screens.firstUse.errorPasswords'));
     }
   };
 
   return (
     <div className="first-use-screen-container">
       <div className="form-container">
-        <h2>Cree su primer cuenta de administrador</h2>
-        <label><strong>Nombre de usuario:</strong></label>
+        <h2>{t('screens.firstUse.title')}</h2>
+        <label><strong>{t('screens.firstUse.userNameLabel')}</strong></label>
         <input
           type="text"
           onChange={(e) => setUserName(e.target.value)} />
-        <label><strong>Contraseña:</strong></label>
+        <label><strong>{t('screens.firstUse.passwordLabel')}</strong></label>
         <input
           type="password"
           onChange={(e) => setPassword(e.target.value)} />
-        <label><strong>Confirme la contraseña:</strong></label>
+        <label><strong>{t('screens.firstUse.confirmPasswordLabel')}</strong></label>
         <input
           type="password"
           onChange={(e) => setPasswordConfirm(e.target.value)} />
@@ -44,7 +46,7 @@ function FirstUseScreen(props: FirstUseScreenProps) {
           onClick={handleCreateFirstUser} />
       </div>
       <div className="data-software">
-        <p>PosDesktop - Punto de venta</p>
+        <p>{t('aboutSoftware.name')}</p>
       </div>
       <ToastContainer />
     </div>

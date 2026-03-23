@@ -1,4 +1,5 @@
 import '../stylesheets/SaleItem.css';
+import { useTranslation } from 'react-i18next';
 
 interface SaleItemProps { 
   saleId: number;
@@ -6,9 +7,10 @@ interface SaleItemProps {
 }
 
 function SaleItem(props: SaleItemProps) {
+  const { t } = useTranslation('global');
   return (
     <div className="sale-item-container" onClick={props.onSaleClicked}>
-      <span>Folio: {props.saleId}</span>
+      <span>{t('items.saleItem.folioLabel', { saleId: props.saleId })}</span>
     </div>
   );
 }
