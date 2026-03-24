@@ -31,11 +31,7 @@ function ProductList(props: ProductListProps) {
     if (props.searchFilter.trim() !== "") {
       products = products.filter(product => product.name.toLowerCase().includes(props.searchFilter.toLowerCase()) || product.code.toLowerCase().includes(props.searchFilter.toLowerCase()));
     }
-    if (props.categoryFilter === allCategoryLabel) {
-      setProductsToShow(props.products);
-    } else {
-      setProductsToShow(products);
-    }
+    setProductsToShow(products);
   }, [props.products, props.categoryFilter, props.searchFilter]);
 
   return (
@@ -48,7 +44,7 @@ function ProductList(props: ProductListProps) {
             name={product.name}
             unitPrice={product.unitPrice}
             stock={product.isInfinityStock ? t('screens.inventory.infinityLabel') : String(product.stock)}
-            category={product.category != allCategoryLabel ? product.category : allCategoryLabel}
+            category={product.category}
             minimunStock={props.minimumStock}
             onUpdate={() => props.onEditProduct(product)}
             onDelete={() => handleDeleteProduct(product.code)} />

@@ -14,6 +14,7 @@ interface CategoryScreenProps {
 
 function CategoryScreen(props: CategoryScreenProps) {
   const { t } = useTranslation('global');
+  const allCategoryLabel = t('screens.inventory.allCategoryLabel');
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryForForm, setCategoryForForm] = useState<Category | null>(null);
@@ -23,6 +24,7 @@ function CategoryScreen(props: CategoryScreenProps) {
   const fetchCategories = async () => {
     const categoriesFetched = await window.categoryAPI?.getAllCategories();
     if (categoriesFetched) {
+      categoriesFetched.find(category => category.name === "Todos").name = allCategoryLabel;
       setCategories(categoriesFetched);
       setLoadingData(false);
     } else {

@@ -47,6 +47,7 @@ function ProductSearchedRow(props: ProductSearchedRowProps) {
 
 function SearchProductScreen(props: SearchProductProps) {
   const { t } = useTranslation('global');
+  const allCategoryLabel = t('screens.inventory.allCategoryLabel')
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchFilter, setSearchFilter] = useState("");
   const [productsToShow, setProductsToShow] = useState<Product[]>([]);
@@ -133,7 +134,7 @@ function SearchProductScreen(props: SearchProductProps) {
                     key={product.code}
                     code={product.code}
                     name={product.name}
-                    category={product.category}
+                    category={product.category == "Todos" ? allCategoryLabel : product.category}
                     unitPrice={product.unitPrice}
                     isSelected={index === selectedIndex}
                     onProductClicked={() => props.onProductClicked(product)} />

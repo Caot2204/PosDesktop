@@ -19,6 +19,7 @@ interface ProductDataProps {
 
 function ProductItem(props: ProductDataProps) {
   const { t } = useTranslation('global');
+  const allCategoryLabel = t("screens.inventory.allCategoryLabel");
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const handleConfirmDelete = () => {
@@ -47,7 +48,7 @@ function ProductItem(props: ProductDataProps) {
             <span className="label-span">{t('items.productItem.stockLabel')}</span>&emsp;<span className={ Number(props.stock) <= props.minimunStock ? "low-stock" : "" }>{props.stock}</span>
           </li>
           <li>
-            <span className="label-span">{t('items.productItem.categoryLabel')}</span>&emsp;{props.category}
+            <span className="label-span">{t('items.productItem.categoryLabel')}</span>&emsp;{props.category == "Todos" ? allCategoryLabel : props.category}
           </li>
         </ul>
       </div>
