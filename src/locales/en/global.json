@@ -26,7 +26,14 @@
       "posLanguageLabel": "Language:",
       "saveConfigLabel": "Save configuration",
       "restartAppMessage": "The application must be restarted to apply the language changes in the entire point of sale",
-      "selectLanguageLabel": "--Select a language--"
+      "selectLanguageLabel": "--Select a language--",
+      "backupTitle": "Database backup",
+      "createBackupLabel": "Create backup",
+      "backupCanceledMessage": "Backup canceled by user",
+      "backupSuccessMessage": "Backup successfully created at path: {{path}}",
+      "backupErrorMessage": "Error creating backup, try again",
+      "exportWindowTitle": "Create database backup",
+      "exportButtonWindowLabel": "Save backup"
     },
     "cashClosingList": {
       "title": "Cash closings",

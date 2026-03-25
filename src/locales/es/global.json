@@ -26,7 +26,14 @@
       "posLanguageLabel": "Idioma:",
       "saveConfigLabel": "Guardar configuración",
       "restartAppMessage": "Se requiere reiniciar la aplicación para aplicar los cambios de idioma en todo el punto de venta",
-      "selectLanguageLabel": "--Seleccione un idioma--"
+      "selectLanguageLabel": "--Seleccione un idioma--",
+      "backupTitle": "Respaldo de la base de datos",
+      "createBackupLabel": "Crear respaldo",
+      "backupCanceledMessage": "Reslpaldo cancelado por el usuario",
+      "backupSuccessMessage": "Respaldo creado con éxito en la ruta: {{path}}",
+      "backupErrorMessage": "Error al crear el respaldo, inténtelo de nuevo",
+      "exportWindowTitle": "Crear respaldo de la base de datos",
+      "exportButtonWindowLabel": "Guardar respaldo"
     },
     "cashClosingList": {
       "title": "Cortes de caja",

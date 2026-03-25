@@ -67,7 +67,10 @@ contextBridge.exposeInMainWorld('posConfigAPI',
     getPosConfig: () => ipcRenderer.invoke('posConfigApi:getPosConfig'),
     savePosConfig: (bussinessName: string, bussinessLogoUrl: string, minimunStock: number, posLanguage: string) => ipcRenderer.invoke('posConfigApi:savePosConfig', bussinessName, bussinessLogoUrl, minimunStock, posLanguage),
     selectNewBussinessLogo: () => ipcRenderer.invoke('posConfigApi:selectNewBussinessLogo'),
-    getBussinessLogoDataUrl: (logoPath: string) => ipcRenderer.invoke('posConfigApi:getBussinessLogoDataUrl', logoPath)
+    getBussinessLogoDataUrl: (logoPath: string) => ipcRenderer.invoke('posConfigApi:getBussinessLogoDataUrl', logoPath),
+    createDbBackup: () => ipcRenderer.invoke('posConfigApi:createDatabaseBackup'),
+    loadDbBackup: () => ipcRenderer.invoke('posConfigApi:loadDatabaseBackup'),
+    restartApp: () => ipcRenderer.invoke('posConfigApi:restartApp')
   }
 );
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import PosButton from '../../common/components/PosButton';
 import CashClosingsListScreen from './CashClosingsListScreen';
 import { MdOutlineCancel } from 'react-icons/md';
-import { showSuccessNotify } from '../../utils/NotifyUtils';
+import { showErrorNotify, showSuccessNotify } from '../../utils/NotifyUtils';
 import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import PosConfirmDialog from '../../../ui/common/components/PosConfirmDialog';
@@ -107,6 +107,33 @@ function AdministrationScreen() {
           <option value="es" selected={posLanguage === "es"}>Español</option>
           <option value="en" selected={posLanguage === "en"}>English</option>
         </select>
+      </div>
+      <div className={openDialog ? "filter-blur" : ""}>
+        <h3>{t('screens.administration.backupTitle')}</h3>
+        <PosButton
+          label={t('screens.administration.createBackupLabel')}
+          onClick={async () => {
+            const result = await window.posConfigAPI?.createDbBackup();
+            if (result?.canceled) {
+              showErrorNotify(t('screens.administration.backupCanceledMessage'));
+              return;
+            }
+
+            if (result?.success) {
+              showSuccessNotify(t('screens.administration.backupSuccessMessage', { path: result.path}))
+            } else {
+              showErrorNotify(t('screens.administration.backupErrorMessage'));
+            }
+          }} />
+        <PosButton
+          label={t('screens.administration.loadBackupLabel')}
+          onClick={async () => {
+            const result = await window.posConfigAPI?.loadDbBackup();
+            if (result?.canceled) {
+              showErrorNotify(t('screens.administration.loadBackupCanceledMessage'));
+              return;
+            }
+          }} />
       </div>
       <PosButton
         className={openDialog ? "filter-blur" : ""}

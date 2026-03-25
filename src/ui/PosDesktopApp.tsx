@@ -69,6 +69,9 @@ declare global {
       getPosConfig: () => Promise<PosConfig>;
       selectNewBussinessLogo: () => Promise<string | undefined>;
       getBussinessLogoDataUrl: (logoPath: string) => Promise<string | undefined>;
+      createDbBackup: () => Promise<{ success: boolean, canceled?: boolean, path?: string }>;
+      loadDbBackup: () => Promise<{ success: boolean, canceled?: boolean }>;
+      restartApp: () => Promise<void>;
     };
     egressAPI?: {
       getAllEgresses: () => Promise<Egress[]>;

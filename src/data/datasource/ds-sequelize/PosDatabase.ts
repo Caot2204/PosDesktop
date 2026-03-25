@@ -1,5 +1,7 @@
 import { DataTypes, Sequelize } from "sequelize";
 import sqlite3 from "sqlite3";
+import { existsSync } from 'fs';
+import { copyFile, unlink } from 'fs/promises'
 import UserDao from "./UserDao";
 import CategoryDao from "./CategoryDao";
 import ProductDao from "./ProductDao";
@@ -11,6 +13,7 @@ import CotizationDao from "./CotizationDao";
 class PosDatabase {
 
     private sequelize: Sequelize;
+    private dbPath: string;
     private UserSequelize: any;
     private CategorySequelize: any;
     private ProductSequelize: any;
@@ -30,6 +33,7 @@ class PosDatabase {
     private cotizationDao: CotizationDao | null = null;
 
     constructor(dbPath: string | 'test') {
+        this.dbPath = dbPath === 'test' ? ':memory:' : dbPath;
         this.sequelize = new Sequelize({
             dialect: 'sqlite',
             dialectModule: sqlite3,
@@ -360,6 +364,77 @@ class PosDatabase {
         const categories = await this.CategorySequelize.findAll();
         if (categories && categories.length === 0) {
             await this.CategorySequelize.create({ name: "Todos" });
+        }
+    }
+
+    async createBackup(path: string) {
+        try {
+            if (existsSync(path)) {
+                await unlink(path);
+            }
+            await this.sequelize.query(`VACUUM INTO '${path}'`);
+            return {
+                success: true,
+                path: path
+            };
+        } catch (error) {
+            console.error('Error durante el backup:', error);
+            return {
+                success: false
+            };
+        }
+    }
+
+    private async isEschemaValid(dbPath: string): Promise<boolean> {
+        const tempSequelize = new Sequelize({
+            dialect: 'sqlite',
+            storage: dbPath,
+            logging: false
+        });
+        try {
+            const queryInterface = tempSequelize.getQueryInterface();
+            const tablas = await queryInterface.showAllTables();
+
+            if (!tablas.includes('Usuarios') || !tablas.includes('Configuracion')) {
+                console.error("Esquema inválido: Faltan tablas críticas.");
+                return false;
+            }
+
+            
+
+            return true;
+        } catch (error) {
+            console.error("No es un archivo SQLite válido o está corrupto.");
+            return false;
+        } finally {
+            await tempSequelize.close();
+        }
+    }
+
+    async loadBackup(backupPath: string) {
+        const currentDbPath = this.dbPath;
+        if (currentDbPath != ':memory:') {
+            try {
+                await this.sequelize.close();
+
+                const tempPath = `${currentDbPath}.tmp`;
+                if (existsSync(currentDbPath)) {
+                    await copyFile(currentDbPath, tempPath);
+                }
+
+                await copyFile(backupPath, currentDbPath);
+
+                if (existsSync(tempPath)) await unlink(tempPath);
+                if (existsSync(`${currentDbPath}-wal`)) await unlink(`${currentDbPath}-wal`);
+                if (existsSync(`${currentDbPath}-shm`)) await unlink(`${currentDbPath}-shm`);
+
+                return { success: true };
+            } catch (error) {
+                console.error('Error durante la carga del backup:', error);
+                return {
+                    success: false
+                }
+            }
         }
     }
 }

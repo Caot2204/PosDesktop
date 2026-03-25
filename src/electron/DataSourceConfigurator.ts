@@ -77,7 +77,12 @@ class DataSourceConfigurator {
         console.log('Database initialized');
         if (this.posDatabase) {
             const posConfigRepository = new PosConfigRepository(posConfigPath);
-            const posConfigDecorator = new PosConfigIpcDecorator(this.ipcMain, posConfigRepository);
+            const posConfigDecorator = new PosConfigIpcDecorator(
+                this.ipcMain, 
+                posConfigRepository, 
+                this.posDatabase.createBackup.bind(this.posDatabase),
+                this.posDatabase.loadBackup.bind(this.posDatabase)
+            );
             await posConfigDecorator.configure();
 
             const categoryRepository = new CategoryRepository(this.posDatabase.getCategoryDao());
