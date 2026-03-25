@@ -61,3 +61,27 @@
 .language-select {
   width: 200px;
 }
+
+.backup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.backup-buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.load-backup-button {
+  background-color: aliceblue;
+  color: black;
+}
+
+.save-config-container {
+  display: flex;
+  justify-content: end;
+}

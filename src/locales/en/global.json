@@ -29,11 +29,18 @@
       "selectLanguageLabel": "--Select a language--",
       "backupTitle": "Database backup",
       "createBackupLabel": "Create backup",
+      "loadBackupLabel": "Load backup",
       "backupCanceledMessage": "Backup canceled by user",
       "backupSuccessMessage": "Backup successfully created at path: {{path}}",
       "backupErrorMessage": "Error creating backup, try again",
       "exportWindowTitle": "Create database backup",
-      "exportButtonWindowLabel": "Save backup"
+      "exportButtonWindowLabel": "Save backup",
+      "loadBackupWindowTitle": "Load database backup",
+      "loadBackupButtonWindowLabel": "Load backup",
+      "loadBackupErrorFileMessage": "The selected file is not a valid backup",
+      "loadBackupErrorMessage": "Error loading backup, please try again",
+      "loadBackupCanceledMessage": "Backup loading canceled by user",
+      "loadBackupSuccessMessage": "Backup loaded successfully, the application will restart to apply the changes"
     },
     "cashClosingList": {
       "title": "Cash closings",

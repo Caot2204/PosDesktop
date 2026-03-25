@@ -12,7 +12,7 @@ const defaultLogo = '../../assets/react.svg';
 
 function AdministrationScreen() {
   const { t, i18n } = useTranslation('global');
-  const [openDialog, setOpenDialog] = useState<'cashClosingDialog' | 'restartAppDialog' | null>(null);
+  const [openDialog, setOpenDialog] = useState<'cashClosingDialog' | 'restartAppDialog' | 'restartAppAfterLoadBackupDialog' | null>(null);
 
   const [bussinessName, setBussinessName] = useState('');
   const [bussinessLogoUrl, setBussinessLogoUrl] = useState<string | undefined>('../icons/icon.png');
@@ -108,37 +108,51 @@ function AdministrationScreen() {
           <option value="en" selected={posLanguage === "en"}>English</option>
         </select>
       </div>
-      <div className={openDialog ? "filter-blur" : ""}>
+      <div className={openDialog ? "backup-container filter-blur" : "backup-container"}>
         <h3>{t('screens.administration.backupTitle')}</h3>
-        <PosButton
-          label={t('screens.administration.createBackupLabel')}
-          onClick={async () => {
-            const result = await window.posConfigAPI?.createDbBackup();
-            if (result?.canceled) {
-              showErrorNotify(t('screens.administration.backupCanceledMessage'));
-              return;
-            }
+        <div className='backup-buttons-container'>
+          <PosButton
+            label={t('screens.administration.createBackupLabel')}
+            onClick={async () => {
+              const result = await window.posConfigAPI?.createDbBackup();
+              if (result?.canceled) {
+                showErrorNotify(t('screens.administration.backupCanceledMessage'));
+                return;
+              }
 
-            if (result?.success) {
-              showSuccessNotify(t('screens.administration.backupSuccessMessage', { path: result.path}))
-            } else {
-              showErrorNotify(t('screens.administration.backupErrorMessage'));
-            }
-          }} />
-        <PosButton
-          label={t('screens.administration.loadBackupLabel')}
-          onClick={async () => {
-            const result = await window.posConfigAPI?.loadDbBackup();
-            if (result?.canceled) {
-              showErrorNotify(t('screens.administration.loadBackupCanceledMessage'));
-              return;
-            }
-          }} />
+              if (result?.success) {
+                showSuccessNotify(t('screens.administration.backupSuccessMessage', { path: result.path }))
+              } else {
+                showErrorNotify(t('screens.administration.backupErrorMessage'));
+              }
+            }} />
+          <PosButton
+            className='load-backup-button'
+            label={t('screens.administration.loadBackupLabel')}
+            onClick={async () => {
+              const result = await window.posConfigAPI?.loadDbBackup();
+              if (result?.canceled) {
+                showErrorNotify(t('screens.administration.loadBackupCanceledMessage'));
+                return;
+              }
+              if (result?.errorFile) {
+                showErrorNotify(t('screens.administration.loadBackupErrorFileMessage'));
+                return;
+              }
+              if (result?.success) {
+                setOpenDialog("restartAppAfterLoadBackupDialog");
+              } else {
+                showErrorNotify(t('screens.administration.loadBackupErrorMessage'));
+              }
+            }} />
+        </div>
       </div>
-      <PosButton
+      <div className={openDialog ? 'save-config-container filter-blur' : 'save-config-container'}>
+        <PosButton
         className={openDialog ? "filter-blur" : ""}
         label={t('screens.administration.saveConfigLabel')}
         onClick={handleSaveConfig} />
+      </div>
       <dialog className="pos-dialog" open={openDialog === "cashClosingDialog"}>
         <div className="header-dialog">
           <MdOutlineCancel className="close-dialog-button" onClick={() => {
@@ -156,6 +170,15 @@ function AdministrationScreen() {
         onOk={() => {
           handleSaveConfig();
           setOpenDialog(null);
+        }} />
+      <PosConfirmDialog
+        message={t('screens.administration.loadBackupSuccessMessage')}
+        isShowed={openDialog === "restartAppAfterLoadBackupDialog"}
+        onCancel={() => setOpenDialog(null)}
+        notShowCancelButton={true}
+        onOk={() => {
+          setOpenDialog(null);
+          window.posConfigAPI?.restartApp();
         }} />
       <ToastContainer />
     </div>

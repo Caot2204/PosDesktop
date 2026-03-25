@@ -34,24 +34,31 @@ class PosDatabase {
 
     constructor(dbPath: string | 'test') {
         this.dbPath = dbPath === 'test' ? ':memory:' : dbPath;
-        this.sequelize = new Sequelize({
+        this.sequelize = this.buildSequelize();
+    }
+
+    private buildSequelize() {
+        return new Sequelize({
             dialect: 'sqlite',
             dialectModule: sqlite3,
-            storage: dbPath === 'test' ? ':memory:' : dbPath,
+            storage: this.dbPath,
         });
     }
 
     async close() {
-        await this.sequelize.close();
+        if (this.sequelize) {
+            await this.sequelize.close();
+        }
     }
 
     async initialize() {
+        this.sequelize = this.buildSequelize();
         this.defineModels();
         await this.sequelize.sync();
         try {
             await this.sequelize.authenticate();
             console.log('Connection has been established successfully.');
-            this.insertDefaultData();
+            await this.insertDefaultData();
         } catch (error) {
             console.log('Unable to connect to the database:', error);
             throw new Error("Error al conectar a la base de datos");
@@ -395,13 +402,15 @@ class PosDatabase {
             const queryInterface = tempSequelize.getQueryInterface();
             const tablas = await queryInterface.showAllTables();
 
-            if (!tablas.includes('Usuarios') || !tablas.includes('Configuracion')) {
+            if (!tablas.includes('users') ||
+                !tablas.includes('categories') ||
+                !tablas.includes('products') ||
+                !tablas.includes('sales') ||
+                !tablas.includes('sales_products')
+            ) {
                 console.error("Esquema inválido: Faltan tablas críticas.");
                 return false;
             }
-
-            
-
             return true;
         } catch (error) {
             console.error("No es un archivo SQLite válido o está corrupto.");
@@ -413,27 +422,44 @@ class PosDatabase {
 
     async loadBackup(backupPath: string) {
         const currentDbPath = this.dbPath;
-        if (currentDbPath != ':memory:') {
+        const isValidBackup = await this.isEschemaValid(backupPath);
+
+        if (!isValidBackup || currentDbPath === ':memory:') {
+            return {
+                success: false,
+                errorFile: true
+            }
+        }
+
+        const tempPath = `${currentDbPath}.tmp`;
+
+        try {
+            await this.sequelize.close();
+
+            if (existsSync(currentDbPath)) {
+                await copyFile(currentDbPath, tempPath);
+            }
+
+            await copyFile(backupPath, currentDbPath);
+
+            if (existsSync(tempPath)) await unlink(tempPath);
+            if (existsSync(`${currentDbPath}-wal`)) await unlink(`${currentDbPath}-wal`);
+            if (existsSync(`${currentDbPath}-shm`)) await unlink(`${currentDbPath}-shm`);
+
+            await this.initialize();
+            return { success: true };
+        } catch (error) {
+            console.error('Error durante la carga del backup:', error);
             try {
-                await this.sequelize.close();
-
-                const tempPath = `${currentDbPath}.tmp`;
-                if (existsSync(currentDbPath)) {
-                    await copyFile(currentDbPath, tempPath);
+                if (existsSync(tempPath)) {
+                    await copyFile(tempPath, currentDbPath);
+                    await this.initialize();
                 }
-
-                await copyFile(backupPath, currentDbPath);
-
-                if (existsSync(tempPath)) await unlink(tempPath);
-                if (existsSync(`${currentDbPath}-wal`)) await unlink(`${currentDbPath}-wal`);
-                if (existsSync(`${currentDbPath}-shm`)) await unlink(`${currentDbPath}-shm`);
-
-                return { success: true };
-            } catch (error) {
-                console.error('Error durante la carga del backup:', error);
-                return {
-                    success: false
-                }
+            } catch (rollbackError) {
+                console.error('Error al restaurar el backup temporal:', rollbackError);
+            }
+            return {
+                success: false
             }
         }
     }

@@ -29,11 +29,18 @@
       "selectLanguageLabel": "--Seleccione un idioma--",
       "backupTitle": "Respaldo de la base de datos",
       "createBackupLabel": "Crear respaldo",
+      "loadBackupLabel": "Cargar respaldo",
       "backupCanceledMessage": "Reslpaldo cancelado por el usuario",
       "backupSuccessMessage": "Respaldo creado con éxito en la ruta: {{path}}",
       "backupErrorMessage": "Error al crear el respaldo, inténtelo de nuevo",
       "exportWindowTitle": "Crear respaldo de la base de datos",
-      "exportButtonWindowLabel": "Guardar respaldo"
+      "exportButtonWindowLabel": "Guardar respaldo",
+      "loadBackupWindowTitle": "Cargar respaldo de la base de datos",
+      "loadBackupButtonWindowLabel": "Cargar respaldo",
+      "loadBackupErrorFileMessage": "El archivo seleccionado no es un respaldo válido",
+      "loadBackupErrorMessage": "Error al cargar el respaldo, inténtelo de nuevo",
+      "loadBackupCanceledMessage": "Carga de respaldo cancelada por el usuario",
+      "loadBackupSuccessMessage": "Respaldo cargado con éxito, la aplicación se reiniciará para aplicar los cambios"
     },
     "cashClosingList": {
       "title": "Cortes de caja",
