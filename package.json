@@ -18,6 +18,12 @@
     "test": "jest --runInBand",
     "test:integration": "jest --runInBand --testPathPattern=\\/test\\/integration\\/"
   },
+  "electronRebuild": {
+    "nativeModules": [
+      "sqlite3",
+      "bcryptjs"
+    ]
+  },
   "keywords": [],
   "author": {
     "name": "Caot2204",
