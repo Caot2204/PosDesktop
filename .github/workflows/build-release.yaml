@@ -1,0 +1,61 @@
+name: Build and Release Multi-Platform
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ windows-latest, ubuntu-latest, macos-latest ]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Make executables
+        run: npm run make
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-builds
+          path: out/make/**/*
+          if-no-files-found: warn
+
+      - name: Upload to Release (Windows)
+        if: startsWith(github.ref, 'refs/tags/') && runner.os == 'Windows'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: out/make/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload to Release (Linux)
+        if: startsWith(github.ref, 'refs/tags/') && runner.os == 'Linux'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: out/make/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload to Release (macOS)
+        if: startsWith(github.ref, 'refs/tags/') && runner.os == 'macOS'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: out/make/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
