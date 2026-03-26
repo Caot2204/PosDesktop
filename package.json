@@ -35,13 +35,17 @@
       "src/icons/**/*"
     ],
     "icon": "./src/icons/icon.ico",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Caot2204",
+        "repo": "PosDesktop"
+      }
+    ],
     "win": {
       "icon": "./src/icons/icon.ico",
       "target": [
         "nsis"
-      ],
-      "publish": [
-        "github"
       ]
     },
     "nsis": {
@@ -54,11 +58,7 @@
     "linux": {
       "icon": "./src/icons",
       "target": [
-        "AppImage",
-        "deb"
-      ],
-      "publish": [
-        "github"
+        "AppImage"
       ]
     }
   },
