@@ -10,13 +10,50 @@
   },
   "scripts": {
     "start": "electron-forge start",
-    "package": "npm run rebuild && electron-forge package",
-    "make": "npm run rebuild && electron-forge make",
-    "publish": "electron-forge publish",
+    "package": "npm run rebuild && electron-builder build",
+    "make": "npm run rebuild && electron-builder build",
+    "publish": "electron-builder build --win --linux -p always",
     "lint": "eslint --ext .ts,.tsx .",
     "rebuild": "electron-rebuild -f",
     "test": "jest --runInBand",
     "test:integration": "jest --runInBand --testPathPattern=\\/test\\/integration\\/"
+  },
+  "build": {
+    "appId": "caot2204.posdesktop",
+    "productName": "PosDesktop",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      ".webpack/**/*",
+      "node_modules/**/*",
+      "package.json",
+      "src/icons/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "publish": [
+        "github"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./src/icons/icon.ico",
+      "uninstallerIcon": "./src/icons/icon.ico",
+      "shortcutName": "PosDesktop"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "publish": [
+        "github"
+      ]
+    }
   },
   "keywords": [],
   "author": {
@@ -49,6 +86,7 @@
     "css-loader": "6.11.0",
     "dependencies-tree": "2.0.0",
     "electron": "37.2.6",
+    "electron-builder": "25.1.8",
     "electron-forge-plugin-dependencies": "1.0.0",
     "eslint": "8.57.1",
     "eslint-plugin-import": "2.32.0",
@@ -63,7 +101,7 @@
   },
   "dependencies": {
     "bcryptjs": "3.0.2",
-    "electron-squirrel-startup": "1.0.1",
+    "electron-updater": "6.3.9",
     "i18next": "^25.8.18",
     "i18next-browser-languagedetector": "^8.2.1",
     "pdfkit": "^0.17.2",
@@ -78,7 +116,6 @@
     "sequelize": "6.37.7",
     "sqlite3": "5.1.7",
     "umzug": "3.8.2",
-    "update-electron-app": "3.1.1",
     "uuid": "11.1.0"
   }
 }
