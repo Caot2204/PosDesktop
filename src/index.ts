@@ -30,7 +30,11 @@ const createWindow = (): void => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  if (isDev()) {
+    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  } else {
+    mainWindow.loadFile(path.join(__dirname, '..', 'renderer', 'main_window', 'index.html'));
+  }
 
   Menu.setApplicationMenu(null);
   // Open the DevTools.

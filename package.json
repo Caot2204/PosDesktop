@@ -10,9 +10,10 @@
   },
   "scripts": {
     "start": "electron-forge start",
-    "package": "npm run rebuild && electron-builder build",
-    "make": "npm run rebuild && electron-builder build",
-    "publish": "electron-builder build --win --linux -p always",
+    "package": "npm run rebuild && electron-forge package && electron-builder build",
+    "make": "npm run rebuild && electron-forge package && electron-builder build",
+    "publish": "npm run rebuild && electron-forge package && electron-builder build -p always",
+    "postinstall": "electron-builder install-app-deps",
     "lint": "eslint --ext .ts,.tsx .",
     "rebuild": "electron-rebuild -f",
     "test": "jest --runInBand",
@@ -21,6 +22,9 @@
   "build": {
     "appId": "caot2204.posdesktop",
     "productName": "PosDesktop",
+    "extraMetadata": {
+      "main": ".webpack/x64/main"
+    },
     "directories": {
       "output": "dist"
     },
@@ -30,7 +34,9 @@
       "package.json",
       "src/icons/**/*"
     ],
+    "icon": "./src/icons/icon.ico",
     "win": {
+      "icon": "./src/icons/icon.ico",
       "target": [
         "nsis"
       ],
@@ -46,6 +52,7 @@
       "shortcutName": "PosDesktop"
     },
     "linux": {
+      "icon": "./src/icons",
       "target": [
         "AppImage",
         "deb"
