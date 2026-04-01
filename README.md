@@ -7,7 +7,11 @@ PosDesktop allows you to record your bussiness' sales so search and view them. T
 
 For more details, please review the documentation section, sorry but the documentation it's only in spanish for the moment. The UML models are in English.
 
-PosDesktop is open source, so, you can modify/extend and use with complety freedom. The project is development in [Electron](https://www.electronjs.org/) for it can make for macOs, Linux and Windows. The release only contain a .exe(Windows) file, if you want make a distributable of macOs and linux, you should run the comand in the "Make the project" section.
+PosDesktop is open source, so, you can modify/extend and use with complety freedom. The project is development in [Electron](https://www.electronjs.org/) for it can make for macOs, Linux and Windows.
+
+Currently, the macOs distributable is not available.
+
+I will be happy if you use this project and report any issues or suggestions.
 
 Thank you for use this project.
 
@@ -27,11 +31,17 @@ src/
 |-- electron/                   # Configure ipcMethods for ui uses
     |-- decorators/             # Configure ipcMethods for each model
 |-- icons/                      # App' icons
+|-- locales/                    # App' locales
+    |-- en/                     # English locale
+       |-- global.json
+    |-- es/                     # Spanish locale
+       |-- global.json
 |-- ui/          # Each feature follow the next structure
     |-- feature/
         |-- components/
         |-- stylesheets/
     |-- PosDesktopApp.tsx       # Include de global.window interface for communicates electron and ui
+|-- i18n.ts                     # Configure i18n for ui
 |-- index.ts                    # Contain the structure for initialize electron
 |-- preload.ts                  # Secure expose the data layer' methods for ui
 .
@@ -74,11 +84,6 @@ Make a installer for your operative system
 npm run make
 ```
 
-## Important notes
-
-Currently, PosDesktop its incomplety, the egresses, language switching, currently sale data maintanance and database backup features are intentionally not included in the first release, the reason for this is that i am learning the process of sending updates to user.
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
