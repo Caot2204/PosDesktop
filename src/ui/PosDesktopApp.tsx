@@ -12,6 +12,7 @@ import AdministrationScreen from './administration/components/AdministrationScre
 import CotizationsScreen from './cotizations/components/CotizationsScreen';
 import FirstUseScreen from './firstuse/components/FirstUseScreen';
 import LoginScreen from './login/components/LoginScreen';
+import BalanceScreen from './administration/components/BalanceScreen';
 
 import type User from '../data/model/User';
 import type Category from '../data/model/Category';
@@ -57,6 +58,7 @@ declare global {
       getCurrentSaleBackup: () => Promise<SaleProductModel[]>;
       getSaleById: (saleId: number) => Promise<Sale | undefined>;
       getSalesByDate: (dateOfSale: Date) => Promise<Sale[]>;
+      getSalesByRange: (startDate: string, endDate: string) => Promise<Sale[]>;
       saveSale: (dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], paymentType: string, amountPayed: number, paymentFolio: string | null, totalSale: number) => Promise<void>;
     };
     cashClosingAPI?: {
@@ -76,6 +78,7 @@ declare global {
     egressAPI?: {
       getAllEgresses: () => Promise<Egress[]>;
       getEgressById: (egressId: number) => Promise<Egress>;
+      getEgressesByRange: (startDate: string, endDate: string) => Promise<Egress[]>;
       saveEgress: (dateOfEgress: Date, amount: number, description: string, userToRegister: string) => Promise<void>;
       updateEgress: (id: number, dateOfEgress: Date, amount: number, description: string, userToRegister: string) => Promise<void>;
       deleteEgress: (egressId: number) => Promise<void>;
@@ -150,6 +153,7 @@ function PosDesktopApp() {
               <Route path="inventory" element={<InventoryScreen />} />
               <Route path="users" element={<UsersScreen />} />
               <Route path="administration" element={<AdministrationScreen />} />
+              <Route path="balance" element={<BalanceScreen />} />
             </Route>
           </Routes>
         </HashRouter>

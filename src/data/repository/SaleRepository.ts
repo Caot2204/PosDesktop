@@ -56,6 +56,10 @@ class SaleRepository {
         return this.saleDataSource.getSalesPerDay(dayOfSale);
     }
 
+    async getSalesByRange(startDate: string, endDate: string): Promise<Sale[]> {
+        return this.saleDataSource.getSalesByRange(startDate, endDate);
+    }
+
     async saveSale(
         dayOfSale: Date,
         userToGenerateSale: string,

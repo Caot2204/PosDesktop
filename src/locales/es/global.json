@@ -40,7 +40,35 @@
       "loadBackupErrorFileMessage": "El archivo seleccionado no es un respaldo válido",
       "loadBackupErrorMessage": "Error al cargar el respaldo, inténtelo de nuevo",
       "loadBackupCanceledMessage": "Carga de respaldo cancelada por el usuario",
-      "loadBackupSuccessMessage": "Respaldo cargado con éxito, la aplicación se reiniciará para aplicar los cambios"
+      "loadBackupSuccessMessage": "Respaldo cargado con éxito, la aplicación se reiniciará para aplicar los cambios",
+      "showBalance": "Balances"
+    },
+    "balance": {
+      "title": "Balance",
+      "startDateLabel": "Fecha Inicio",
+      "endDateLabel": "Fecha Fin",
+      "searchButton": "Buscar",
+      "loading": "Cargando...",
+      "totalSales": "Total Ventas",
+      "totalEgresses": "Total Egresos",
+      "netTotal": "Saldo Neto",
+      "errorGetEgresses": "Error al obtener los egresos, inténtelo de nuevo",
+      "errorGetSales": "Error al obtener las ventas, inténtelo de nuevo",
+      "errorInvalidDates": "Seleccione un rango de fechas válido",
+      "noRangeSelected": "Seleccione un rango de fecha para generar el balance"
+    },
+    "egressesTable": {
+      "caption": "Egresos de {{tiempoString}}",
+      "idTh": "Id",
+      "dateTh": "Fecha",
+      "descriptionTh": "Descripción",
+      "amountTh": "Monto"
+    },
+    "salesTable": {
+      "caption": "Ventas de {{tiempoString}}",
+      "idTh": "Folio",
+      "dateTh": "Fecha",
+      "totalTh": "Total venta"
     },
     "cashClosingList": {
       "title": "Cortes de caja",

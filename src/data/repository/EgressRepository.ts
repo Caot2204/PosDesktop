@@ -27,6 +27,15 @@ class EgressRepository {
         }
     }
 
+    async getEgressesByRange(startDate: string, endDate: string) {
+        try {
+            return this.egressDataSource.getEgressesByRange(startDate, endDate);
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
     async saveEgress(dateOfEgress: Date, amount: number, descripcion: string, userToRegister: string) {
         try {
             if (this.validateEgressData(dateOfEgress, amount, descripcion)) {

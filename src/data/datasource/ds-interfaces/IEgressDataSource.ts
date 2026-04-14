@@ -12,4 +12,6 @@ export interface IEgressDataSource {
 
     deleteEgress(egressId: number): Promise<void>;
 
+    getEgressesByRange(startDate: string, endDate: string): Promise<Egress[]>;
+
 }

@@ -42,6 +42,7 @@ contextBridge.exposeInMainWorld('saleAPI',
     getCurrentSaleBackup: () => ipcRenderer.invoke('saleAPI:getCurrentSaleBackup'),
     getSaleById: (saleId: number) => ipcRenderer.invoke('saleApi:getSaleById', saleId),
     getSalesByDate: (dateOfSale: Date) => ipcRenderer.invoke('saleApi:getSalesByDate', dateOfSale),
+    getSalesByRange: (startDate: string, endDate: string) => ipcRenderer.invoke('saleApi:getSalesByRange', startDate, endDate),
     saveSale: (
       dateOfSale: Date,
       userToGenerateSale: string,
@@ -78,6 +79,7 @@ contextBridge.exposeInMainWorld('egressAPI',
   {
     getAllEgresses: () => ipcRenderer.invoke('egressApi:getAllEgresses'),
     getEgressById: (egressId: number) => ipcRenderer.invoke('egressApi:getEgressById', egressId),
+    getEgressesByRange: (startDate: string, endDate: string) => ipcRenderer.invoke('egressApi:getEgressesByRange', startDate, endDate),
     saveEgress: (dateOfEgress: Date, amount: number, description: string, userToRegister: string) => ipcRenderer.invoke('egressApi:saveEgress', dateOfEgress, amount, description, userToRegister),
     updateEgress: (id: number, dateOfEgress: Date, amount: number, description: string, userToRegister: string) => ipcRenderer.invoke('egressApi:updateEgress', id, dateOfEgress, amount, description, userToRegister),
     deleteEgress: (egressId: number) => ipcRenderer.invoke('egressApi:deleteEgress', egressId)

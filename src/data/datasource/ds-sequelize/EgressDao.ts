@@ -1,5 +1,6 @@
 import Egress from "../../model/Egress";
 import { IEgressDataSource } from "../ds-interfaces/IEgressDataSource";
+import { Op } from "sequelize";
 
 class EgressDao implements IEgressDataSource {
 
@@ -21,10 +22,37 @@ class EgressDao implements IEgressDataSource {
                 egressDb.userToRegister,
                 egressDb.id
             ));
-        } catch(error) {
+        } catch (error) {
             throw error;
         }
     }
+
+    async getEgressesByRange(startDate: string, endDate: string): Promise<Egress[]> {
+        try {
+            // Append time to ensure local timezone is used (YYYY-MM-DD is parsed as UTC by default)
+            const start = new Date(`${startDate}T00:00:00`);
+            const end = new Date(`${endDate}T23:59:59.999`);
+
+            const egressesDb: any[] = await this.EgressSequelize.findAll({
+                where: {
+                    dateOfEgress: {
+                        [Op.between]: [start, end]
+                    }
+                },
+                order: [['dateOfEgress', 'DESC']]
+            });
+            return egressesDb.map((egressDb: any) => new Egress(
+                egressDb.dateOfEgress,
+                egressDb.amount,
+                egressDb.description,
+                egressDb.userToRegister,
+                egressDb.id
+            ));
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
     async getEgressById(egressId: number): Promise<Egress> {
         try {
@@ -39,7 +67,7 @@ class EgressDao implements IEgressDataSource {
             )
         } catch (error) {
             throw error;
-        }     
+        }
     }
 
     async saveEgress(egress: Egress): Promise<void> {
@@ -51,7 +79,7 @@ class EgressDao implements IEgressDataSource {
                 userToRegister: egress.userToRegister
             });
             return;
-        } catch(error) {
+        } catch (error) {
             throw error;
         }
     }
@@ -66,7 +94,7 @@ class EgressDao implements IEgressDataSource {
             egressDb.userToRegister = egress.userToRegister;
             await egressDb.save();
             return;
-        } catch(error) {
+        } catch (error) {
             throw error;
         }
     }
@@ -77,7 +105,7 @@ class EgressDao implements IEgressDataSource {
             if (!egressDb) throw new Error("Egreso no encontrado");
             await egressDb.destroy();
             return;
-        } catch(error) {
+        } catch (error) {
             throw error;
         }
     }

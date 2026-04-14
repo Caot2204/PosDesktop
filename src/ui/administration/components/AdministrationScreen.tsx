@@ -7,6 +7,7 @@ import { showErrorNotify, showSuccessNotify } from '../../utils/NotifyUtils';
 import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import PosConfirmDialog from '../../../ui/common/components/PosConfirmDialog';
+import { NavLink } from 'react-router';
 
 const defaultLogo = '../../assets/react.svg';
 
@@ -47,9 +48,17 @@ function AdministrationScreen() {
     <div className="administrationscreen-container">
       <div className={openDialog ? "sales-container filter-blur" : "sales-container"}>
         <h3>{t('screens.administration.titleSales')}</h3>
-        <PosButton
-          label={t('screens.administration.showCashClosings')}
-          onClick={() => setOpenDialog("cashClosingDialog")} />
+        <div className="actions-sales">
+          <PosButton
+            label={t('screens.administration.showCashClosings')}
+            onClick={() => setOpenDialog("cashClosingDialog")} />
+          <NavLink
+            to="/balance" >
+            <PosButton
+              label={t('screens.administration.showBalance')}
+              onClick={() => { }} />
+          </NavLink>
+        </div>
       </div>
       <hr />
       <div className={openDialog ? "pos-configurations-container filter-blur" : "pos-configurations-container"}>
@@ -149,9 +158,9 @@ function AdministrationScreen() {
       </div>
       <div className={openDialog ? 'save-config-container filter-blur' : 'save-config-container'}>
         <PosButton
-        className={openDialog ? "filter-blur" : ""}
-        label={t('screens.administration.saveConfigLabel')}
-        onClick={handleSaveConfig} />
+          className={openDialog ? "filter-blur" : ""}
+          label={t('screens.administration.saveConfigLabel')}
+          onClick={handleSaveConfig} />
       </div>
       <dialog className="pos-dialog" open={openDialog === "cashClosingDialog"}>
         <div className="header-dialog">

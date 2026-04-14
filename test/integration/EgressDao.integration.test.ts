@@ -101,4 +101,34 @@ describe('EgressesDao integration', () => {
   test('getEgressById throws when not found', async () => {
     await expect(dao.getEgressById(99999)).rejects.toThrow('Egreso no encontrado');
   });
+
+  test('getEgressesByRange returns records within range', async () => {
+    // Clear for this specific test to ensure clean state
+    await EgressModel.destroy({ where: {}, truncate: true });
+
+    const e1 = new Egress(new Date('2023-10-20T10:00:00'), 100, 'Inside Oct 20', 'admin');
+    const e2 = new Egress(new Date('2023-10-21T15:00:00'), 200, 'Inside Oct 21', 'admin');
+    const e3 = new Egress(new Date('2023-10-22T08:00:00'), 300, 'Inside Oct 22', 'admin');
+    const eBefore = new Egress(new Date('2023-10-19T23:59:59'), 50, 'Before range', 'admin');
+    const eAfter = new Egress(new Date('2023-10-23T00:00:01'), 60, 'After range', 'admin');
+
+    await dao.saveEgress(e1);
+    await dao.saveEgress(e2);
+    await dao.saveEgress(e3);
+    await dao.saveEgress(eBefore);
+    await dao.saveEgress(eAfter);
+
+    const results = await dao.getEgressesByRange('2023-10-20', '2023-10-22');
+
+    expect(results).toHaveLength(3);
+    const descriptions = results.map(r => r.description);
+    expect(descriptions).toContain('Inside Oct 20');
+    expect(descriptions).toContain('Inside Oct 21');
+    expect(descriptions).toContain('Inside Oct 22');
+    expect(descriptions).not.toContain('Before range');
+    expect(descriptions).not.toContain('After range');
+    
+    // Check order (DESC by dateOfEgress)
+    expect(results[0].description).toBe('Inside Oct 22');
+  });
 });

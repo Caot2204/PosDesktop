@@ -2,15 +2,17 @@ import type Sale from "../../model/Sale";
 import type SalesProduct from "../../model/SalesProduct";
 
 export default interface ISaleDataSource {
-    
+
     getSaleById(saleId: number): Promise<Sale | undefined>;
 
     getSalesPerDay(dayOfSale: Date): Promise<Sale[]>;
 
+    getSalesByRange(startDate: string, endDate: string): Promise<Sale[]>;
+
     saveSale(
-        dayOfSale: Date, 
-        userToGenerateSale: string, 
-        productsSold: SalesProduct[], 
+        dayOfSale: Date,
+        userToGenerateSale: string,
+        productsSold: SalesProduct[],
         paymentType: string,
         amountPayed: number,
         paymentFolio: string | null,

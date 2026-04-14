@@ -40,7 +40,35 @@
       "loadBackupErrorFileMessage": "The selected file is not a valid backup",
       "loadBackupErrorMessage": "Error loading backup, please try again",
       "loadBackupCanceledMessage": "Backup loading canceled by user",
-      "loadBackupSuccessMessage": "Backup loaded successfully, the application will restart to apply the changes"
+      "loadBackupSuccessMessage": "Backup loaded successfully, the application will restart to apply the changes",
+      "showBalance": "Balances"
+    },
+    "balance": {
+      "title": "Balance",
+      "startDateLabel": "Start date",
+      "endDateLabel": "End date",
+      "searchButton": "Search",
+      "loading": "Loading...",
+      "totalSales": "Total Sales",
+      "totalEgresses": "Total Egresses",
+      "netTotal": "Net",
+      "errorGetEgresses": "Error to load egresses, try again",
+      "errorGetSales": "Error to load sales, try again",
+      "errorInvalidDates": "Select a date range valid",
+      "noRangeSelected": "Select a date range for generate the balance"
+    },
+    "egressesTable": {
+      "caption": "Egresses of {{tiempoString}}",
+      "idTh": "Id",
+      "dateTh": "Date",
+      "descriptionTh": "Description",
+      "amountTh": "Amount"
+    },
+    "salesTable": {
+      "caption": "Sales of {{tiempoString}}",
+      "idTh": "Folio",
+      "dateTh": "Date",
+      "totalTh": "Total of Sale"
     },
     "cashClosingList": {
       "title": "Cash closings",

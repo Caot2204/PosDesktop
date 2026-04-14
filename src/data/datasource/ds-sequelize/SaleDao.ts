@@ -65,7 +65,7 @@ class SaleDao implements ISaleDataSource {
             try {
                 const startOfDay = new Date(dayOfSale);
                 startOfDay.setHours(0, 0, 0, 0);
-                
+
                 const endOfDay = new Date(dayOfSale);
                 endOfDay.setHours(23, 59, 59, 999);
 
@@ -84,6 +84,29 @@ class SaleDao implements ISaleDataSource {
                 reject(error);
             }
         });
+    }
+
+    async getSalesByRange(startDate: string, endDate: string): Promise<Sale[]> {
+        try {
+            const start = new Date(`${startDate}T00:00:00`);
+            const end = new Date(`${endDate}T23:59:59.999`);
+
+            const salesDb = await this.SaleSequelize.findAll({
+                where: {
+                    dateOfSale: {
+                        [Op.between]: [start, end]
+                    }
+                },
+                order: [['dateOfSale', 'DESC']]
+            });
+
+            const salesPlainObject = await Promise.all(
+                salesDb.map((saleDb: any) => this.mapSaleForPlainObject(saleDb))
+            );
+            return salesPlainObject as Sale[];
+        } catch (error) {
+            throw error;
+        }
     }
 
     saveSale(

@@ -1,0 +1,84 @@
+.balance-screen-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.balance-header {
+  position: sticky;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.close-button {
+  margin: 0;
+  color: red;
+}
+
+.range-dates-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.date-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 40%;
+}
+
+.search-button {
+  border-radius: 10px;
+  color: black;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.totals-summary-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 200px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.summary-card>* {
+  margin: 0;
+  text-align: start;
+}
+
+.sales {
+  box-shadow: 0 2px 2px 0 greenyellow;
+}
+
+.egresses {
+  box-shadow: 0 2px 2px 0 red;
+}
+
+.net {
+  box-shadow: 0 2px 2px 0 blue;
+}
+
+.data-tables-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.no-range-message {
+  width: 100%;
+  text-align: center;
+}

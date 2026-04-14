@@ -2,7 +2,7 @@ import { IpcMain } from "electron";
 import EgressRepository from "../../data/repository/EgressRepository";
 
 class EgressIpcDecorator {
-    
+
     private egressRepository: EgressRepository;
     private ipcMain: IpcMain;
 
@@ -20,8 +20,12 @@ class EgressIpcDecorator {
             return await this.egressRepository.getAllEgresses();
         });
 
-        this.ipcMain.handle('egressApi:getEgressById', async (event, egressId:number) => {
+        this.ipcMain.handle('egressApi:getEgressById', async (event, egressId: number) => {
             return await this.egressRepository.getEgressById(egressId);
+        });
+
+        this.ipcMain.handle('egressApi:getEgressesByRange', async (event, startsDate: string, endsDate: string) => {
+            return await this.egressRepository.getEgressesByRange(startsDate, endsDate);
         });
 
         this.ipcMain.handle('egressApi:saveEgress', async (event, dateOfEgress: Date, amount: number, description: string, userToRegister: string) => {
