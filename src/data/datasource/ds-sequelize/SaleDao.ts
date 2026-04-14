@@ -2,7 +2,6 @@ import { Op } from 'sequelize';
 import Sale from '../../model/Sale';
 import SalesProduct from '../../model/SalesProduct';
 import type ISaleDataSource from '../ds-interfaces/ISaleDataSource';
-import { toMysqlDatetime } from '../utils/DateUtils';
 
 class SaleDao implements ISaleDataSource {
 
@@ -86,27 +85,29 @@ class SaleDao implements ISaleDataSource {
         });
     }
 
-    async getSalesByRange(startDate: string, endDate: string): Promise<Sale[]> {
-        try {
-            const start = new Date(`${startDate}T00:00:00`);
-            const end = new Date(`${endDate}T23:59:59.999`);
+    getSalesByRange(startDate: string, endDate: string): Promise<Sale[]> {
+        return new Promise<Sale[]>(async (resolve, reject) => {
+            try {
+                const start = new Date(`${startDate}T00:00:00`);
+                const end = new Date(`${endDate}T23:59:59.999`);
 
-            const salesDb = await this.SaleSequelize.findAll({
-                where: {
-                    dateOfSale: {
-                        [Op.between]: [start, end]
-                    }
-                },
-                order: [['dateOfSale', 'DESC']]
-            });
+                const salesDb = await this.SaleSequelize.findAll({
+                    where: {
+                        dateOfSale: {
+                            [Op.between]: [start, end]
+                        }
+                    },
+                    order: [['dateOfSale', 'DESC']]
+                });
 
-            const salesPlainObject = await Promise.all(
-                salesDb.map((saleDb: any) => this.mapSaleForPlainObject(saleDb))
-            );
-            return salesPlainObject as Sale[];
-        } catch (error) {
-            throw error;
-        }
+                const salesPlainObject = await Promise.all(
+                    salesDb.map((saleDb: any) => this.mapSaleForPlainObject(saleDb))
+                );
+                resolve(salesPlainObject);
+            } catch (error) {
+                reject(error);
+            }
+        });
     }
 
     saveSale(

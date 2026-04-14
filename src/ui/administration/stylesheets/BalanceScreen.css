@@ -38,6 +38,14 @@
   font-size: 1.2rem;
 }
 
+.totals-container {
+  display: flex;
+  flex-direction: row;
+  gap: 120px;
+  align-items: center;
+  justify-content: center;
+}
+
 .totals-summary-container {
   display: flex;
   flex-direction: column;
@@ -57,7 +65,12 @@
 
 .summary-card>* {
   margin: 0;
+  margin-bottom: 10px;
   text-align: start;
+}
+
+.total-amount {
+  font-size: 1.5em;
 }
 
 .sales {
@@ -70,6 +83,12 @@
 
 .net {
   box-shadow: 0 2px 2px 0 blue;
+}
+
+.chart-container {
+  position: relative;
+  width: 350px;
+  height: 350px;
 }
 
 .data-tables-container {

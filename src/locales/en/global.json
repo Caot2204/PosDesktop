@@ -55,7 +55,9 @@
       "errorGetEgresses": "Error to load egresses, try again",
       "errorGetSales": "Error to load sales, try again",
       "errorInvalidDates": "Select a date range valid",
-      "noRangeSelected": "Select a date range for generate the balance"
+      "noRangeSelected": "Select a date range and clic on Search for generate the balance",
+      "salesChartLabel": "Sales",
+      "egressesChartLabel": "Egresses"
     },
     "egressesTable": {
       "caption": "Egresses of {{tiempoString}}",

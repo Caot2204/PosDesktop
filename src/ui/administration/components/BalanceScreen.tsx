@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import '../stylesheets/BalanceScreen.css';
 import EgressesTable from "./EgressesTable";
@@ -7,9 +7,12 @@ import { showErrorNotify } from "../../../ui/utils/NotifyUtils";
 import { formatNumberToCurrentPrice } from "../../../ui/utils/FormatUtils";
 import { NavLink } from "react-router";
 import { MdOutlineCancel } from "react-icons/md";
+import { Chart } from "chart.js/auto";
 
 function BalanceScreen() {
   const { t } = useTranslation('global');
+  const chartRef = useRef<HTMLCanvasElement>(null);
+  const chartInstance = useRef<Chart | null>(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [loadingData, setLoadingData] = useState(false);
@@ -54,6 +57,42 @@ function BalanceScreen() {
       });
   };
 
+  const generateChart = async () => {
+    if (!chartRef.current) return;
+
+    if (chartInstance.current) {
+      chartInstance.current.destroy();
+    }
+
+    chartInstance.current = new Chart(
+      chartRef.current,
+      {
+        type: 'doughnut',
+        data: {
+          labels: [t('screens.balance.salesChartLabel'), t('screens.balance.egressesChartLabel')],
+          datasets: [{
+            label: `${startDate} - ${endDate}`,
+            data: [totalSale, totalEgress],
+            backgroundColor: [
+              'rgba(99, 255, 146, 1)',
+              'rgb(255, 99, 132)'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (readyToDisplayInform) {
+      generateChart();
+    }
+  }, [readyToDisplayInform, totalSale, totalEgress]);
+
   return (
     <div className="balance-screen-container">
       <div className="balance-header">
@@ -69,14 +108,20 @@ function BalanceScreen() {
           <input
             type="date"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)} />
+            onChange={(e) => {
+              setStartDate(e.target.value);
+              setReadyToDisplayInform(false);
+            }} />
         </div>
         <div className="date-input-group">
           <label>{t('screens.balance.endDateLabel')}</label>
           <input
             type="date"
             value={endDate}
-            onChange={(e) => setEndDate(e.target.value)} />
+            onChange={(e) => {
+              setEndDate(e.target.value);
+              setReadyToDisplayInform(false);
+            }} />
         </div>
         <button
           className="search-button"
@@ -90,20 +135,25 @@ function BalanceScreen() {
       {
         readyToDisplayInform ?
           <>
-            <div className="totals-summary-container">
-              <div className="summary-card sales">
-                <h3>{t('screens.balance.totalSales')}</h3>
-                <p className="total-amount">{formatNumberToCurrentPrice(totalSale)}</p>
+            <div className="totals-container">
+              <div className="totals-summary-container">
+                <div className="summary-card sales">
+                  <h3>{t('screens.balance.totalSales')}</h3>
+                  <p className="total-amount">{formatNumberToCurrentPrice(totalSale)}</p>
+                </div>
+                <div className="summary-card egresses">
+                  <h3>{t('screens.balance.totalEgresses')}</h3>
+                  <p className="total-amount">{formatNumberToCurrentPrice(totalEgress)}</p>
+                </div>
+                <div className="summary-card net">
+                  <h3>{t('screens.balance.netTotal')}</h3>
+                  <p className={`total-amount ${(totalSale - totalEgress) >= 0 ? 'positive' : 'negative'}`}>
+                    {formatNumberToCurrentPrice(totalSale - totalEgress)}
+                  </p>
+                </div>
               </div>
-              <div className="summary-card egresses">
-                <h3>{t('screens.balance.totalEgresses')}</h3>
-                <p className="total-amount">{formatNumberToCurrentPrice(totalEgress)}</p>
-              </div>
-              <div className="summary-card net">
-                <h3>{t('screens.balance.netTotal')}</h3>
-                <p className={`total-amount ${(totalSale - totalEgress) >= 0 ? 'positive' : 'negative'}`}>
-                  {formatNumberToCurrentPrice(totalSale - totalEgress)}
-                </p>
+              <div className="chart-container">
+                <canvas className="totals-chart" ref={chartRef}></canvas>
               </div>
             </div>
 

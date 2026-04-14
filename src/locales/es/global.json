@@ -55,7 +55,9 @@
       "errorGetEgresses": "Error al obtener los egresos, inténtelo de nuevo",
       "errorGetSales": "Error al obtener las ventas, inténtelo de nuevo",
       "errorInvalidDates": "Seleccione un rango de fechas válido",
-      "noRangeSelected": "Seleccione un rango de fecha para generar el balance"
+      "noRangeSelected": "Seleccione un rango de fecha y de clic en Buscar para generar el balance",
+      "salesChartLabel": "Ventas",
+      "egressesChartLabel": "Egresos"
     },
     "egressesTable": {
       "caption": "Egresos de {{tiempoString}}",

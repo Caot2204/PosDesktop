@@ -110,6 +110,47 @@ class SaleDao implements ISaleDataSource {
         });
     }
 
+    getSalesByRange(startDate: string, endDate: string): Promise<Sale[]> {
+        return new Promise<Sale[]>((resolve, reject) => {
+            const startStr = `${startDate} 00:00:00`;
+            const endStr = `${endDate} 23:59:59`;
+            this.dbInstance.serialize(() => {
+                this.dbInstance.all(
+                    'SELECT * FROM sales WHERE dateOfSale BETWEEN ? AND ? ORDER BY dateOfSale DESC',
+                    [startStr, endStr],
+                    (error: Error | null, rows: any[]) => {
+                        if (error) {
+                            reject(error);
+                        }
+                        if (rows) {
+                            Promise.all(rows.map(async row => {
+                                const saleDate = fromMysqlDatetime(row.dateOfSale);
+                                if (!saleDate) {
+                                    throw new Error("Fecha invalida");
+                                }
+                                const productsOfSale = await this.getSalesProductSold(Number(row.id));
+                                return new Sale(
+                                    row.id,
+                                    saleDate,
+                                    row.userToGenerateSale,
+                                    productsOfSale,
+                                    row.paymentType,
+                                    row.amountPayed,
+                                    row.paymentFolio,
+                                    row.totalSale
+                                );
+                            })).then(sales => {
+                                resolve(sales);
+                            }).catch(reject);
+                        } else {
+                            resolve([]);
+                        }
+                    }
+                );
+            });
+        });
+    }
+
     private saveSalesProduct(saleId: number, productSold: SalesProduct): Promise<void> {
         return new Promise((resolve, reject) => {
             this.dbInstance.serialize(() => {
