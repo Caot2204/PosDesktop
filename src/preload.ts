@@ -1,6 +1,8 @@
 import { contextBridge, ipcRenderer } from "electron";
 import SaleProductModel from "./ui/sales/model/SalesProductModel";
 import CotizationProduct from "./data/model/CotizationProduct";
+import Sale from "./data/model/Sale";
+import Egress from "./data/model/Egress";
 
 contextBridge.exposeInMainWorld('userAPI',
   {
@@ -96,5 +98,13 @@ contextBridge.exposeInMainWorld('cotizationAPI',
     findCotizationPdf: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:findCotizationPdf', cotizationId),
     createCotizationPdf: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:createCotizationPdf', cotizationId),
     deleteCotizationPdf: (cotizationId: number) => ipcRenderer.invoke('cotizationApi:deleteCotizationPdf', cotizationId)
+  }
+);
+
+contextBridge.exposeInMainWorld('balanceAPI',
+  {
+    createBalancePdf: (startDate: string, endDate: string, sales: Sale[], egresses: Egress[]) => ipcRenderer.invoke('balanceApi:createBalancePdf', startDate, endDate, sales, egresses),
+    findBalancePdf: (rangeDate: string) => ipcRenderer.invoke('balanceApi:findBalancePdf', rangeDate),
+    deleteBalancePdf: (rangeDate: string) => ipcRenderer.invoke('balanceApi:deleteBalancePdf', rangeDate)
   }
 );

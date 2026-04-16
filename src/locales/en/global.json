@@ -57,7 +57,8 @@
       "errorInvalidDates": "Select a date range valid",
       "noRangeSelected": "Select a date range and clic on Search for generate the balance",
       "salesChartLabel": "Sales",
-      "egressesChartLabel": "Egresses"
+      "egressesChartLabel": "Egresses",
+      "exportPdfLabel": "Export to PDF"
     },
     "egressesTable": {
       "caption": "Egresses of {{tiempoString}}",
@@ -308,5 +309,20 @@
     "unitsSoldLabel": "Quantity",
     "subtotalLabel": "Subtotal",
     "totalLabel": "Total of cotization:    {{totalAmount}}"
+  },
+  "balancePdfMaker": {
+    "rangeDate": "Range date",
+    "totalSales": "Total Sales",
+    "totalEgresses": "Total Egresses",
+    "totalNet": "Net",
+    "egressCaption": "Egresses of {{tiempoString}}",
+    "egressIdTh": "Id",
+    "egressDateTh": "Date",
+    "egressDescriptionTh": "Description",
+    "egressAmountTh": "Amount",
+    "salesCaption": "Sales of {{tiempoString}}",
+    "salesIdTh": "Folio",
+    "salesDateTh": "Date",
+    "salesTotalTh": "Total sale"
   }
 }

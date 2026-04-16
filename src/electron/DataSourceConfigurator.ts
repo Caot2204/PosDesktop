@@ -18,6 +18,8 @@ import EgressRepository from '../data/repository/EgressRepository';
 import EgressIpcDecorator from './decorators/EgressIpcDecorator';
 import CotizationRepository from '../data/repository/CotizationRepository';
 import CotizationIpcDecorator from './decorators/CotizationIpcDecorator';
+import BalanceIpcDecorator from './decorators/BalanceIpcDecorator';
+import BalancePdfMaker from './BalancePdfMaker';
 
 class DataSourceConfigurator {
 
@@ -78,8 +80,8 @@ class DataSourceConfigurator {
         if (this.posDatabase) {
             const posConfigRepository = new PosConfigRepository(posConfigPath);
             const posConfigDecorator = new PosConfigIpcDecorator(
-                this.ipcMain, 
-                posConfigRepository, 
+                this.ipcMain,
+                posConfigRepository,
                 this.posDatabase.createBackup.bind(this.posDatabase),
                 this.posDatabase.loadBackup.bind(this.posDatabase)
             );
@@ -110,6 +112,10 @@ class DataSourceConfigurator {
             const cotizationRepository = new CotizationRepository(this.posDatabase.getCotizationDao());
             const cotizationDecorator = new CotizationIpcDecorator(cotizationRepository, this.ipcMain, this.posDatabase.getProductDao(), posConfig);
             await cotizationDecorator.configure();
+
+            const balancePdfMaker = BalancePdfMaker.getInstance(posConfig);
+            const balanceDecorator = new BalanceIpcDecorator(balancePdfMaker, this.ipcMain);
+            await balanceDecorator.configure();
         }
     }
 }

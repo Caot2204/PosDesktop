@@ -93,6 +93,11 @@ declare global {
       createCotizationPdf: (cotizationId: number) => Promise<void>;
       deleteCotizationPdf: (cotizationId: number) => Promise<void>;
     };
+    balanceAPI?: {
+      createBalancePdf: (startDate: string, endDate: string, sales: Sale[], egresses: Egress[]) => Promise<void>;
+      findBalancePdf: (rangeDate: string) => Promise<string | null>;
+      deleteBalancePdf: (rangeDate: string) => Promise<void>;
+    }
   }
 }
 

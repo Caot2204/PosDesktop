@@ -1,0 +1,30 @@
+.balance-pdf-dialog-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 80px);
+}
+
+.balance-pdf-dialog-container>* {
+  margin-bottom: 8px;
+}
+
+.back-button {
+  width: 100px;
+  color: red;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+}
+
+.pdf-loading-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.5rem;
+}
+
+.pdf-loading-message .image-loader {
+  margin-bottom: 32px;
+}

@@ -11,7 +11,8 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'pos-pdf', privileges: { bypassCSP: true, stream: true, secure: true, supportFetchAPI: true } }
+  { scheme: 'pos-pdf', privileges: { bypassCSP: true, stream: true, secure: true, supportFetchAPI: true } },
+  { scheme: 'pos-balances-pdf', privileges: { bypassCSP: true, stream: true, secure: true, supportFetchAPI: true } }
 ]);
 
 const dataSourceConfigurator = new DataSourceConfigurator(ipcMain);
@@ -63,6 +64,19 @@ app.on('ready', () => {
       const url = new URL(request.url);
       const filename = url.pathname.startsWith('/') ? url.pathname.slice(1) : url.pathname;
       const folderPath = isDev() ? path.join(process.cwd(), 'cotizations-pdfs') : path.join(app.getPath('userData'), 'cotizations-pdfs');
+      const filePath = path.join(folderPath, filename);
+      console.log(`Protocol handling pos-pdf request for: ${filePath}`);
+      return net.fetch(pathToFileURL(filePath).toString());
+    } catch (error) {
+      console.error('Error in pos-pdf protocol handler:', error);
+      return new Response('Not Found', { status: 404 });
+    }
+  });
+  protocol.handle('pos-balances-pdf', (request) => {
+    try {
+      const url = new URL(request.url);
+      const filename = url.pathname.startsWith('/') ? url.pathname.slice(1) : url.pathname;
+      const folderPath = isDev() ? path.join(process.cwd(), 'balances-pdfs') : path.join(app.getPath('userData'), 'balances-pdfs');
       const filePath = path.join(folderPath, filename);
       console.log(`Protocol handling pos-pdf request for: ${filePath}`);
       return net.fetch(pathToFileURL(filePath).toString());
