@@ -51,11 +51,11 @@ function CashClosingsListScreen(props: CashClosingsListScreenProps) {
   }, [props.isShowed]);
 
   useEffect(() => {
-    fetchCashClosingsOfDate();
+    if (props.isShowed) fetchCashClosingsOfDate();
   }, [dateToSearch]);
 
   useEffect(() => {
-    fetchCashClosingsOfUser();
+    if (props.isShowed) fetchCashClosingsOfUser();
   }, [userToSearch]);
 
   return (

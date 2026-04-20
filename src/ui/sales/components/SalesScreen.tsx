@@ -29,13 +29,15 @@ function SalesScreen(props: SalesScreenProps) {
   };
 
   useEffect(() => {
-    const parsed = parseLocalDate(dateToSearch);
-    if (parsed) handleGetSalesByDate(parsed);
-    else handleGetSalesByDate(new Date());
+    if (props.isShowed) {
+      const parsed = parseLocalDate(dateToSearch);
+      if (parsed) handleGetSalesByDate(parsed);
+      else handleGetSalesByDate(new Date());
+    }
   }, [dateToSearch]);
 
   useEffect(() => {
-    handleGetSalesByDate(new Date());
+    if (props.isShowed) handleGetSalesByDate(new Date());
   }, [props.isShowed]);
 
   return (

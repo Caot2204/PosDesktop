@@ -42,14 +42,16 @@ function CashClosingScreen(props: CashClosingScreenProps) {
   };
 
   useEffect(() => {
-    window.saleAPI?.getSalesByDate(new Date()).then(sales => {
-      const salesOfCurrentUser = sales.filter(sale => sale.userToGenerateSale === props.currentUser);
-      let tempTotal = 0.0;
-      salesOfCurrentUser.forEach(sale => {
-        tempTotal += sale.totalSale;
+    if (props.isShowed) {
+      window.saleAPI?.getSalesByDate(new Date()).then(sales => {
+        const salesOfCurrentUser = sales.filter(sale => sale.userToGenerateSale === props.currentUser);
+        let tempTotal = 0.0;
+        salesOfCurrentUser.forEach(sale => {
+          tempTotal += sale.totalSale;
+        });
+        setTotalOfDay(tempTotal);
       });
-      setTotalOfDay(tempTotal);
-    });
+    }
     if (physicalMoneyInputRef.current) {
       physicalMoneyInputRef.current.value = "";
       physicalMoneyInputRef.current.focus();
