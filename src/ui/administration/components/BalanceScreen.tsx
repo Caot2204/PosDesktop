@@ -194,6 +194,7 @@ function BalanceScreen() {
           endDate={endDate}
           sales={sales}
           egresses={egresses}
+          chartUrl={openDialog === 'balancePdfViewer' ? chartRef.current.toDataURL() : ""}
           onClose={() => {
             setOpenDialog(null);
           }} />

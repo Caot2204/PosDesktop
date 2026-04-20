@@ -17,8 +17,8 @@ class BalanceIpcDecorator {
     }
 
     private async configureBalanceIpcMethods() {
-        this.ipcMain.handle('balanceApi:createBalancePdf', async (event, startDate: string, endDate: string, sales: Sale[], egresses: Egress[]) => {
-            await this.balancePdfMaker.createPdf(startDate, endDate, sales, egresses);
+        this.ipcMain.handle('balanceApi:createBalancePdf', async (event, startDate: string, endDate: string, sales: Sale[], egresses: Egress[], chartUrl: string) => {
+            await this.balancePdfMaker.createPdf(startDate, endDate, sales, egresses, chartUrl);
         });
 
         this.ipcMain.handle('balanceApi:findBalancePdf', async (event, rangeDate: string) => {

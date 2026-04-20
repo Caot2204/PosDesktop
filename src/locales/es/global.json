@@ -311,6 +311,7 @@
     "totalLabel": "Total de la cotización:     {{totalAmount}}"
   },
   "balancePdfMaker": {
+    "title": "Balance",
     "rangeDate": "Rango de fecha",
     "totalSales": "Total Ventas",
     "totalEgresses": "Total Egresos",

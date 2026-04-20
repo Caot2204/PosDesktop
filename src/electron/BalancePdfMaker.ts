@@ -28,7 +28,8 @@ class BalancePdfMaker {
         startDate: string,
         endDate: string,
         sales: Sale[],
-        egresses: Egress[]
+        egresses: Egress[],
+        chartUrl: string
     ): Promise<void> {
         await i18next.changeLanguage(this.configPos.posLanguage);
         const folderPath = isDev() ? path.join(process.cwd(), 'balances-pdfs') : path.join(app.getPath('userData'), 'balances-pdfs');
@@ -40,6 +41,8 @@ class BalancePdfMaker {
         const filePath = path.join(folderPath, `Balance_${startDate}-${endDate}.pdf`);
 
         return new Promise((resolve, reject) => {
+            const base64Data = chartUrl.replace(/^data:image\/png;base64,/, "");
+            const buffer = Buffer.from(base64Data, 'base64');
             const totalSales = sales.reduce((acc, curr) => acc + curr.totalSale, 0);
             const totalEgresses = egresses.reduceRight((acc, curr) => acc + curr.amount, 0);
             const neto = totalSales - totalEgresses;
@@ -83,15 +86,24 @@ class BalancePdfMaker {
 
             pdf.text(this.configPos.bussinessName);
 
+            pdf.text(i18next.t('balancePdfMaker.title'), {
+                align: 'center',
+                stroke: true
+            });
+
+            pdf.moveDown();
             pdf.moveDown();
 
+            const currentY = pdf.y;
+
+            // Tabla resumen a la izquierda
             pdf.table({
                 // Set the style for all cells
                 defaultStyle: { border: 1, borderColor: "gray" },
                 // Set the style for cells based on their column
                 columnStyles: (i) => {
-                    if (i === 0) return { width: 100, border: { left: 2 }, borderColor: { left: "black" } };
-                    if (i === 2) return { width: "*", border: { right: 2 }, borderColor: { right: "black" } };
+                    if (i === 0) return { width: 140, border: { left: 2 }, borderColor: { left: "black" } };
+                    if (i === 1) return { width: 210, border: { right: 2 }, borderColor: { right: "black" } };
                 },
                 rowStyles: (i) => {
                     if (i === 0) return { border: { top: 2, right: 2 }, borderColor: { top: "black", right: "black" } };
@@ -106,6 +118,16 @@ class BalancePdfMaker {
                     [i18next.t('balancePdfMaker.totalNet'), formatNumberToCurrentPrice(neto)]
                 ]
             });
+
+            const tableEndY = pdf.y;
+
+            // Gráfica a la derecha
+            pdf.image(buffer, 380, currentY, {
+                fit: [180, 180]
+            });
+
+            // Ajustar la posición Y para continuar debajo de ambos elementos
+            pdf.y = Math.max(tableEndY, currentY + 180);
 
             pdf.moveDown();
             pdf.moveDown();

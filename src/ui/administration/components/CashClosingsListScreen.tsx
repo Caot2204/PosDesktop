@@ -40,12 +40,14 @@ function CashClosingsListScreen(props: CashClosingsListScreenProps) {
   };
 
   useEffect(() => {
-    window.userAPI?.getAllUsers()
-      .then(users => {
-        setPosUsers(users);
-      });
-    setDateToSearch(formatDateForSearch(new Date()));
-    setUserToSearch(null);
+    if (props.isShowed) {
+      window.userAPI?.getAllUsers()
+        .then(users => {
+          setPosUsers(users);
+        });
+      setDateToSearch(formatDateForSearch(new Date()));
+      setUserToSearch(null);
+    }
   }, [props.isShowed]);
 
   useEffect(() => {

@@ -12,6 +12,7 @@ interface BalancePdfDialogProps {
   endDate: string;
   sales: Sale[];
   egresses: Egress[];
+  chartUrl: string;
   onClose: () => void;
 }
 
@@ -25,17 +26,17 @@ function BalancePdfDialog(props: BalancePdfDialogProps) {
     if (pdfPath) {
       await window.balanceAPI?.deleteBalancePdf(rangeDate);
     }
-    await window.balanceAPI?.createBalancePdf(props.startDate, props.endDate, props.sales, props.egresses);
+    await window.balanceAPI?.createBalancePdf(props.startDate, props.endDate, props.sales, props.egresses, props.chartUrl);
     setIsGenerating(false);
   };
 
   useEffect(() => {
-    if (props.isShowed && props.startDate && props.endDate && props.sales && props.egresses) {
+    if (props.isShowed && props.startDate && props.endDate && props.sales && props.egresses && props.chartUrl) {
       verifyPdfExists(`${props.startDate}-${props.endDate}`);
     } else {
       setIsGenerating(true);
     }
-  }, [props.isShowed, props.startDate, props.endDate, props.sales, props.egresses]);
+  }, [props.isShowed, props.startDate, props.endDate, props.sales, props.egresses, props.chartUrl]);
 
   return (
     <div className='balance-pdf-dialog-container'>

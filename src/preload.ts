@@ -103,7 +103,7 @@ contextBridge.exposeInMainWorld('cotizationAPI',
 
 contextBridge.exposeInMainWorld('balanceAPI',
   {
-    createBalancePdf: (startDate: string, endDate: string, sales: Sale[], egresses: Egress[]) => ipcRenderer.invoke('balanceApi:createBalancePdf', startDate, endDate, sales, egresses),
+    createBalancePdf: (startDate: string, endDate: string, sales: Sale[], egresses: Egress[], chartUrl: string) => ipcRenderer.invoke('balanceApi:createBalancePdf', startDate, endDate, sales, egresses, chartUrl),
     findBalancePdf: (rangeDate: string) => ipcRenderer.invoke('balanceApi:findBalancePdf', rangeDate),
     deleteBalancePdf: (rangeDate: string) => ipcRenderer.invoke('balanceApi:deleteBalancePdf', rangeDate)
   }

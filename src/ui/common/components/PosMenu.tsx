@@ -6,6 +6,7 @@ import { NavLink } from 'react-router';
 import type UserSession from '../../../data/model/UserSession';
 import { AiFillFileText } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 
 interface PosMenuProps {
   className?: string;
@@ -14,15 +15,17 @@ interface PosMenuProps {
 
 function PosMenu(props: PosMenuProps) {
   const { t } = useTranslation('global');
+  const location = useLocation();
 
   return (
     <div className={props.className}>
       <div className="menu-container">
         <NavLink
           to="/sales"
-          className={({ isActive }) =>
-            isActive ? "menu-item selected" : "menu-item"
-          }
+          className={({ isActive }) => {
+            const manualActive = location.pathname === "/" || location.pathname.includes("sales");
+            return isActive || manualActive ? "menu-item selected" : "menu-item";
+          }}
         >
           <PosMenuItem
             icon={<MdOutlinePointOfSale />}
@@ -73,9 +76,10 @@ function PosMenu(props: PosMenuProps) {
               </NavLink>
               <NavLink
                 to="/administration"
-                className={({ isActive }) =>
-                  isActive ? "menu-item selected" : "menu-item"
-                }
+                className={({ isActive }) => {
+                  const isInBalanceScreen = location.pathname.includes("balance");
+                  return isActive || isInBalanceScreen ? "menu-item selected" : "menu-item";
+                }}
               >
                 <PosMenuItem
                   icon={<FaShop />}

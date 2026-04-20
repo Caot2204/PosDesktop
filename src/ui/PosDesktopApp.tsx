@@ -94,7 +94,7 @@ declare global {
       deleteCotizationPdf: (cotizationId: number) => Promise<void>;
     };
     balanceAPI?: {
-      createBalancePdf: (startDate: string, endDate: string, sales: Sale[], egresses: Egress[]) => Promise<void>;
+      createBalancePdf: (startDate: string, endDate: string, sales: Sale[], egresses: Egress[], chartUrl: string) => Promise<void>;
       findBalancePdf: (rangeDate: string) => Promise<string | null>;
       deleteBalancePdf: (rangeDate: string) => Promise<void>;
     }
