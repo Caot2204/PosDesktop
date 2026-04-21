@@ -102,7 +102,7 @@ class BalancePdfMaker {
                 defaultStyle: { border: 1, borderColor: "gray" },
                 // Set the style for cells based on their column
                 columnStyles: (i) => {
-                    if (i === 0) return { width: 140, border: { left: 2 }, borderColor: { left: "black" } };
+                    if (i === 0) return { width: 140, border: { left: 2 }, borderColor: { left: "black" }, textStroke: 0.5 };
                     if (i === 1) return { width: 210, border: { right: 2 }, borderColor: { right: "black" } };
                 },
                 rowStyles: (i) => {
