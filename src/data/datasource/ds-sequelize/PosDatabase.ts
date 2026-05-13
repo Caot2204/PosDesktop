@@ -55,6 +55,7 @@ class PosDatabase {
         this.sequelize = this.buildSequelize();
         this.defineModels();
         await this.sequelize.sync();
+        await this.runMigrations();
         try {
             await this.sequelize.authenticate();
             console.log('Connection has been established successfully.');
@@ -272,6 +273,11 @@ class PosDatabase {
                     type: DataTypes.DOUBLE,
                     allowNull: false
                 },
+                amountPayedWithCard: {
+                    type: DataTypes.DOUBLE,
+                    allowNull: true,
+                    defaultValue: null
+                },
                 paymentFolio: {
                     type: DataTypes.TEXT,
                     allowNull: true,
@@ -341,7 +347,7 @@ class PosDatabase {
 
     getSaleDao() {
         if (!this.saleDao) {
-            this.saleDao = new SaleDao(this.SaleSequelize, this.SaleProductsSequelize, this.sequelize);
+            this.saleDao = new SaleDao(this.SaleSequelize, this.SaleProductsSequelize);
         }
         return this.saleDao;
     }
@@ -365,6 +371,20 @@ class PosDatabase {
             this.userDao = new UserDao(this.UserSequelize);
         }
         return this.userDao
+    }
+
+    private async runMigrations() {
+        const queryInterface = this.sequelize.getQueryInterface();
+        const tableInfo = await queryInterface.describeTable('sales');
+
+        if (!tableInfo.amountPayedWithCard) {
+            console.log('Migración: Agregando columna amountPayedWithCard a la tabla sales...');
+            await queryInterface.addColumn('sales', 'amountPayedWithCard', {
+                type: DataTypes.DOUBLE,
+                allowNull: true,
+                defaultValue: null
+            });
+        }
     }
 
     private async insertDefaultData() {

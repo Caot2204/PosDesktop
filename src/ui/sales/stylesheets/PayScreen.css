@@ -1,4 +1,4 @@
-.payscreen-container{
+.payscreen-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -16,7 +16,7 @@
   justify-content: start;
 }
 
-.payment-inputs > * {
+.payment-inputs>* {
   margin-bottom: 30px;
 }
 
@@ -62,4 +62,11 @@
 
 .cambio-label {
   font-size: 2em;
+}
+
+.payment-tarjeta-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: space-between;
 }

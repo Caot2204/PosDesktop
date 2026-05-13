@@ -7,12 +7,10 @@ class SaleDao implements ISaleDataSource {
 
     private SaleSequelize: any;
     private SaleProductsSequelize: any;
-    private sequelizeDb: any;
 
-    constructor(saleSequelize: any, saleProductsSequelize: any, sequelizeDb: any) {
+    constructor(saleSequelize: any, saleProductsSequelize: any) {
         this.SaleSequelize = saleSequelize;
         this.SaleProductsSequelize = saleProductsSequelize;
-        this.sequelizeDb = sequelizeDb;
     }
 
     private getSalesProductSold(saleId: number): Promise<SalesProduct[]> {
@@ -39,6 +37,7 @@ class SaleDao implements ISaleDataSource {
             productsSold: await this.getSalesProductSold(saleDb.id),
             paymentType: saleDb.paymentType,
             amountPayed: saleDb.amountPayed,
+            amountPayedWithCard: saleDb.amountPayedWithCard,
             paymentFolio: saleDb.paymentFolio,
             totalSale: saleDb.totalSale
         }
@@ -116,6 +115,7 @@ class SaleDao implements ISaleDataSource {
         productsSold: SalesProduct[],
         paymentType: string,
         amountPayed: number,
+        amountPayedWithCard: number | null,
         paymentFolio: string | null,
         totalSale: number): Promise<void> {
 
@@ -126,6 +126,7 @@ class SaleDao implements ISaleDataSource {
                 userToGenerateSale: userToGenerateSale,
                 paymentType: paymentType,
                 amountPayed: amountPayed,
+                amountPayedWithCard: amountPayedWithCard,
                 paymentFolio: paymentFolio,
                 totalSale: totalSale
             }).then(async () => {

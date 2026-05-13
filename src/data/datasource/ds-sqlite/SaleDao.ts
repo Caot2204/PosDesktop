@@ -58,6 +58,7 @@ class SaleDao implements ISaleDataSource {
                                 productsSold,
                                 row.paymentType,
                                 row.amountPayed,
+                                row.amountPayedWithCard,
                                 row.paymentFolio,
                                 row.totalSale
                             ));
@@ -97,6 +98,7 @@ class SaleDao implements ISaleDataSource {
                                     productsOfSale,
                                     row.paymentType,
                                     row.amountPayed,
+                                    row.amountPayedWithCard,
                                     row.paymentFolio,
                                     row.totalSale
                                 );
@@ -136,6 +138,7 @@ class SaleDao implements ISaleDataSource {
                                     productsOfSale,
                                     row.paymentType,
                                     row.amountPayed,
+                                    row.amountPayedWithCard,
                                     row.paymentFolio,
                                     row.totalSale
                                 );
@@ -167,11 +170,12 @@ class SaleDao implements ISaleDataSource {
     }
 
     saveSale(
-        dayOfSale: Date, 
-        userToGenerateSale: string, 
-        productsSold: SalesProduct[], 
+        dayOfSale: Date,
+        userToGenerateSale: string,
+        productsSold: SalesProduct[],
         paymentType: string,
         amountPayed: number,
+        amountPayedWithCard: number | null,
         paymentFolio: string | null,
         totalSale: number): Promise<void> {
         return new Promise((resolve, reject) => {
@@ -185,6 +189,7 @@ class SaleDao implements ISaleDataSource {
                     userToGenerateSale,
                     paymentType,
                     amountPayed,
+                    amountPayedWithCard,
                     paymentFolio,
                     totalSale,
                     (error: Error | null) => {

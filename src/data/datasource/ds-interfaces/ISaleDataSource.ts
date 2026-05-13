@@ -15,6 +15,7 @@ export default interface ISaleDataSource {
         productsSold: SalesProduct[],
         paymentType: string,
         amountPayed: number,
+        amountPayedWithCard: number | null,
         paymentFolio: string | null,
         totalSale: number): Promise<void>;
 

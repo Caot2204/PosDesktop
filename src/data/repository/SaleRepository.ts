@@ -66,6 +66,7 @@ class SaleRepository {
         productsSold: SaleProductModel[],
         paymentType: string,
         amountPayed: number,
+        amountPayedWithCard: number | null,
         paymentFolio: string | null,
         totalSale: number): Promise<void> {
         const salesProductToSave: SalesProduct[] = productsSold.map(product =>
@@ -82,6 +83,7 @@ class SaleRepository {
                 salesProductToSave,
                 paymentType,
                 amountPayed,
+                amountPayedWithCard,
                 paymentFolio,
                 totalSale
             );

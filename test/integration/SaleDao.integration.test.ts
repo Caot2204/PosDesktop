@@ -40,6 +40,11 @@ describe('SaleDao integration', () => {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
+      amountPayedWithCard: {
+        type: DataTypes.DOUBLE,
+        allowNull: true,
+        defaultValue: null,
+      },
       paymentFolio: {
         type: DataTypes.TEXT,
         allowNull: true,
@@ -74,7 +79,7 @@ describe('SaleDao integration', () => {
     SaleProductsModel.belongsTo(SaleModel);
 
     await sequelize.sync({ force: true });
-    dao = new SaleDao(SaleModel, SaleProductsModel, sequelize);
+    dao = new SaleDao(SaleModel, SaleProductsModel);
   });
 
   afterAll(async () => {
@@ -88,7 +93,7 @@ describe('SaleDao integration', () => {
       new SalesProduct('Mouse', 29.99, 2),
     ];
 
-    await dao.saveSale(date, 'user1', products, 'cash', 1059.98, null, 1059.97);
+    await dao.saveSale(date, 'user1', products, 'cash', 1059.98, null, null, 1059.97);
 
     const sales = await dao.getSalesPerDay(date);
     expect(sales.length).toBeGreaterThanOrEqual(1);
@@ -101,7 +106,7 @@ describe('SaleDao integration', () => {
     const date = new Date('2024-01-21T14:00:00');
     const products = [new SalesProduct('Monitor', 349.99, 1)];
 
-    await dao.saveSale(date, 'user2', products, 'card', 349.99, 'FOLIO123', 349.99);
+    await dao.saveSale(date, 'user2', products, 'card', 0, 349.99, 'FOLIO123', 349.99);
 
     const sales = await dao.getSalesPerDay(date);
     const sale = sales.find(s => s.userToGenerateSale === 'user2');
@@ -117,7 +122,7 @@ describe('SaleDao integration', () => {
       new SalesProduct('Cable', 9.99, 3),
     ];
 
-    await dao.saveSale(date, 'user3', products, 'cash', 109.97, null, 109.96);
+    await dao.saveSale(date, 'user3', products, 'cash', 109.97, null, null, 109.96);
 
     const sales = await dao.getSalesPerDay(date);
     const firstSale = sales[0];
@@ -138,7 +143,7 @@ describe('SaleDao integration', () => {
       new SalesProduct('USB Hub', 59.99, 1),
     ];
 
-    await dao.saveSale(date, 'user4', products, 'check', 399.96, 'CHECK001', 399.95);
+    await dao.saveSale(date, 'user4', products, 'check', 399.96, null, 'CHECK001', 399.95);
 
     const sales = await dao.getSalesPerDay(date);
     const sale = sales.find(s => s.userToGenerateSale === 'user4');

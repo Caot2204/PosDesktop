@@ -53,21 +53,30 @@ function NewSaleScreen(props: NewSaleScreenProps) {
   const handleAddProduct = (product: Product) => {
     const index = productsOfSale.findIndex(saleProduct => saleProduct.code === product.code);
     if (index !== -1) {
-      const updateProducts = productsOfSale.map((product, i) => (
-        i === index ? { ...product, unitsToSale: product.unitsToSale + 1 } : product
+      const existingProduct = productsOfSale[index];
+      if (existingProduct.stock !== 'infinity' && (existingProduct.unitsToSale + 1) > existingProduct.stock) {
+        showErrorNotify(t('screens.newSale.notStock', { productName: product.name }));
+        return;
+      }
+      const updateProducts = productsOfSale.map((p, i) => (
+        i === index ? { ...p, unitsToSale: p.unitsToSale + 1 } : p
       ));
       handleClearScreen();
       setProductsOfSale(updateProducts);
     } else {
-      const productToSale = new SaleProductModel(
-        product.code,
-        product.name,
-        product.unitPrice,
-        1,
-        product.isInfinityStock ? 'infinity' : product.stock
-      );
-      handleClearScreen();
-      setProductsOfSale([...productsOfSale, productToSale]);
+      if (!product.isInfinityStock && product.stock <= 0) {
+        showErrorNotify(t('screens.newSale.notStock', { productName: product.name }));
+      } else {
+        const productToSale = new SaleProductModel(
+          product.code,
+          product.name,
+          product.unitPrice,
+          1,
+          product.isInfinityStock ? 'infinity' : product.stock
+        );
+        handleClearScreen();
+        setProductsOfSale([...productsOfSale, productToSale]);
+      }
     }
   };
 
@@ -86,11 +95,16 @@ function NewSaleScreen(props: NewSaleScreenProps) {
     const index = productsOfSale.findIndex(saleProduct => saleProduct.code === code);
     if (index !== -1) {
       const updateProducts: SaleProductModel[] = productsOfSale.filter(product => code !== product.code);
+      if (updateProducts.length === 0) {
+        window.saleAPI?.clearCurrentSaleBackup()
+          .then(() => { })
+          .catch((e) => console.log(e));
+      }
       setProductsOfSale(updateProducts);
     }
   };
 
-  const handlePaySale = (paymentType: string, amountPayed: number, paymentFolio: string | null) => {
+  const handlePaySale = (paymentType: string, amountPayed: number, amountPayedWithCard: number | null, paymentFolio: string | null) => {
     const currentDate = new Date();
     window.saleAPI?.saveSale(
       currentDate,
@@ -98,6 +112,7 @@ function NewSaleScreen(props: NewSaleScreenProps) {
       productsOfSale,
       paymentType,
       paymentType === "Tarjeta" ? totalSale : amountPayed,
+      amountPayedWithCard,
       paymentFolio,
       totalSale
     )

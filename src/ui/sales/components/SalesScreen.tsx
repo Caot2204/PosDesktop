@@ -37,7 +37,10 @@ function SalesScreen(props: SalesScreenProps) {
   }, [dateToSearch]);
 
   useEffect(() => {
-    if (props.isShowed) handleGetSalesByDate(new Date());
+    if (props.isShowed) {
+      handleGetSalesByDate(new Date());
+      setSaleToShow(null);
+    }
   }, [props.isShowed]);
 
   return (
@@ -78,7 +81,7 @@ function SalesScreen(props: SalesScreenProps) {
         <p><strong>{t('screens.sales.ticketFolio')}</strong> {saleToShow?.id}</p>
         <p><strong>{t('screens.sales.ticketDate')}</strong> {saleToShow ? formatDate(saleToShow.dateOfSale) : ''}</p>
         <p><strong>{t('screens.sales.ticketAttend')}</strong> {saleToShow?.userToGenerateSale}</p>
-        <p><strong>{t('screens.sales.ticketPayType')}</strong> {saleToShow?.paymentType}</p>
+        <p><strong>{t('screens.sales.ticketPayType')}</strong> {saleToShow?.paymentType === "Hibrido" ? t('screens.sales.ticketHibridLabel') : saleToShow?.paymentType}</p>
         {
           saleToShow?.paymentFolio ?
             <p><strong>{t('screens.sales.ticketFolioTransaction')}</strong> {saleToShow?.paymentFolio}</p>
@@ -99,8 +102,19 @@ function SalesScreen(props: SalesScreenProps) {
         }
         <hr />
         <p className="ticket-total-label"><strong>{t('screens.sales.ticketTotal')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.totalSale) : ''}</p>
-        <p className="ticket-total-label"><strong>{t('screens.sales.ticketAmountPayed')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayed) : ''}</p>
-        <p className="ticket-total-label"><strong>{t('screens.sales.ticketCambio')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayed - saleToShow.totalSale) : ''}</p>
+        {
+          saleToShow?.paymentType === "Hibrido" ?
+            <>
+              <p className="ticket-total-label"><strong>{t('screens.sales.ticketAmountPayedCash')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayed) : ''}</p>
+              <p className="ticket-total-label"><strong>{t('screens.sales.ticketAmountPayedCard')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayedWithCard) : ''}</p>
+              <p className="ticket-total-label"><strong>{t('screens.sales.ticketCambio')}</strong>{saleToShow ? formatNumberToCurrentPrice((saleToShow.amountPayed + saleToShow.amountPayedWithCard) - saleToShow.totalSale) : ''}</p>
+            </>
+            :
+            <>
+              <p className="ticket-total-label"><strong>{t('screens.sales.ticketAmountPayed')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayed) : ''}</p>
+              <p className="ticket-total-label"><strong>{t('screens.sales.ticketCambio')}</strong>{saleToShow ? formatNumberToCurrentPrice(saleToShow.amountPayed - saleToShow.totalSale) : ''}</p>
+            </>
+        }
       </div>
     </div>
   );

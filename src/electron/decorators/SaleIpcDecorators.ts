@@ -20,7 +20,7 @@ class SaleIpcDecorator {
         this.ipcMain.handle('saleApi:clearCurrentSaleBackup', async (event) => {
             await this.saleRepository.clearCurrentSaleBackup();
         });
-        
+
         this.ipcMain.handle('saleApi:createCurrentSaleBackup', async (event, productsSold: SaleProductModel[]) => {
             await this.saleRepository.createCurrentSaleBackup(productsSold);
         });
@@ -32,7 +32,7 @@ class SaleIpcDecorator {
         this.ipcMain.handle('saleApi:getSaleById', async (event, saleId: number) => {
             return await this.saleRepository.getSaleById(saleId);
         });
-        
+
         this.ipcMain.handle('saleApi:getSalesByDate', async (event, dayOfSale: Date) => {
             return await this.saleRepository.getSalesByDate(dayOfSale);
         });
@@ -41,8 +41,8 @@ class SaleIpcDecorator {
             return await this.saleRepository.getSalesByRange(startDate, endDate);
         });
 
-        this.ipcMain.handle('saleApi:saveSale', async (event, dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], paymentType: string, amountPayed: number, paymentFolio: string | null, totalSale: number) => {
-            await this.saleRepository.saveSale(dateOfSale, userToGenerateSale, productsSold, paymentType, amountPayed, paymentFolio, totalSale);
+        this.ipcMain.handle('saleApi:saveSale', async (event, dateOfSale: Date, userToGenerateSale: string, productsSold: SaleProductModel[], paymentType: string, amountPayed: number, amountPayedWithCard: number | null, paymentFolio: string | null, totalSale: number) => {
+            await this.saleRepository.saveSale(dateOfSale, userToGenerateSale, productsSold, paymentType, amountPayed, amountPayedWithCard, paymentFolio, totalSale);
         });
     }
 }
