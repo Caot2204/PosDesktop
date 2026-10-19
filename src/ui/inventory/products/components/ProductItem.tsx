@@ -1,64 +1,48 @@
 import '../stylesheets/ProductItem.css';
-import { useState } from 'react';
+import { memo } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { formatNumberToCurrentPrice } from '../../../utils/FormatUtils';
-import PosConfirmDialog from '../../../common/components/PosConfirmDialog';
 import { useTranslation } from 'react-i18next';
+import type Product from '../../../../data/model/Product';
 
 interface ProductDataProps {
-  code: string;
-  name: string;
-  unitPrice: number;
-  stock: string;
-  category: string;
+  product: Product;
   minimunStock: number;
-  onUpdate: () => void;
-  onDelete: () => void;
+  onEdit: (product: Product) => void;
+  onRequestDelete: (code: string) => void;
 }
 
-function ProductItem(props: ProductDataProps) {
+function ProductItem({ product, minimunStock, onEdit, onRequestDelete }: ProductDataProps) {
   const { t } = useTranslation('global');
   const allCategoryLabel = t("screens.inventory.allCategoryLabel");
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-
-  const handleConfirmDelete = () => {
-    setShowConfirmDialog(false);
-    props.onDelete();
-  };
+  const stock = product.isInfinityStock ? t('screens.inventory.infinityLabel') : String(product.stock);
 
   return (
-    <>
-      <div className="product-data-container">
-        <div className="product-header">
-          <span className="product-name">{props.name}</span>
-          <div className="button-actions">
-            <AiOutlineEdit className="product-edit-button" onClick={props.onUpdate} />
-            <RiDeleteBin6Line className="product-delete-button" onClick={() => setShowConfirmDialog(true)} />
-          </div>
+    <div className="product-data-container">
+      <div className="product-header">
+        <span className="product-name">{product.name}</span>
+        <div className="button-actions">
+          <AiOutlineEdit className="product-edit-button" onClick={() => onEdit(product)} />
+          <RiDeleteBin6Line className="product-delete-button" onClick={() => onRequestDelete(product.code)} />
         </div>
-        <ul>
-          <li>
-            <span className="label-span">{t('items.productItem.codeLabel')}</span>&emsp;{props.code}
-          </li>
-          <li>
-            <span className="label-span">{t('items.productItem.priceLabel')}</span>&emsp;{formatNumberToCurrentPrice(props.unitPrice)}
-          </li>
-          <li>
-            <span className="label-span">{t('items.productItem.stockLabel')}</span>&emsp;<span className={ Number(props.stock) <= props.minimunStock ? "low-stock" : "" }>{props.stock}</span>
-          </li>
-          <li>
-            <span className="label-span">{t('items.productItem.categoryLabel')}</span>&emsp;{props.category == "Todos" ? allCategoryLabel : props.category}
-          </li>
-        </ul>
       </div>
-      <PosConfirmDialog
-        message={t('items.productItem.deleteMessage')}
-        isShowed={showConfirmDialog}
-        onCancel={() => setShowConfirmDialog(false)}
-        onOk={handleConfirmDelete} />
-    </>
+      <ul>
+        <li>
+          <span className="label-span">{t('items.productItem.codeLabel')}</span>&emsp;{product.code}
+        </li>
+        <li>
+          <span className="label-span">{t('items.productItem.priceLabel')}</span>&emsp;{formatNumberToCurrentPrice(product.unitPrice)}
+        </li>
+        <li>
+          <span className="label-span">{t('items.productItem.stockLabel')}</span>&emsp;<span className={ Number(stock) <= minimunStock ? "low-stock" : "" }>{stock}</span>
+        </li>
+        <li>
+          <span className="label-span">{t('items.productItem.categoryLabel')}</span>&emsp;{product.category == "Todos" ? allCategoryLabel : product.category}
+        </li>
+      </ul>
+    </div>
   );
 }
 
-export default ProductItem;
+export default memo(ProductItem);

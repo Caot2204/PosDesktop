@@ -1,7 +1,8 @@
 import '../stylesheets/ProductList.css';
-import { useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type Product from "../../../../data/model/Product";
 import ProductItem from "../../products/components/ProductItem";
+import PosConfirmDialog from "../../../common/components/PosConfirmDialog";
 import { useTranslation } from 'react-i18next';
 
 interface ProductListProps {
@@ -15,24 +16,31 @@ interface ProductListProps {
 
 function ProductList(props: ProductListProps) {
   const { t } = useTranslation('global');
-  const [productsToShow, setProductsToShow] = useState<Product[]>([]);
   const allCategoryLabel = t('screens.inventory.allCategoryLabel');
 
-  const handleDeleteProduct = async (code: string) => {
+  const [codeToDelete, setCodeToDelete] = useState<string | null>(null);
+
+  const handleRequestDelete = useCallback((code: string) => setCodeToDelete(code), []);
+
+  const handleConfirmDelete = async () => {
+    const code = codeToDelete;
+    setCodeToDelete(null);
+    if (code === null) return;
     await window.productAPI?.deleteProduct(code);
     props.onDeleteProductSuccess();
   };
 
-  useEffect(() => {
+  const productsToShow = useMemo(() => {
     let products = props.products;
     if (props.categoryFilter !== allCategoryLabel) {
       products = products.filter(product => product.category === props.categoryFilter);
     }
     if (props.searchFilter.trim() !== "") {
-      products = products.filter(product => product.name.toLowerCase().includes(props.searchFilter.toLowerCase()) || product.code.toLowerCase().includes(props.searchFilter.toLowerCase()));
+      const search = props.searchFilter.toLowerCase();
+      products = products.filter(product => product.name.toLowerCase().includes(search) || product.code.toLowerCase().includes(search));
     }
-    setProductsToShow(products);
-  }, [props.products, props.categoryFilter, props.searchFilter]);
+    return products;
+  }, [props.products, props.categoryFilter, props.searchFilter, allCategoryLabel]);
 
   return (
     <div className="products-list-container">
@@ -40,16 +48,17 @@ function ProductList(props: ProductListProps) {
         productsToShow.map((product: Product) => (
           <ProductItem
             key={product.code}
-            code={product.code}
-            name={product.name}
-            unitPrice={product.unitPrice}
-            stock={product.isInfinityStock ? t('screens.inventory.infinityLabel') : String(product.stock)}
-            category={product.category}
+            product={product}
             minimunStock={props.minimumStock}
-            onUpdate={() => props.onEditProduct(product)}
-            onDelete={() => handleDeleteProduct(product.code)} />
+            onEdit={props.onEditProduct}
+            onRequestDelete={handleRequestDelete} />
         ))
       }
+      <PosConfirmDialog
+        message={t('items.productItem.deleteMessage')}
+        isShowed={codeToDelete !== null}
+        onCancel={() => setCodeToDelete(null)}
+        onOk={handleConfirmDelete} />
     </div>
   );
 }

@@ -64,10 +64,10 @@ function InventoryScreen() {
     setSearchFilter("");
   };
 
-  const handleEditProduct = (product: Product) => {
+  const handleEditProduct = useCallback((product: Product) => {
     setOpenDialog("productForm");
     setProductToEdit(product);
-  };
+  }, []);
 
   useEffect(() => {
     window.posConfigAPI?.getPosConfig()

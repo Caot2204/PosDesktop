@@ -69,6 +69,32 @@ function EgressScreen(props: EgressScreenProps) {
     }
   };
 
+  const showAllEgresses = async () => {
+    const egressesDb = await window.egressAPI?.getAllEgresses();
+    if (egressesDb) {
+      const normalized = egressesDb.map((eg: any) => {
+        // ensure dateOfEgress is a local Date object
+        let dateObj: Date | null = null;
+        if (eg.dateOfEgress) {
+          if (typeof eg.dateOfEgress === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(eg.dateOfEgress)) {
+            dateObj = parseLocalDate(eg.dateOfEgress);
+          } else {
+            dateObj = new Date(eg.dateOfEgress);
+          }
+        }
+        return {
+          ...eg,
+          dateOfEgress: dateObj
+        };
+      });
+
+      setEgresses(normalized);
+      setLoadingData(false);
+    } else {
+      showErrorNotify(t('screens.egresses.errorLoadEgresses'));
+    }
+  };
+
   const handleEdit = async (egress: Egress) => {
     setEgressToEdit(egress);
     setOpenDialog('egressForm');
@@ -101,13 +127,19 @@ function EgressScreen(props: EgressScreenProps) {
       <div className='egressescreen-container'>
         <div className={openDialog ? 'egress-actions-container filter-blur' : 'egress-actions-container'}>
           <PosButton
-              className="add-egress-button"
-              icon={<IoAddOutline />}
-              label={t('screens.egresses.newEgress')}
-              onClick={() => {
-                setOpenDialog('egressForm');
-              }} />
+            className="add-egress-button"
+            icon={<IoAddOutline />}
+            label={t('screens.egresses.newEgress')}
+            onClick={() => {
+              setOpenDialog('egressForm');
+            }} />
           <div className='date-filter-input'>
+            <PosButton
+              className='second-button'
+              label={t('screens.egresses.showAllEgresess')}
+              onClick={() => {
+                showAllEgresses()
+              }} />
             <input
               type='date'
               value={toInputDateValue(dateFilter)}

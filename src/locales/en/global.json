@@ -120,7 +120,8 @@
       "amountLabel": "Amount",
       "userRegisteredLabel": "User who recorded",
       "descriptionLabel": "Description",
-      "deleteMessage": "Do you want to delete this expense?"
+      "deleteMessage": "Do you want to delete this expense?",
+      "showAllEgresess": "Mostrar todos los egresos"
     },
     "firstUse": {
       "errorPasswords": "Passwords do not match",

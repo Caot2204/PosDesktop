@@ -120,7 +120,8 @@
       "amountLabel": "Monto",
       "userRegisteredLabel": "Usuario que registró",
       "descriptionLabel": "Descripción",
-      "deleteMessage": "¿Desea eliminar este egreso?"
+      "deleteMessage": "¿Desea eliminar este egreso?",
+      "showAllEgresess": "Mostrar todos los egresos"
     },
     "firstUse": {
       "errorPasswords": "Las contraseñas no coinciden",
