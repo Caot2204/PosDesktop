@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Menu, protocol, net } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, protocol, net, dialog } from 'electron';
 import path from 'path';
 import { pathToFileURL } from 'url';
 import { autoUpdater } from 'electron-updater';
@@ -24,15 +24,21 @@ if (process.platform === 'win32') {
 
 
 
+let mainWindow: BrowserWindow | null = null;
+
 const createWindow = (): void => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     icon: path.join(__dirname, 'icons', 'icon.ico'),
     height: 600,
     width: 800,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     },
+  });
+
+  mainWindow.on('closed', () => {
+    mainWindow = null;
   });
 
   // and load the index.html of the app.
@@ -113,5 +119,85 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-// Check for updates and notify the user
-autoUpdater.checkForUpdatesAndNotify();
+// Configuración de actualizaciones automáticas
+const isSpanish = () => app.getLocale().toLowerCase().startsWith('es');
+
+const i18nUpdater = {
+  updateAvailable: (version: string) => ({
+    title: isSpanish() ? 'Actualización disponible' : 'Update Available',
+    message: isSpanish()
+      ? `Hay una nueva versión disponible (${version}).`
+      : `A new version is available (${version}).`,
+    detail: isSpanish()
+      ? '¿Deseas descargarla ahora?'
+      : 'Would you like to download it now?',
+    buttons: isSpanish() ? ['Descargar', 'Más tarde'] : ['Download', 'Later'],
+  }),
+  updateDownloaded: (version: string) => ({
+    title: isSpanish() ? 'Actualización lista' : 'Update Ready',
+    message: isSpanish()
+      ? `La versión ${version} se ha descargado correctamente.`
+      : `Version ${version} has been downloaded successfully.`,
+    detail: isSpanish()
+      ? '¿Deseas reiniciar la aplicación ahora para instalar la actualización?'
+      : 'Would you like to restart the application now to install the update?',
+    buttons: isSpanish() ? ['Reiniciar y actualizar', 'Más tarde'] : ['Restart and update', 'Later'],
+  }),
+};
+
+autoUpdater.autoDownload = false; // No descargar automáticamente
+
+autoUpdater.on('update-available', (info) => {
+  const t = i18nUpdater.updateAvailable(info.version);
+  const options: Electron.MessageBoxOptions = {
+    type: 'question',
+    title: t.title,
+    message: t.message,
+    detail: t.detail,
+    buttons: t.buttons,
+    defaultId: 0,
+    cancelId: 1,
+  };
+
+  const showDialog = mainWindow && !mainWindow.isDestroyed()
+    ? dialog.showMessageBox(mainWindow, options)
+    : dialog.showMessageBox(options);
+
+  showDialog.then((result) => {
+    if (result.response === 0) {
+      autoUpdater.downloadUpdate();
+    }
+  });
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+  const t = i18nUpdater.updateDownloaded(info.version);
+  const options: Electron.MessageBoxOptions = {
+    type: 'info',
+    title: t.title,
+    message: t.message,
+    detail: t.detail,
+    buttons: t.buttons,
+    defaultId: 0,
+    cancelId: 1,
+  };
+
+  const showDialog = mainWindow && !mainWindow.isDestroyed()
+    ? dialog.showMessageBox(mainWindow, options)
+    : dialog.showMessageBox(options);
+
+  showDialog.then((result) => {
+    if (result.response === 0) {
+      autoUpdater.quitAndInstall();
+    }
+  });
+});
+
+autoUpdater.on('error', (error) => {
+  console.error('Error en el actualizador automático:', error);
+});
+
+// Iniciar búsqueda de actualizaciones
+autoUpdater.checkForUpdates().catch((error) => {
+  console.error('Error al verificar actualizaciones:', error);
+});
