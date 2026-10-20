@@ -41,7 +41,15 @@
       "loadBackupErrorMessage": "Error loading backup, please try again",
       "loadBackupCanceledMessage": "Backup loading canceled by user",
       "loadBackupSuccessMessage": "Backup loaded successfully, the application will restart to apply the changes",
-      "showBalance": "Balances"
+      "showBalance": "Balances",
+      "themeTitle": "Theme",
+      "classicTheme": "Classic",
+      "corporateTheme": "Blue",
+      "pinkTheme": "Pink",
+      "purpleTheme": "Purple",
+      "redTheme": "Red",
+      "yellowTheme": "Yellow",
+      "darkTheme": "Dark"
     },
     "balance": {
       "title": "Balance",

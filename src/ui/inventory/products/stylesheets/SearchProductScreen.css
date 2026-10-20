@@ -13,7 +13,7 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  border: 2px solid rgb(140 140 140);
+  border: 2px solid var(--border-table-color);
   font-family: sans-serif;
   font-size: 0.8rem;
   letter-spacing: 1px;
@@ -27,19 +27,19 @@ caption {
 
 thead,
 tfoot {
-  background-color: rgb(192, 255, 137);
+  background-color: var(--bg-tfoot);
 }
 
 .product-list thead th {
   position: sticky;
   top: 0;
-  background-color: rgb(192, 255, 137); /* same as your header */
+  background-color: var(--bg-tfoot);
   z-index: 2;
 }
 
 th,
 td {
-  border: 1px solid rgb(160, 160, 160);
+  border: 1px solid var(--border-td);
   padding: 8px 10px;
 }
 
@@ -47,8 +47,8 @@ td:last-of-type {
   text-align: center;
 }
 
-tbody > tr:nth-of-type(even) {
-  background-color: rgb(232, 255, 230);
+tbody>tr:nth-of-type(even) {
+  background-color: var(--bg-tbody);
 }
 
 tr {
@@ -56,6 +56,6 @@ tr {
 }
 
 .selected-row {
-  background-color: #81c784 !important;
-  color: white;
+  background-color: var(--selected-row-color) !important;
+  color: var(--text-inverse);
 }

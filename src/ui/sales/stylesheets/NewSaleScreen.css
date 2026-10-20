@@ -1,14 +1,15 @@
 .new-sale-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px); /* Full viewport height */
+  height: calc(100vh - 80px);
+  /* Full viewport height */
 }
 
 .pos-dialog {
   width: calc(50vw);
   height: fit-content;
   border: none;
-  box-shadow: 0px 1px 3px 0px #838282;
+  box-shadow: 0px 1px 3px 0px var(--box-shadow);
   border-radius: 10px;
   position: fixed;
   top: 50%;
@@ -19,8 +20,10 @@
 
 .filter-blur {
   filter: blur(8px);
-  pointer-events: none; /* Optional: prevent interaction with blurred content */
-  user-select: none;    /* Optional: prevent text selection */
+  pointer-events: none;
+  /* Optional: prevent interaction with blurred content */
+  user-select: none;
+  /* Optional: prevent text selection */
 }
 
 .header-dialog {
@@ -35,13 +38,13 @@
   height: fit-content;
 }
 
-.code-input > * {
+.code-input>* {
   margin: 5px;
 }
 
 .code-input-sale {
   border-radius: 10px;
-  border: 3px solid #d9d9d9;
+  border: 3px solid var(--border-color);
 }
 
 .codebar-icon {
@@ -52,9 +55,9 @@
 .search-button {
   width: 200px;
   height: 40px;
-  background-color: #BCECE7;
-  border: 1px solid #d9d9d9;
-  color: black;
+  background-color: var(--bg-accent);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
 }
 
 .pay-container {
@@ -101,7 +104,7 @@
   width: 60px;
   height: 60px;
   border-radius: 10px;
-  box-shadow: 0px 1px 3px 0px #838282;
+  box-shadow: 0px 1px 3px 0px var(--box-shadow);
 }
 
 .sale-buttons-extra {
@@ -114,7 +117,7 @@
 .extra-button {
   width: 150px;
   height: 40px;
-  background-color: #BCECE7;
-  color: #000;
-  border: 1px solid #d9d9d9;
+  background-color: var(--bg-accent);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
 }

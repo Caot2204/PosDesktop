@@ -47,9 +47,9 @@
 .bussiness-logo-administration {
   width: 200px;
   height: 200px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
-  box-shadow: 0 1px 3px 0px #838282;
+  box-shadow: 0 1px 3px 0px var(--box-shadow);
 }
 
 .pos-label {
@@ -85,8 +85,8 @@
 }
 
 .load-backup-button {
-  background-color: aliceblue;
-  color: black;
+  background-color: var(--color-secondary);
+  color: var(--text-main);
 }
 
 .save-config-container {

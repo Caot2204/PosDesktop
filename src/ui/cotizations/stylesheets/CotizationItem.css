@@ -1,6 +1,6 @@
 .cotization-data-row {
   height: 40px;
-  background-color: #FFFFFF;
+  background-color: var(--bg-app);
 }
 
 .cotization-button-actions {
@@ -10,25 +10,25 @@
   align-items: center;
 }
 
-.cotization-button-actions > * {
+.cotization-button-actions>* {
   margin: 0 8px;
   cursor: pointer;
 }
 
 .cotization-buy-cotization-button {
-  color: green;
+  color: var(--color-primary);
 }
 
 .cotization-pdf-button {
-  color: teal;
+  color: var(--hover-search-icon);
 }
 
 .cotization-edit-button {
-  color: black;
+  color: var(--text-main);
 }
 
 .cotization-delete-button {
-  color: red;
+  color: var(--back-color);
 }
 
 .cotization-actions-cell {

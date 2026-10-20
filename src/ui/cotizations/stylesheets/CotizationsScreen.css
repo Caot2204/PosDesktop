@@ -44,7 +44,7 @@
   /* fallback for contexts where specificity isn't applied */
   max-width: 1200px;
   border: none;
-  box-shadow: 0px 1px 3px 0px #838282;
+  box-shadow: 0px 1px 3px 0px var(--box-shadow);
   border-radius: 10px;
   position: fixed;
   top: 50%;
@@ -58,7 +58,7 @@
   /* fallback for contexts where specificity isn't applied */
   max-width: 1200px;
   border: none;
-  box-shadow: 0px 1px 3px 0px #838282;
+  box-shadow: 0px 1px 3px 0px var(--box-shadow);
   border-radius: 10px;
   position: fixed;
   top: 50%;

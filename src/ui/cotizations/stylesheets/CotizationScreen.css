@@ -1,16 +1,17 @@
 .cotizationscreen-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px); /* Full viewport height */
+  height: calc(100vh - 80px);
+  /* Full viewport height */
 }
 
-.cotizationscreen-container > * {
+.cotizationscreen-container>* {
   margin-bottom: 8px;
 }
 
 .back-container {
   width: 25px;
-  color: red;
+  color: var(--back-color);
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -39,7 +40,7 @@
   align-items: center;
 }
 
-.total-cotization-container > * {
+.total-cotization-container>* {
   margin-bottom: 8px;
 }
 
@@ -54,7 +55,7 @@
   width: calc(50vw);
   height: fit-content;
   border: none;
-  box-shadow: 0px 1px 3px 0px #838282;
+  box-shadow: 0px 1px 3px 0px var(--box-shadow);
   border-radius: 10px;
   position: fixed;
   top: 50%;
@@ -65,8 +66,10 @@
 
 .filter-blur {
   filter: blur(8px);
-  pointer-events: none; /* Optional: prevent interaction with blurred content */
-  user-select: none;    /* Optional: prevent text selection */
+  pointer-events: none;
+  /* Optional: prevent interaction with blurred content */
+  user-select: none;
+  /* Optional: prevent text selection */
 }
 
 .cotization-button {
@@ -74,6 +77,6 @@
 }
 
 .guardar {
-  background-color: aliceblue;
-  color: black;
+  background-color: var(--color-secondary);
+  color: var(--text-main);
 }

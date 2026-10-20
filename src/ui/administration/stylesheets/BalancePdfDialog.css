@@ -10,9 +10,9 @@
 
 .back-button {
   width: 100px;
-  color: red;
+  color: var(--back-color);
   cursor: pointer;
-  background-color: white;
+  background-color: var(--bg-app);
   border: none;
 }
 

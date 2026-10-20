@@ -1,6 +1,6 @@
 .search-input {
   border-radius: 10px;
-  border: 2px solid #d9d9d9;
+  border: 2px solid var(--border-color);
 }
 
 .inventory-container {
@@ -19,10 +19,10 @@
   flex-direction: column;
   align-items: center;
   box-shadow: 0px 1px 3px 0px #838282;
-  background-color: white;
+  background-color: var(--bg-app);
 }
 
-.actions-container > * {
+.actions-container>* {
   margin: 8px;
 }
 
@@ -57,7 +57,7 @@
   padding-left: 10px;
 }
 
-.search-product-container > * {
+.search-product-container>* {
   margin: 4px;
   align-items: center;
 }
@@ -72,7 +72,7 @@
   width: calc(50%);
   height: fit-content;
   border: none;
-  box-shadow: 0px 1px 3px 0px #838282;
+  box-shadow: 0px 1px 3px 0px var(--box-shadow);
   border-radius: 10px;
   position: fixed;
   top: 50%;
@@ -83,13 +83,15 @@
 
 .close-dialog-button {
   cursor: pointer;
-  color: red;
+  color: var(--back-color);
   width: 25px;
   height: 25px;
 }
 
 .filter-blur {
   filter: blur(8px);
-  pointer-events: none; /* Optional: prevent interaction with blurred content */
-  user-select: none;    /* Optional: prevent text selection */
+  pointer-events: none;
+  /* Optional: prevent interaction with blurred content */
+  user-select: none;
+  /* Optional: prevent text selection */
 }

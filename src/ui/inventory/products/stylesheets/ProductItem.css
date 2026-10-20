@@ -2,9 +2,9 @@
 	min-width: 200px;
 	height: fit-content;
 	padding: 8px;
-	background-color: #F9FAEF;
+	background-color: var(--bg-app);
 	border-radius: 5px;
-	box-shadow: 0px 0px 5px 0px #838282;
+	box-shadow: 0px 0px 5px 0px var(--box-shadow);
 }
 
 .product-header {
@@ -13,7 +13,7 @@
 	align-items: center;
 }
 
-.button-actions > * {
+.button-actions>* {
 	margin: 4px;
 }
 
@@ -24,17 +24,17 @@
 
 .product-edit-button {
 	cursor: pointer;
-	color: black;
+	color: var(--text-main);
 	height: 100%;
 }
 
 .product-delete-button {
 	cursor: pointer;
-	color: red;
+	color: var(--back-color);
 }
 
 .low-stock {
-	color: red;
+	color: var(--low-stock-color);
 }
 
 .label-span {

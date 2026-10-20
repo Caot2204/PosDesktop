@@ -1,9 +1,9 @@
 .category-container {
   min-width: 200px;
   min-height: 65px;
-  background-color: #F9FAEF;
+  background-color: var(--bg-card);
   padding: 8px 16px;
-  box-shadow: 0 1px 5px 0px #838282;
+  box-shadow: 0 1px 5px 0px var(--box-shadow);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,7 +22,7 @@
 .category-name {
   font-family: Inter, sans-serif;
   font-size: 1em;
-  color: #000;
+  color: var(--text-main);
 }
 
 .category-icon {
@@ -32,9 +32,9 @@
 }
 
 .edit {
-  color: #000;
+  color: var(--text-main);
 }
 
 .delete {
-  color: red;
+  color: var(--back-color);
 }

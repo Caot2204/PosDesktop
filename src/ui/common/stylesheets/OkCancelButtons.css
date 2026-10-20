@@ -8,7 +8,7 @@
 
 .cancel-button {
   background-color: transparent;
-  color: black;
+  color: var(--text-main);
   border: none;
 }
 

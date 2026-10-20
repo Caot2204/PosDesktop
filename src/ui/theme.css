@@ -1,0 +1,210 @@
+/* ========================================================
+   TEMA POR DEFECTO (Verde - Actual del POS)
+   ======================================================== */
+:root,
+[data-theme="verde"] {
+    --color-primary: #4C662B;
+    --color-primary-hover: #83b941;
+    --color-secondary: aliceblue;
+    --bg-app: #FFFFFF;
+    --bg-card: #F9FAEF;
+    --bg-accent: #BCECE7;
+    --text-main: black;
+    --text-inverse: #FFFFFF;
+    --border-color: #d9d9d9;
+    --box-shadow: #838282;
+    --back-color: red;
+    --sales-color: greenyellow;
+    --egresses-color: red;
+    --net-color: blue;
+    --disabled-button: gray;
+    --menu-item-color: #767676;
+    --border-menu: #767676;
+    --menu-selected-color: #586249;
+    --text-menu-selected: white;
+    --hover-search-icon: blue;
+    --low-stock-color: red;
+    --border-table-color: rgb(140 140 140);
+    --bg-tfoot: rgb(192, 255, 137);
+    --border-td: rgb(160, 160, 160);
+    --bg-tbody: rgb(232, 255, 230);
+    --selected-row-color: #81c784;
+    --border-payamount: black;
+    --border-sales-folio: black;
+    --border-ticket-container: black;
+}
+
+/* ========================================================
+   TEMA AZUL (Corporativo)
+   ======================================================== */
+[data-theme="azul"] {
+    --color-primary: #1976D2;
+    --color-primary-hover: #1565C0;
+    --color-secondary: #e3f2fd;
+    --bg-app: #FFFFFF;
+    --bg-card: #F0F4F8;
+    --bg-accent: #89f5bf;
+    --text-main: black;
+    --text-inverse: #FFFFFF;
+    --border-color: #d9d9d9;
+    --box-shadow: #838282;
+    --back-color: #d32f2f;
+    --sales-color: greenyellow;
+    --egresses-color: red;
+    --net-color: blue;
+    --disabled-button: gray;
+    --menu-item-color: #767676;
+    --border-menu: #767676;
+    --menu-selected-color: #1565C0;
+    --text-menu-selected: white;
+    --hover-search-icon: #1976D2;
+    --low-stock-color: red;
+    --border-table-color: rgb(140 140 140);
+    --bg-tfoot: #BBDEFB;
+    --border-td: rgb(160, 160, 160);
+    --bg-tbody: #E3F2FD;
+    --selected-row-color: #90CAF9;
+    --border-payamount: black;
+    --border-sales-folio: black;
+    --border-ticket-container: black;
+}
+
+/* ========================================================
+   TEMA ROSADO
+   ======================================================== */
+[data-theme="rosado"] {
+    --color-primary: #D81B60;
+    --color-primary-hover: #EC407A;
+    --color-secondary: #FCE4EC;
+    --bg-app: #FFFFFF;
+    --bg-card: #FFF0F5;
+    --bg-accent: #eeb6f7;
+    --text-main: black;
+    --text-inverse: #FFFFFF;
+    --border-color: #d9d9d9;
+    --box-shadow: #838282;
+    --back-color: #C2185B;
+    --sales-color: greenyellow;
+    --egresses-color: red;
+    --net-color: blue;
+    --disabled-button: gray;
+    --menu-item-color: #767676;
+    --border-menu: #767676;
+    --menu-selected-color: #AD1457;
+    --text-menu-selected: white;
+    --hover-search-icon: #D81B60;
+    --low-stock-color: #D81B60;
+    --border-table-color: rgb(140 140 140);
+    --bg-tfoot: #F8BBD0;
+    --border-td: rgb(160, 160, 160);
+    --bg-tbody: #FCE4EC;
+    --selected-row-color: #F48FB1;
+    --border-payamount: black;
+    --border-sales-folio: black;
+    --border-ticket-container: black;
+}
+
+/* ========================================================
+   TEMA MORADO
+   ======================================================== */
+[data-theme="morado"] {
+    --color-primary: #7B1FA2;
+    --color-primary-hover: #9C27B0;
+    --color-secondary: #F3E5F5;
+    --bg-app: #FFFFFF;
+    --bg-card: #F8F0FB;
+    --bg-accent: #f7cbd0;
+    --text-main: black;
+    --text-inverse: #FFFFFF;
+    --border-color: #d9d9d9;
+    --box-shadow: #838282;
+    --back-color: #d32f2f;
+    --sales-color: greenyellow;
+    --egresses-color: red;
+    --net-color: blue;
+    --disabled-button: gray;
+    --menu-item-color: #767676;
+    --border-menu: #767676;
+    --menu-selected-color: #6A1B9A;
+    --text-menu-selected: white;
+    --hover-search-icon: #7B1FA2;
+    --low-stock-color: red;
+    --border-table-color: rgb(140 140 140);
+    --bg-tfoot: #E1BEE7;
+    --border-td: rgb(160, 160, 160);
+    --bg-tbody: #F3E5F5;
+    --selected-row-color: #CE93D8;
+    --border-payamount: black;
+    --border-sales-folio: black;
+    --border-ticket-container: black;
+}
+
+/* ========================================================
+   TEMA ROJO
+   ======================================================== */
+[data-theme="rojo"] {
+    --color-primary: #C62828;
+    --color-primary-hover: #E53935;
+    --color-secondary: #FFEBEE;
+    --bg-app: #FFFFFF;
+    --bg-card: #FFF5F5;
+    --bg-accent: #fcccad;
+    --text-main: black;
+    --text-inverse: #FFFFFF;
+    --border-color: #d9d9d9;
+    --box-shadow: #838282;
+    --back-color: #B71C1C;
+    --sales-color: greenyellow;
+    --egresses-color: red;
+    --net-color: blue;
+    --disabled-button: gray;
+    --menu-item-color: #767676;
+    --border-menu: #767676;
+    --menu-selected-color: #B71C1C;
+    --text-menu-selected: white;
+    --hover-search-icon: #C62828;
+    --low-stock-color: #B71C1C;
+    --border-table-color: rgb(140 140 140);
+    --bg-tfoot: #fc6969;
+    --border-td: rgb(160, 160, 160);
+    --bg-tbody: #FFEBEE;
+    --selected-row-color: #E57373;
+    --border-payamount: black;
+    --border-sales-folio: black;
+    --border-ticket-container: black;
+}
+
+/* ========================================================
+   TEMA AMARILLO
+   ======================================================== */
+[data-theme="amarillo"] {
+    --color-primary: #F9A825;
+    --color-primary-hover: #FBC02D;
+    --color-secondary: #FFFDE7;
+    --bg-app: #FFFFFF;
+    --bg-card: #FFFDF0;
+    --bg-accent: #f0ecca;
+    --text-main: black;
+    --text-inverse: #212121;
+    --border-color: #d9d9d9;
+    --box-shadow: #838282;
+    --back-color: #d32f2f;
+    --sales-color: greenyellow;
+    --egresses-color: red;
+    --net-color: blue;
+    --disabled-button: gray;
+    --menu-item-color: #767676;
+    --border-menu: #767676;
+    --menu-selected-color: #F9A825;
+    --text-menu-selected: #212121;
+    --hover-search-icon: #F57F17;
+    --low-stock-color: red;
+    --border-table-color: rgb(140 140 140);
+    --bg-tfoot: #FFF59D;
+    --border-td: rgb(160, 160, 160);
+    --bg-tbody: #FFFDE7;
+    --selected-row-color: #FFE082;
+    --border-payamount: black;
+    --border-sales-folio: black;
+    --border-ticket-container: black;
+}

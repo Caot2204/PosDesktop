@@ -1,5 +1,5 @@
 select {
-  background-color: white;
+  background-color: var(--bg-app);
   width: calc(100% - 10px);
   height: 40px;
   border-radius: 10px;

@@ -41,7 +41,15 @@
       "loadBackupErrorMessage": "Error al cargar el respaldo, inténtelo de nuevo",
       "loadBackupCanceledMessage": "Carga de respaldo cancelada por el usuario",
       "loadBackupSuccessMessage": "Respaldo cargado con éxito, la aplicación se reiniciará para aplicar los cambios",
-      "showBalance": "Balances"
+      "showBalance": "Balances",
+      "themeTitle": "Tema",
+      "classicTheme": "Clásico",
+      "corporateTheme": "Azúl",
+      "pinkTheme": "Rosado",
+      "purpleTheme": "Morado",
+      "redTheme": "Rojo",
+      "yellowTheme": "Amarillo",
+      "darkTheme": "Oscuro"
     },
     "balance": {
       "title": "Balance",

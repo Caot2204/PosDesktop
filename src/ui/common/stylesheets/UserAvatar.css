@@ -13,6 +13,6 @@
 }
 
 .logout-icon {
-  color: red;
+  color: var(--back-color);
   cursor: pointer;
 }

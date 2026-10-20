@@ -17,7 +17,7 @@
 }
 
 .search-icon:hover {
-  color: blue;
+  color: var(--hover-search-icon);
   transition: 0.3s;
 }
 

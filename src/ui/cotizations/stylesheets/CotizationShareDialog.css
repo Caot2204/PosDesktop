@@ -1,5 +1,5 @@
 .message-container {
-    box-shadow: 0px 1px 10px 0px #D9D9D9;
+    box-shadow: 0px 1px 10px 0px var(--border-color);
     border-radius: 10px;
     padding: 20px;
     border: none;
@@ -21,7 +21,7 @@
 
 .sharepdf-button {
     background-color: transparent;
-    color: black;
+    color: var(--text-main);
 }
 
 .shareemail-button {

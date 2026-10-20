@@ -16,7 +16,7 @@
 
 .sales-folio-input {
   width: 100%;
-  border: 1px solid #000;
+  border: 1px solid var(--border-sales-folio);
   border-radius: 5px;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .ticket-container {
-  border: 1px solid #000;
+  border: 1px solid var(--border-ticket-container);
   width: calc(100% - 200px);
   overflow-y: auto;
 }
@@ -54,7 +54,8 @@
   margin-left: 10px;
 }
 
-.ticket-products-header, .product-sold-container {
+.ticket-products-header,
+.product-sold-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

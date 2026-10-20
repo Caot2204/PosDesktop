@@ -8,7 +8,7 @@
 .sales-product-list {
   width: 100%;
   border-collapse: collapse;
-  border: 2px solid rgb(140 140 140);
+  border: 2px solid var(--border-table-color);
   font-family: sans-serif;
   font-size: 0.8rem;
   letter-spacing: 1px;
@@ -19,7 +19,8 @@
 .sales-product-list thead th {
   position: sticky;
   top: 0;
-  background-color: rgb(192, 255, 137); /* same as your header */
+  background-color: var(--bg-tfoot);
+  /* same as your header */
   z-index: 2;
   padding: 8px 10px;
 }
@@ -32,46 +33,52 @@
 
 .sales-product-list th:nth-child(1),
 .sales-product-list td:nth-child(1) {
-  width: 15%; /* Adjust as needed for "Código" */
+  width: 15%;
+  /* Adjust as needed for "Código" */
   min-width: 100px;
   max-width: 180px;
 }
 
 .sales-product-list th:nth-child(2),
 .sales-product-list td:nth-child(2) {
-  width: 45%; /* Adjust as needed for "Nombre" */
+  width: 45%;
+  /* Adjust as needed for "Nombre" */
   min-width: 200px;
   max-width: 600px;
 }
 
 .sales-product-list th:nth-child(3),
 .sales-product-list td:nth-child(3) {
-  width: 15%; /* Adjust as needed for "Precio" */
+  width: 15%;
+  /* Adjust as needed for "Precio" */
   min-width: 100px;
   max-width: 180px;
 }
 
 .sales-product-list th:nth-child(4),
 .sales-product-list td:nth-child(4) {
-  width: 10%; /* Adjust as needed for "Unidades" */
+  width: 10%;
+  /* Adjust as needed for "Unidades" */
   min-width: 100px;
   max-width: 180px;
 }
 
 .sales-product-list th:nth-child(5),
 .sales-product-list td:nth-child(5) {
-  width: 15%; /* Adjust as needed for "Subtotal" */
+  width: 15%;
+  /* Adjust as needed for "Subtotal" */
   min-width: 100px;
   max-width: 180px;
 }
 
-.product-sale-item > th, td {
+.product-sale-item>th,
+td {
   text-align: center;
-  border: 1px solid rgb(160, 160, 160);
+  border: 1px solid var(--border-td);
 }
 
-.product-list > tbody > tr:nth-of-type(even) {
-  background-color: rgb(232, 255, 230);
+.product-list>tbody>tr:nth-of-type(even) {
+  background-color: var(--bg-tbody);
 }
 
 .product-list tbody tr {
@@ -100,7 +107,7 @@
 .units-icon {
   width: 20px;
   height: auto;
-  color: #000;
+  color: var(--text-main);
 }
 
 /* Hide default arrows in Chrome, Safari, Edge */
@@ -111,8 +118,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .delete-button {
-	cursor: pointer;
-	color: red;
+  cursor: pointer;
+  color: var(--back-color);
   width: 20px;
   height: 20px;
   padding: 5px;

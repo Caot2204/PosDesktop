@@ -31,7 +31,7 @@
 }
 
 .payamount-input {
-  border: 1px solid #000;
+  border: 1px solid var(--border-payamount);
   border-radius: 5px;
 }
 

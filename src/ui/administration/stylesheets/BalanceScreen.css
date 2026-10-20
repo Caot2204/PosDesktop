@@ -14,7 +14,7 @@
 
 .close-button {
   margin: 0;
-  color: red;
+  color: var(--back-color);
 }
 
 .range-dates-container {
@@ -33,7 +33,7 @@
 
 .search-button {
   border-radius: 10px;
-  color: black;
+  color: var(--text-main);
   cursor: pointer;
   font-size: 1.2rem;
 }
@@ -59,7 +59,7 @@
   flex-direction: column;
   padding: 10px;
   width: 200px;
-  border: 1px solid black;
+  border: 1px solid var(--text-main);
   border-radius: 10px;
 }
 
@@ -74,15 +74,15 @@
 }
 
 .sales {
-  box-shadow: 0 2px 2px 0 greenyellow;
+  box-shadow: 0 2px 2px 0 var(--sales-color);
 }
 
 .egresses {
-  box-shadow: 0 2px 2px 0 red;
+  box-shadow: 0 2px 2px 0 var(--egresses-color);
 }
 
 .net {
-  box-shadow: 0 2px 2px 0 blue;
+  box-shadow: 0 2px 2px 0 var(--net-color);
 }
 
 .chart-container {
@@ -114,7 +114,7 @@
   /* fallback for contexts where specificity isn't applied */
   max-width: 1200px;
   border: none;
-  box-shadow: 0px 1px 3px 0px #838282;
+  box-shadow: 0px 1px 3px 0px var(--box-shadow);
   border-radius: 10px;
   position: fixed;
   top: 50%;

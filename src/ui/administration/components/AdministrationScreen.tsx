@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import PosConfirmDialog from '../../../ui/common/components/PosConfirmDialog';
 import { NavLink } from 'react-router';
+import { ThemeSelector } from './ThemeSelector';
 
 const defaultLogo = '../../assets/react.svg';
 
@@ -116,6 +117,7 @@ function AdministrationScreen() {
           <option value="es" selected={posLanguage === "es"}>Español</option>
           <option value="en" selected={posLanguage === "en"}>English</option>
         </select>
+        <ThemeSelector />
       </div>
       <div className={openDialog ? "backup-container filter-blur" : "backup-container"}>
         <h3>{t('screens.administration.backupTitle')}</h3>

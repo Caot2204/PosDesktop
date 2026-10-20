@@ -1,6 +1,6 @@
 .egress-data-container {
   height: 40px;
-  background-color: #FFFFFF;
+  background-color: var(--bg-app);
 }
 
 .egress-button-actions {
@@ -10,19 +10,19 @@
   align-items: center;
 }
 
-.egress-button-actions > * {
+.egress-button-actions>* {
   margin: 0 8px;
 }
 
 .egress-edit-button {
   cursor: pointer;
-  color: black;
+  color: var(--text-main);
   font-size: 18px;
 }
 
 .egress-delete-button {
   cursor: pointer;
-  color: red;
+  color: var(--back-color);
   font-size: 18px;
 }
 

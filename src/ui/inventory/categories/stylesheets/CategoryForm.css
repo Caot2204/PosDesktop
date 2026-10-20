@@ -12,5 +12,5 @@ span {
 }
 
 .error-message-container {
-  color: red;
+  color: var(--back-color);
 }
