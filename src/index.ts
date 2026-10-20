@@ -17,6 +17,11 @@ protocol.registerSchemesAsPrivileged([
 
 const dataSourceConfigurator = new DataSourceConfigurator(ipcMain);
 
+// Debe coincidir con build.appId de package.json; si no, Windows no asocia la ventana con el acceso anclado
+if (process.platform === 'win32') {
+  app.setAppUserModelId('caot2204.posdesktop');
+}
+
 
 
 const createWindow = (): void => {
