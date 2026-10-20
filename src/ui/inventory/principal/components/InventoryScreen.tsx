@@ -35,6 +35,7 @@ function InventoryScreen() {
     try {
       window.productAPI?.getAllProducts().then((fetchedProducts: Product[]) => {
         setFetchedProducts(fetchedProducts);
+        setLoadingData(false);
       });
     } catch (error) {
       showErrorNotify(t('screens.inventory.errorLoadProducts'));
@@ -77,10 +78,10 @@ function InventoryScreen() {
   }, []);
 
   useEffect(() => {
+    if (!loadingData) return;
     fetchCategories();
     fetchProducts();
     setCategoryFilter(categoryFilter);
-    setLoadingData(false);
   }, [loadingData]);
 
   return (
@@ -127,6 +128,7 @@ function InventoryScreen() {
             <div className="loader-container">
               <GridLoader
                 color="#4C662B" />
+              <span>{t('screens.inventory.loadingProducts')}</span>
             </div>
             :
             <ProductList

@@ -161,6 +161,7 @@
     "inventory": {
       "allCategoryLabel": "All",
       "errorLoadProducts": "Error retrieving products",
+      "loadingProducts": "Loading products...",
       "errorLoadCategories": "Error retrieving categories",
       "categoryLabel": "Category: ",
       "productsInventoryLabel": "Products in inventory: {{productsCount}}",
