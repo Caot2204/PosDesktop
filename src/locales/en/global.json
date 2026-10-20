@@ -162,6 +162,7 @@
       "allCategoryLabel": "All",
       "errorLoadProducts": "Error retrieving products",
       "loadingProducts": "Loading products...",
+      "noProducts": "No products registered",
       "errorLoadCategories": "Error retrieving categories",
       "categoryLabel": "Category: ",
       "productsInventoryLabel": "Products in inventory: {{productsCount}}",

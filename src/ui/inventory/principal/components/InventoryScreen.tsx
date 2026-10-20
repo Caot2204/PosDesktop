@@ -130,17 +130,21 @@ function InventoryScreen() {
                 color="#4C662B" />
               <span>{t('screens.inventory.loadingProducts')}</span>
             </div>
-            :
-            <ProductList
-              products={fetchedProducts}
-              categoryFilter={categoryFilter}
-              searchFilter={searchFilter}
-              minimumStock={minimumStock}
-              onEditProduct={handleEditProduct}
-              onDeleteProductSuccess={() => {
-                showSuccessNotify(t('screens.inventory.productDeleted'));
-                fetchProducts();
-              }} />
+            : fetchedProducts.length === 0 ?
+              <div className="loader-container">
+                <span>{t('screens.inventory.noProducts')}</span>
+              </div>
+              :
+              <ProductList
+                products={fetchedProducts}
+                categoryFilter={categoryFilter}
+                searchFilter={searchFilter}
+                minimumStock={minimumStock}
+                onEditProduct={handleEditProduct}
+                onDeleteProductSuccess={() => {
+                  showSuccessNotify(t('screens.inventory.productDeleted'));
+                  fetchProducts();
+                }} />
         }
       </div>
       <dialog className="pos-dialog" ref={categoriesDialogRef} open={openDialog === "categories"}>
