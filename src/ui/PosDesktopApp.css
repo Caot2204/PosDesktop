@@ -9,6 +9,22 @@ body {
 
 .pos-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   height: 60px;
+}
+
+.pos-header-options {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+
+.about-button {
+  width: fit-content;
+  height: fit-content;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }

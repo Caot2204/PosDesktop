@@ -1,0 +1,51 @@
+.about-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.about-container span {
+  font-size: 1.2rem;
+}
+
+.logo-app {
+  width: 200px;
+  height: 200px;
+}
+
+.software-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 70%;
+  gap: 10px;
+}
+
+.name-update-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.author-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 70%;
+  gap: 10px;
+}
+
+.update-button {
+  background-color: var(--color-primary);
+  color: var(--text-main);
+}

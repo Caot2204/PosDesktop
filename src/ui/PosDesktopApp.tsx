@@ -13,6 +13,7 @@ import CotizationsScreen from './cotizations/components/CotizationsScreen';
 import FirstUseScreen from './firstuse/components/FirstUseScreen';
 import LoginScreen from './login/components/LoginScreen';
 import BalanceScreen from './administration/components/BalanceScreen';
+import { GrSystem } from "react-icons/gr";
 
 import type User from '../data/model/User';
 import type Category from '../data/model/Category';
@@ -25,6 +26,7 @@ import type PosConfig from '../data/pos-config/PosConfig';
 import type Egress from '../data/model/Egress';
 import type Cotization from '../data/model/Cotization';
 import CotizationProduct from '../data/model/CotizationProduct';
+import type AboutInfo from '../types/AboutInfo';
 
 import '../i18n';
 
@@ -97,6 +99,10 @@ declare global {
       createBalancePdf: (startDate: string, endDate: string, sales: Sale[], egresses: Egress[], chartUrl: string) => Promise<void>;
       findBalancePdf: (rangeDate: string) => Promise<string | null>;
       deleteBalancePdf: (rangeDate: string) => Promise<void>;
+    };
+    posSystemApi?: {
+      showAboutWindow: () => void,
+      aboutInfo: AboutInfo
     }
   }
 }
@@ -181,13 +187,18 @@ function PosScreen(props: PosScreenProps) {
         <PosMenu
           className="pos-menu"
           userSession={props.userSession} />
-        <UserAvatar
-          name={props.userSession.userName}
-          isAdmin={props.userSession.isAdmin}
-          onLogout={() => {
-            props.onLogout();
-            navigate("/sales");
-          }} />
+        <div className="pos-header-options">
+          <button className="about-button" onClick={() => window.posSystemApi?.showAboutWindow()}>
+            <GrSystem />
+          </button>
+          <UserAvatar
+            name={props.userSession.userName}
+            isAdmin={props.userSession.isAdmin}
+            onLogout={() => {
+              props.onLogout();
+              navigate("/sales");
+            }} />
+        </div>
       </div>
       <Outlet />
     </>

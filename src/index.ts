@@ -9,6 +9,8 @@ import { isDev } from './electron/util';
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare const ABOUT_POS_WEBPACK_ENTRY: string;
+declare const ABOUT_POS_PRELOAD_WEBPACK_ENTRY: string;
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'pos-pdf', privileges: { bypassCSP: true, stream: true, secure: true, supportFetchAPI: true } },
@@ -22,9 +24,8 @@ if (process.platform === 'win32') {
   app.setAppUserModelId('caot2204.posdesktop');
 }
 
-
-
 let mainWindow: BrowserWindow | null = null;
+let aboutWindow: BrowserWindow | null = null;
 
 const createWindow = (): void => {
   // Create the browser window.
@@ -65,6 +66,41 @@ function createMainWindow() {
       app.quit();
     });
 }
+
+function createAboutWindow() {
+  if (aboutWindow) {
+    aboutWindow.focus();
+    return;
+  }
+
+  aboutWindow = new BrowserWindow({
+    icon: path.join(__dirname, 'icons', 'icon.ico'),
+    height: 600,
+    width: 800,
+    center: true,
+    parent: mainWindow,
+    modal: true,
+    webPreferences: {
+      preload: ABOUT_POS_PRELOAD_WEBPACK_ENTRY,
+      nodeIntegration: false,
+      contextIsolation: true
+    }
+  });
+
+  if (isDev()) {
+    aboutWindow.loadURL(ABOUT_POS_WEBPACK_ENTRY);
+  } else {
+    aboutWindow.loadFile(path.join(__dirname, '..', 'renderer', 'about_pos', 'index.html'));
+  }
+
+  aboutWindow.on('closed', () => {
+    aboutWindow = null;
+  });
+}
+
+ipcMain.handle('posSystemApi:showAboutWindow', () => {
+  createAboutWindow();
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

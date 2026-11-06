@@ -3,6 +3,7 @@ import SaleProductModel from "./ui/sales/model/SalesProductModel";
 import CotizationProduct from "./data/model/CotizationProduct";
 import Sale from "./data/model/Sale";
 import Egress from "./data/model/Egress";
+import packageJson from '../package.json';
 
 contextBridge.exposeInMainWorld('userAPI',
   {
@@ -109,3 +110,16 @@ contextBridge.exposeInMainWorld('balanceAPI',
     deleteBalancePdf: (rangeDate: string) => ipcRenderer.invoke('balanceApi:deleteBalancePdf', rangeDate)
   }
 );
+
+contextBridge.exposeInMainWorld('posSystemApi',
+  {
+    showAboutWindow: () => ipcRenderer.invoke('posSystemApi:showAboutWindow'),
+    aboutInfo: {
+      name: packageJson.productName,
+      author: packageJson.author.name,
+      github: packageJson.author.url,
+      repo: packageJson.repository.url,
+      version: packageJson.version
+    }
+  }
+)
