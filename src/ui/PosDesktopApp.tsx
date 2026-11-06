@@ -13,7 +13,7 @@ import CotizationsScreen from './cotizations/components/CotizationsScreen';
 import FirstUseScreen from './firstuse/components/FirstUseScreen';
 import LoginScreen from './login/components/LoginScreen';
 import BalanceScreen from './administration/components/BalanceScreen';
-import { GrSystem } from "react-icons/gr";
+import { GoGear } from "react-icons/go";
 
 import type User from '../data/model/User';
 import type Category from '../data/model/Category';
@@ -102,7 +102,8 @@ declare global {
     };
     posSystemApi?: {
       showAboutWindow: () => void,
-      aboutInfo: AboutInfo
+      aboutInfo: AboutInfo,
+      checkUpdates: () => Promise<void>
     }
   }
 }
@@ -189,7 +190,8 @@ function PosScreen(props: PosScreenProps) {
           userSession={props.userSession} />
         <div className="pos-header-options">
           <button className="about-button" onClick={() => window.posSystemApi?.showAboutWindow()}>
-            <GrSystem />
+            <GoGear
+              className="about-icon-option" />
           </button>
           <UserAvatar
             name={props.userSession.userName}

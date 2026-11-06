@@ -49,3 +49,16 @@
   background-color: var(--color-primary);
   color: var(--text-main);
 }
+
+.github-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.github-icon {
+  width: 25px;
+  height: 25px;
+}

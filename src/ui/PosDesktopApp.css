@@ -9,7 +9,6 @@ body {
 
 .pos-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   height: 60px;
 }
@@ -27,4 +26,10 @@ body {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.about-icon-option {
+  width: 25px;
+  height: 25px;
+  color: var(--color-primary-hover);
 }

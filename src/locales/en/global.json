@@ -13,6 +13,12 @@
     "userNameLabel": "User"
   },
   "screens": {
+    "aboutPos": {
+      "softwareData": "Point of sale",
+      "authorData": "Author",
+      "repository": "Repository:",
+      "checkUpdates": "Check updates"
+    },
     "administration": {
       "titleSales": "Sales:",
       "configSaveSuccess": "Configuration saved successfully",

@@ -120,6 +120,7 @@ contextBridge.exposeInMainWorld('posSystemApi',
       github: packageJson.author.url,
       repo: packageJson.repository.url,
       version: packageJson.version
-    }
+    },
+    checkUpdates: () => ipcRenderer.invoke('posSystemApi:checkUpdates')
   }
 )
